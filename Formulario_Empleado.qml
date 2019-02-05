@@ -6,11 +6,29 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.4 as Fecha
 
+import Empleado 1.0
+
 Window {
     id: formulario
     width: 800
     height: 600
     modality: Qt.WindowModal
+
+    Popup
+    {
+        width: 250
+        height: 60
+        id: mensajeExitoso
+        Material.background: "#006677"
+        x: 500
+        y: 500
+
+        Label
+        {
+            text: "Empleado Registrado Exitosamente"
+            color: "white"
+        }
+    }
 
     Pane
     {
@@ -130,13 +148,33 @@ Window {
                         id: radiobtnFemenino
                         text: "Femenino"
                     }
+
+                    ComboBox
+                    {
+                        id: seleccionCategoria
+                        model: ["Gerente", "Cocinero", "Mesero", "Anfitrión", "Ayudante de Mesero"]
+                        Layout.fillWidth: true
+                    }
                 }
 
-                TextField
+                RowLayout
                 {
-                    id: txtTelefono
-                    placeholderText: "Tel/Cel"
-                    Layout.fillWidth: parent
+                    id: filaExtra
+                    spacing: 10
+
+                    TextField
+                    {
+                        id: txtTelefono
+                        placeholderText: "Tel/Cel"
+                        Layout.fillWidth: parent
+                    }
+
+                    TextField
+                    {
+                        id: txtSalario
+                        placeholderText: "Salario"
+                        Layout.fillWidth: parent
+                    }
                 }
 
                 RowLayout
@@ -193,6 +231,38 @@ Window {
                         //Material.accent: "#008d96"
                         Material.foreground: "#FFFFFF"
                         Material.background: "#008d96"
+                        onClicked:
+                        {
+                            var sexo
+                            if(radiobtnFemenino.checked)
+                            {
+                                sexo = "Femenino"
+                            }
+                            else
+                            {
+                                sexo = "Masculino"
+                            }
+
+                            var categoria = (seleccionCategoria.currentIndex+1)
+                            empleadoLista.altaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
+                                                      sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
+                                                      txtSalario.text, txtTelefono.text, categoria, txtUsuario.text, txtContrasegna)
+                            txtNombre.clear()
+                            txtApellidoPaterno.clear()
+                            txtApellidoMaterno.clear()
+                            fechaNacimiento.text = "Fecha de Nacimiento"
+                            radiobtnMasculino.checked = true
+                            seleccionCategoria.currentIndex = 0
+                            txtRFC.clear()
+                            txtSeguroSocial.clear()
+                            txtSalario.clear()
+                            txtTelefono.clear()
+                            txtUsuario.clear()
+                            txtConfirmacionContrasegna.clear()
+                            txtContrasegna.clear()
+
+                            mensajeExitoso.open()
+                        }
                     }
 
                     Button

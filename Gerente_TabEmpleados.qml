@@ -123,12 +123,80 @@ Item {
                         display: AbstractButton.TextBesideIcon
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
+
+                        onClicked:
+                        {
+                            var idUsuario = ""
+                            idUsuario = empleadoLista.getDato(idUsuario)
+
+                            if(idUsuario!="")
+                                confirmarEliminacion.open()
+                            else
+                                falloSeleccion.open()
+                        }
                     }
                 }
             }
         }
     }
+    Popup
+    {
+        id: falloSeleccion
+        width: 200
+        height: 75
+        x: 125
+        y: 580
+        Material.background: "#006677"
 
+        Label
+        {
+            text: "Empleado no seleccionado"
+            color: "white"
+        }
+    }
+
+    Popup
+    {
+        id: confirmarEliminacion
+        width: 300
+        height: 100
+        x: 125
+        y: 580
+        Material.background: "#006677"
+
+        ColumnLayout
+        {
+            Label
+            {
+                text: "¿Dar de baja empleado permanentemente?"
+                color: "white"
+            }
+
+            RowLayout
+            {
+                Button
+                {
+                    text: "Aceptar"
+                    Layout.fillWidth: true
+                    onClicked:
+                    {
+                        var usuarioEliminado
+                        var idUsuario = ""
+                        usuarioEliminado = empleadoLista.getDato(idUsuario)
+                        empleadoLista.bajaUsuario(usuarioEliminado)
+                        empleadoLista.removeCheckedItem()
+                        confirmarEliminacion.close()
+                    }
+                }
+                Button
+                {
+                    text: "Cancelar"
+                    Layout.fillWidth: true
+                    onClicked: confirmarEliminacion.close()
+                }
+            }
+        }
+    }
 
     ColumnLayout{
         spacing: 20
@@ -143,7 +211,7 @@ Item {
                 ListView
                 {
                     id: tablaEmpleados
-                    implicitWidth: 250
+                    implicitWidth: 500
                     implicitHeight: 250
                     clip: true
 
@@ -156,11 +224,11 @@ Item {
                     {
                         width: parent.width
 
-                        Label
+                        /*Label
                         {
                             text: model.idEmpleado
                             Layout.fillWidth: true
-                        }
+                        }*/
                         Label
                         {
                             text: model.nombreEmpleado
@@ -178,21 +246,6 @@ Item {
                             onClicked: model.eleccionEmpleado = checked
                         }
                     }
-                }
-            }
-            RowLayout
-            {
-                Button
-                {
-                    text: "Agregar"
-                    Layout.fillWidth: true
-                    onClicked: empleadoLista.appendItem()
-                }
-                Button
-                {
-                    text: "Remover"
-                    Layout.fillWidth: true
-                    onClicked: empleadoLista.removeCheckedItem()
                 }
             }
         }

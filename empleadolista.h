@@ -40,6 +40,11 @@ public slots:
 
     void removeCheckedItem();
 
+    QString getDato(QString);
+
+    void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString);
+
+    void bajaUsuario(QString);
 private:
     QVector<ToDoItem> mItems;
 };
