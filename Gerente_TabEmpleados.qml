@@ -5,6 +5,8 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 
+import Empleado 1.0
+
 Item {
     id: element
     visible: true
@@ -127,11 +129,76 @@ Item {
         }
     }
 
+
     ColumnLayout{
         spacing: 20
         anchors.topMargin: 90
         anchors.leftMargin: 200
         anchors.fill: parent
+
+        ColumnLayout
+        {
+            Frame
+            {
+                ListView
+                {
+                    id: tablaEmpleados
+                    implicitWidth: 250
+                    implicitHeight: 250
+                    clip: true
+
+                    model: EmpleadoModelo
+                    {
+                        list: empleadoLista
+                    }
+
+                    delegate: RowLayout
+                    {
+                        width: parent.width
+
+                        Label
+                        {
+                            text: model.idEmpleado
+                            Layout.fillWidth: true
+                        }
+                        Label
+                        {
+                            text: model.nombreEmpleado
+                            Layout.fillWidth: true
+                        }
+                        Label
+                        {
+                            text: model.puestoEmpleado
+                            Layout.fillWidth: true
+                        }
+                        CheckBox
+                        {
+                            Layout.alignment: Qt.AlignRight
+                            checked: model.eleccionEmpleado
+                            onClicked: model.eleccionEmpleado = checked
+                        }
+                    }
+                }
+            }
+            RowLayout
+            {
+                Button
+                {
+                    text: "Agregar"
+                    Layout.fillWidth: true
+                    onClicked: empleadoLista.appendItem()
+                }
+                Button
+                {
+                    text: "Remover"
+                    Layout.fillWidth: true
+                    onClicked: empleadoLista.removeCheckedItem()
+                }
+            }
+        }
+
+
+        /*
         RowLayout{
             Layout.fillWidth: true
             spacing: 10
@@ -168,5 +235,6 @@ Item {
                 }
             }
         }
+        */
     }
 }

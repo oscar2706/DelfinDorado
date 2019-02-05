@@ -83,6 +83,7 @@ ApplicationWindow{
                 }
                 TextField {
                     //placeholderText: qsTr("User name")
+                    id: txtUsuario
                     onTextChanged: persona.getUserName = text
                 }
             }
@@ -95,6 +96,7 @@ ApplicationWindow{
                 }
                 TextField {
                     //placeholderText: qsTr("User name")
+                    id: txtContrasegna
                     onTextChanged: persona.getUserName = text
                 }
             }
@@ -127,7 +129,36 @@ ApplicationWindow{
                     title: qsTr("Gerente")
                     visible: false
                 }
-                onClicked: mainWindiwGerente.show()
+                onClicked:
+                {
+                    if(txtUsuario.text==""||txtContrasegna.text=="")
+                    {
+                        ventanaErrorVacio.open()
+                    }
+                    else
+                    {
+                        if(txtUsuario.text=="Gerente"&&txtContrasegna.text=="admin")
+                        {
+                            mainWindiwGerente.show()
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+
+                Popup
+                {
+                    id: ventanaErrorVacio
+                    width: 200
+                    height: 50
+
+                    Label
+                    {
+                        text: "Campos Vacios Encontrados"
+                    }
+                }
             }
             /*
             RowLayout{
