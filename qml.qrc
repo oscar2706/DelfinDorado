@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainWindowGerente.qml</file>
+        <file>Formulario_Empleado.qml</file>
+        <file>TablaEmpleados.qml</file>
+        <file>Gerente_TabEmpleados.qml</file>
+    </qresource>
+</RCC>
