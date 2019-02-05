@@ -105,7 +105,6 @@ ApplicationWindow{
                 antialiasing: true
                 autoRepeat: false
                 spacing: 0
-                Layout.maximumHeight: 65535
                 Layout.minimumHeight: 50
                 Layout.minimumWidth: 120
                 Layout.preferredHeight: 50

@@ -11,18 +11,32 @@ Window {
     title: "System Dialogs Gallery"
     width: 1366
     height: 720
-    ColumnLayout{
-        anchors.fill: parent
+
+    StackLayout{
+        width: 170
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.top: parent.top
+        Layout.fillHeight: false
+        currentIndex: tabBar.currentIndex
+        Gerente_TabEmpleados{
+            id: tabEmpleados
+        }
+    }
+
     Pane{
+        x: 0
         //Material.theme: Material.Dark
         Material.background: "#006677"
         Material.accent: "#FFFFFF"
         Material.foreground: Material.Grey
         width: 1366
         height: 60
+        anchors.top: parent.top
+        anchors.topMargin: 0
         Layout.fillWidth: true
         //Material.background: Material.Teal
-        Material.elevation: 8
+        Material.elevation: 4
         //Material.color: Material.Teal
         TabBar {
             id: tabBar
@@ -95,11 +109,17 @@ Window {
             }
         }
     }
-    StackLayout{
-        currentIndex: tabBar.currentIndex
-        Gerente_TabEmpleados{
-            id: tabEmpleados
-        }
-    }
-    }
 }
+
+
+
+
+
+
+
+
+
+/*##^## Designer {
+    D{i:1;anchors_x:0;anchors_y:110}D{i:3;anchors_y:10}
+}
+ ##^##*/

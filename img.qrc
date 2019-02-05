@@ -3,5 +3,8 @@
         <file>img/loginUser.png</file>
         <file>img/loginBackground.png</file>
         <file>img/logo.png</file>
+        <file>img/addEmploye.png</file>
+        <file>img/deleteEmploye.png</file>
+        <file>img/updateEmploye.png</file>
     </qresource>
 </RCC>

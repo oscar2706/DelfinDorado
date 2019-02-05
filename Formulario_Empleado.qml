@@ -11,18 +11,19 @@ Window {
     width: 800
     height: 600
     modality: Qt.WindowModal
-    x: 333
-    y: 110
 
     Pane
     {
         id: panelFormulario
-        width: 720
-        height: 500
-
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        Material.accent: "#008d96"
+        Material.foreground: "#008d96"
+        Material.background: "#FFFFFF"
         RowLayout
         {
             id: filaPanel
+            anchors.fill: parent
             spacing: 40
 
             ColumnLayout
@@ -88,8 +89,11 @@ Window {
                     Button
                     {
                         id: fechaNacimiento;
+                        Material.background: "#FFFFFF"
+                        Material.foreground: "#000000"
+                        Material.elevation: 0
                         text: "Fecha de Nacimiento"
-
+                        antialiasing: true
                         onClicked: ventanaFechaNacimiento.open()
 
                         Popup
@@ -179,12 +183,16 @@ Window {
                 RowLayout
                 {
                     id: filaBotones
+                    Layout.fillWidth: false
                     spacing: 10
 
                     Button
                     {
                         id:btnRegistrar
                         text: "Guardar"
+                        //Material.accent: "#008d96"
+                        Material.foreground: "#FFFFFF"
+                        Material.background: "#008d96"
                     }
 
                     Button
@@ -192,6 +200,9 @@ Window {
                         id: btnCancelar
                         text: "Cancelar"
                         onClicked: formulario.close()
+                        //Material.accent: "#008d96"
+                        Material.foreground: "#FFFFFF"
+                        Material.background: "#008d96"
                     }
                 }
             }
