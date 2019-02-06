@@ -11,7 +11,6 @@ ApplicationWindow{
     width: 1366
     height: 720
     title: qsTr("Prueba inicial")
-    //color: color("#008d9e")
 
     Image {
         id: name
@@ -36,7 +35,7 @@ ApplicationWindow{
     }
 
     Pane {
-        id: pane
+        id: panelSesion
         x: 483
         y: 160
         width: 350
@@ -45,6 +44,7 @@ ApplicationWindow{
         anchors.centerIn: parent
         Material.elevation: 8
         Material.background: "#FFFFFF"
+        //Material.background: "#eceff1"
         //Material.background: Material.Amber
 
         ColumnLayout{
@@ -61,6 +61,7 @@ ApplicationWindow{
             clip: true
 
             Image {
+                smooth: true
                 antialiasing: true
                 Layout.minimumHeight: 100
                 Layout.minimumWidth: 100
@@ -84,7 +85,7 @@ ApplicationWindow{
                 TextField {
                     //placeholderText: qsTr("User name")
                     id: txtUsuario
-                    onTextChanged: persona.getUserName = text
+                    //onTextChanged: persona.getUserName = text
                 }
             }
 
@@ -97,7 +98,8 @@ ApplicationWindow{
                 TextField {
                     //placeholderText: qsTr("User name")
                     id: txtContrasegna
-                    onTextChanged: persona.getUserName = text
+                    echoMode: TextInput.Password
+                    //onTextChanged: persona.getUserName = text
                 }
             }
             RoundButton{
@@ -139,6 +141,8 @@ ApplicationWindow{
                     {
                         if(txtUsuario.text=="Gerente"&&txtContrasegna.text=="admin")
                         {
+                            txtUsuario.clear()
+                            txtContrasegna.clear()
                             mainWindiwGerente.show()
                         }
                         else
@@ -174,34 +178,3 @@ ApplicationWindow{
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*##^## Designer {
-    D{i:2;anchors_x:43;anchors_y:42}
-}
- ##^##*/

@@ -3,8 +3,8 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
-    db.setUserName("Leonardo");
-    db.setPassword("football26398");
+    db.setUserName("root");
+    db.setPassword("");
     db.setDatabaseName("dorado");
     if(db.open()){
         QSqlQuery query;
@@ -89,6 +89,65 @@ void EmpleadoLista::appendItem()
     mItems.append(item);
 
     emit postItemAppended();
+}
+
+void EmpleadoLista::refresh()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("127.0.0.1");
+    db.setUserName("root");
+    db.setPassword("");
+    db.setDatabaseName("dorado");
+    if(db.open()){
+        QSqlQuery query;
+        qDebug() << "Se conecto la base de datos! :D";
+        /*
+        if (query.exec("SELECT * FROM persona")) {
+            while (query.next()) {
+                qDebug() << query.value(0).toString() << ", "<< query.value(1).toString() << "," << query.value(2).toString();
+            }
+        }
+        */
+    }else{
+        qDebug() << "Sigue intentando! D:";
+    }
+    //mItems.append({QStringLiteral("1"), QStringLiteral("Oscar"), QStringLiteral("Gerente"), false});
+
+    QSqlQuery queryConsulta;
+
+    queryConsulta.prepare("SELECT IdEmpleado, Nombre, ApellidoPaterno, ApellidoMaterno, Categoria_idCategoria "
+                          "from empleado");
+    queryConsulta.exec();
+
+    while(queryConsulta.next())
+    {
+        ToDoItem empleadoEncontrado;
+
+        empleadoEncontrado.idEmpleado = queryConsulta.value(0).toString();
+        empleadoEncontrado.nombreEmpleado = queryConsulta.value(1).toString() + " " + queryConsulta.value(2).toString() +
+                                            " " + queryConsulta.value(3).toString();
+        switch (queryConsulta.value(4).toInt()) {
+        case 1:
+            empleadoEncontrado.puestoEmpleado = "Gerente";
+            break;
+        case 2:
+            empleadoEncontrado.puestoEmpleado = "Cocinero";
+            break;
+        case 3:
+            empleadoEncontrado.puestoEmpleado = "Mesero";
+            break;
+        case 4:
+            empleadoEncontrado.puestoEmpleado = "Anfitrión";
+            break;
+        case 5:
+            empleadoEncontrado.puestoEmpleado = "Ayudante de Mesero";
+            break;
+        default:
+            break;
+        }
+
+        mItems.append(empleadoEncontrado);
+    }
 }
 
 void EmpleadoLista::removeCheckedItem()

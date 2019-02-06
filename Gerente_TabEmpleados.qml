@@ -75,10 +75,14 @@ Item {
                         display: AbstractButton.TextBesideIcon
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
+
                         Formulario_Empleado{
                             id: form_Empleado
+                            //onClosing: empleadoLista.refresh()
                         }
                         onClicked:  form_Empleado.show()
+
+                        //empleadoLista.refresh()
                     }
                 }
                 RowLayout{
@@ -203,91 +207,90 @@ Item {
         anchors.topMargin: 90
         anchors.leftMargin: 200
         anchors.fill: parent
-
-        ColumnLayout
-        {
-            Frame
-            {
-                ListView
-                {
-                    id: tablaEmpleados
-                    implicitWidth: 500
-                    implicitHeight: 250
-                    clip: true
-
-                    model: EmpleadoModelo
-                    {
-                        list: empleadoLista
-                    }
-
-                    delegate: RowLayout
-                    {
-                        width: parent.width
-
-                        /*Label
-                        {
-                            text: model.idEmpleado
-                            Layout.fillWidth: true
-                        }*/
-                        Label
-                        {
-                            text: model.nombreEmpleado
-                            Layout.fillWidth: true
-                        }
-                        Label
-                        {
-                            text: model.puestoEmpleado
-                            Layout.fillWidth: true
-                        }
-                        CheckBox
-                        {
-                            Layout.alignment: Qt.AlignRight
-                            checked: model.eleccionEmpleado
-                            onClicked: model.eleccionEmpleado = checked
-                        }
-                    }
-                }
-            }
-        }
-
-
-        /*
-        RowLayout{
+        //Layout.alignment: Qt.AlignCenter
+        Label{
+            id: etiqueta
+            width: 60
+            height: 40
+            font.bold: true
+            font.pointSize: 9
+            textFormat: Text.PlainText
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillHeight: true
             Layout.fillWidth: true
-            spacing: 10
-            //Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            Label{
-                text: "Buscar:"
-            }
-            TextField{
-                placeholderText: "Nombre"
+
+        }
+
+        Frame
+        {
+            ListView
+            {
+                id: tablaEmpleados
+                spacing: 10
+                anchors.fill: parent
+                implicitWidth: 600
+                implicitHeight: 500
+                clip: true
+                highlightFollowsCurrentItem : true
+                RowLayout {
+                    spacing: 70
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    Label{
+                        color: "#006677"
+                        text: "Nombre"
+                        font.pointSize: 10
+                        font.bold: true
+                    }
+                    Label{
+                        color: "#006677"
+                        text: "Puesto"
+                        font.pointSize: 10
+                        font.bold: true
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    }
+                    Label{
+                        color: "#006677"
+                        text: "Seleccionado"
+                        font.pointSize: 10
+                        font.bold: true
+                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                    }
+                }
+                model: EmpleadoModelo
+                {
+                    list: empleadoLista
+                }
+
+                delegate: RowLayout
+                {
+                    width: parent.width
+
+                    /*Label
+                    {
+                        text: model.idEmpleado
+                        Layout.fillWidth: true
+                    }*/
+                    Label
+                    {
+                        text: model.nombreEmpleado
+                        Layout.fillWidth: true
+                    }
+                    Label
+                    {
+                        text: model.puestoEmpleado
+                        Layout.fillWidth: true
+                    }
+                    CheckBox
+                    {
+                        Layout.alignment: Qt.AlignRight
+                        checked: model.eleccionEmpleado
+                        onClicked: model.eleccionEmpleado = checked
+                    }
+                }
             }
         }
-        ListView{
-            y: 90
-            width: 300
-            height: 500
-            clip: true
-            //Layout.fillHeight: true
-            //implicitWidth: 400
-            model: 100
-            delegate: RowLayout{
-                Image {
-                    Layout.maximumHeight: 30
-                    Layout.maximumWidth: 30
-                    source: "img/deleteEmploye.png"
-                }
-                Label{
-                    text: qsTr("Id")
-                }
-                Label{
-                    text: qsTr("Nombre")
-                }
-                Label{
-                    text: qsTr("Cargo")
-                }
-            }
-        }
-        */
     }
 }

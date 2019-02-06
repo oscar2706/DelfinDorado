@@ -20,7 +20,7 @@ Window {
         height: 60
         id: mensajeExitoso
         Material.background: "#006677"
-        x: 500
+        x: 350
         y: 500
 
         Label
@@ -33,8 +33,7 @@ Window {
     Pane
     {
         id: panelFormulario
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.left: parent.left
+        anchors.fill: parent
         Material.accent: "#008d96"
         Material.foreground: "#008d96"
         Material.background: "#FFFFFF"
@@ -207,6 +206,7 @@ Window {
                 TextField
                 {
                     id: txtContrasegna
+                    echoMode: TextInput.Password
                     placeholderText: "Contraseña"
                     Layout.fillWidth: parent
                 }
@@ -214,6 +214,7 @@ Window {
                 TextField
                 {
                     id: txtConfirmacionContrasegna
+                    echoMode: TextInput.Password
                     placeholderText: "Confirmación de la Contraseña"
                     Layout.fillWidth: parent
                 }
@@ -221,6 +222,7 @@ Window {
                 RowLayout
                 {
                     id: filaBotones
+                    Layout.alignment: Qt.AlignRight | Qt.AlignBottom
                     Layout.fillWidth: false
                     spacing: 10
 
@@ -261,10 +263,11 @@ Window {
                             txtConfirmacionContrasegna.clear()
                             txtContrasegna.clear()
 
+                            //empleadoLista.refresh()
+
                             mensajeExitoso.open()
                         }
                     }
-
                     Button
                     {
                         id: btnCancelar

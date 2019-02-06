@@ -5,6 +5,8 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 
+import Empleado 1.0
+
 Window {
     id: window
     visible: true
@@ -21,6 +23,15 @@ Window {
         currentIndex: tabBar.currentIndex
         Gerente_TabEmpleados{
             id: tabEmpleados
+        }
+        Item {
+            id: tabFinanzas
+        }
+        Gerente_TabAlmacen{
+            id: tabAlmacen
+        }
+        Item {
+            id: tabMenu
         }
     }
 
@@ -110,16 +121,3 @@ Window {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-/*##^## Designer {
-    D{i:1;anchors_x:0;anchors_y:110}D{i:3;anchors_y:10}
-}
- ##^##*/
