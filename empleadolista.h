@@ -39,11 +39,25 @@ public slots:
     void appendItem();
     void refresh();
     void removeCheckedItem();
+    void removeItems();
 
     QString getDato(QString);
 
-    void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString);
+    QString getNombre(QString id);
+    QString getApellidoPaterno(QString id);
+    QString getApellidoMaterno(QString id);
+    QString getFechaNacimiento(QString id);
+    QString getSexo(QString id);
+    int getPuesto(QString id);
+    QString getTelefono(QString id);
+    QString getSalario(QString id);
+    QString getRFC(QString id);
+    QString getSeguroSocial(QString id);
+    QString getUsuario(QString id);
+    QString getContrasegna(QString id);
 
+    void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString);
+    void modificaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
     void bajaUsuario(QString);
 private:
     QVector<ToDoItem> mItems;

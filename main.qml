@@ -103,6 +103,7 @@ ApplicationWindow{
                 }
             }
             RoundButton{
+                id: btnLogin
                 radius: 20
                 width: 120
                 text: qsTr("Iniciar sesión")

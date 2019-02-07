@@ -87,7 +87,11 @@ Item {
                         Formulario_Empleado{
                             id: form_Empleado
                         }
-                        onClicked:  form_Empleado.show()
+                        onClicked:
+                        {
+                            form_Empleado.idUsuario = "0"
+                            form_Empleado.show()
+                        }
                     }
                 }
                 RowLayout{
@@ -112,6 +116,23 @@ Item {
                         display: AbstractButton.TextBesideIcon
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
+
+                        onClicked:
+                        {
+                            var idUsuario = ""
+                            idUsuario = empleadoLista.getDato(idUsuario)
+
+                            if(idUsuario!="")
+                            {
+                                form_Empleado.idUsuario = idUsuario.toString()
+                                form_Empleado.show()
+                            }
+                            else
+                            {
+                                falloSeleccion.y = 390
+                                falloSeleccion.open()
+                            }
+                        }
                     }
                 }
                 RowLayout{
@@ -145,7 +166,10 @@ Item {
                             if(idUsuario!="")
                                 confirmarEliminacion.open()
                             else
+                            {
+                                falloSeleccion.y = 580
                                 falloSeleccion.open()
+                            }
                         }
                     }
                 }
@@ -287,10 +311,6 @@ Item {
                 clip: true
                 focus: true
                 model: modelo
-                /*EmpleadoModelo
-                {
-                    list: empleadoLista
-                }*/
                 delegate: Component {
                     Item{
                         width: parent.width

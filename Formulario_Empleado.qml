@@ -13,6 +13,7 @@ Window {
     width: 800
     height: 600
     modality: Qt.WindowModal
+    property string idUsuario: "0"
 
     Popup
     {
@@ -25,8 +26,153 @@ Window {
 
         Label
         {
+            id: lblMensajeExitoso
             text: "Empleado Registrado Exitosamente"
             color: "white"
+        }
+    }
+    Popup
+    {
+        width: 150
+        height: 35
+        id: nombreIncompleto
+        Material.background: "#DBAB0D"
+        x: 425
+        y: 90
+
+        Label
+        {
+            id: lblNombreIncompleto
+            text: "Nombre incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 170
+        height: 35
+        id: fechaIncompleta
+        Material.background: "#DBAB0D"
+        x: 425
+        y: 200
+
+        Label
+        {
+            id: lblFechaIncompleta
+            text: "Fecha no seleccionada"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 150
+        height: 35
+        id: telefonoIncompleto
+        Material.background: "#DBAB0D"
+        x: 325
+        y: 250
+
+        Label
+        {
+            id: lblTelefonoIncompleto
+            text: "Telefono incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 150
+        height: 35
+        id: telefonoInvalido
+        Material.background: "#DBAB0D"
+        x: 325
+        y: 250
+
+        Label
+        {
+            id: lblTelefonoInvalido
+            text: "Telefono invalido"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 140
+        height: 35
+        id: salarioIncompleto
+        Material.background: "#DBAB0D"
+        x: 590
+        y: 250
+
+        Label
+        {
+            id: lblSalarioIncompleto
+            text: "Salario incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 125
+        height: 35
+        id: _RFCIncompleto
+        Material.background: "#DBAB0D"
+        x: 340
+        y: 300
+
+        Label
+        {
+            id: lblRFCIncompleto
+            text: "RFC incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 220
+        height: 35
+        id: seguroIncompleto
+        Material.background: "#DBAB0D"
+        x: 550
+        y: 300
+
+        Label
+        {
+            id: lblSeguroIncompleto
+            text: "Numero de seguro incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 145
+        height: 35
+        id: usuarioIncompleto
+        Material.background: "#DBAB0D"
+        x: 425
+        y: 405
+
+        Label
+        {
+            id: lblUsuarioIncompleto
+            text: "Usuario incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        width: 250
+        height: 35
+        id: contrasegnaIncorrecta
+        Material.background: "#DBAB0D"
+        x: 365
+        y: 455
+
+        Label
+        {
+            id: lblContrasegnaIncorrecta
+            text: "Campos de contraseña no coinciden"
+            color: "black"
         }
     }
 
@@ -82,6 +228,7 @@ Window {
                     id: txtNombre
                     placeholderText: "Nombre"
                     Layout.fillWidth: parent
+                    text: idUsuario=="0" ? "" : empleadoLista.getNombre(idUsuario)
                 }
 
                 TextField
@@ -89,6 +236,7 @@ Window {
                     id: txtApellidoPaterno
                     placeholderText: "Apellido Paterno"
                     Layout.fillWidth: parent
+                    text: idUsuario=="0" ? "" : empleadoLista.getApellidoPaterno(idUsuario)
                 }
 
                 TextField
@@ -96,6 +244,7 @@ Window {
                     id: txtApellidoMaterno
                     placeholderText: "Apellido Materno"
                     Layout.fillWidth: parent
+                    text: idUsuario=="0" ? "" : empleadoLista.getApellidoMaterno(idUsuario)
                 }
 
                 RowLayout
@@ -109,7 +258,7 @@ Window {
                         Material.background: "#FFFFFF"
                         Material.foreground: "#000000"
                         Material.elevation: 0
-                        text: "Fecha de Nacimiento"
+                        text: idUsuario=="0" ? "Fecha de Nacimiento" : empleadoLista.getFechaNacimiento(idUsuario)
                         antialiasing: true
                         onClicked: ventanaFechaNacimiento.open()
 
@@ -138,13 +287,43 @@ Window {
                     RadioButton
                     {
                         id: radiobtnMasculino
-                        checked: true;
+                        checked: if(idUsuario=="0")
+                                 {
+                                     return true;
+                                 }
+                                 else
+                                 {
+                                    if(empleadoLista.getSexo(idUsuario) === "Masculino")
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                 }
+
                         text: "Masculino"
                     }
 
                     RadioButton
                     {
                         id: radiobtnFemenino
+                        checked: if(idUsuario=="0")
+                                 {
+                                     return false;
+                                 }
+                                 else
+                                 {
+                                    if(empleadoLista.getSexo(idUsuario) === "Femenino")
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                 }
                         text: "Femenino"
                     }
 
@@ -153,6 +332,7 @@ Window {
                         id: seleccionCategoria
                         model: ["Gerente", "Cocinero", "Mesero", "Anfitrión", "Ayudante de Mesero"]
                         Layout.fillWidth: true
+                        currentIndex: idUsuario=="0" ? 0 : (empleadoLista.getPuesto(idUsuario)-1)
                     }
                 }
 
@@ -166,6 +346,7 @@ Window {
                         id: txtTelefono
                         placeholderText: "Tel/Cel"
                         Layout.fillWidth: parent
+                        text: idUsuario=="0" ? "" : empleadoLista.getTelefono(idUsuario)
                     }
 
                     TextField
@@ -173,6 +354,7 @@ Window {
                         id: txtSalario
                         placeholderText: "Salario"
                         Layout.fillWidth: parent
+                        text: idUsuario=="0" ? "" : empleadoLista.getSalario(idUsuario)
                     }
                 }
 
@@ -186,6 +368,7 @@ Window {
                         id: txtRFC
                         placeholderText: "RFC"
                         Layout.fillWidth: parent
+                        text: idUsuario=="0" ? "" : empleadoLista.getRFC(idUsuario)
                     }
 
                     TextField
@@ -193,6 +376,7 @@ Window {
                         id: txtSeguroSocial
                         placeholderText: "Numero Seguro Social"
                         Layout.fillWidth: parent
+                        text: idUsuario=="0" ? "" : empleadoLista.getSeguroSocial(idUsuario)
                     }
                 }
 
@@ -201,6 +385,7 @@ Window {
                     id: txtUsuario
                     placeholderText: "Usuario"
                     Layout.fillWidth: parent
+                    text: idUsuario=="0" ? "" : empleadoLista.getUsuario(idUsuario)
                 }
 
                 TextField
@@ -209,6 +394,7 @@ Window {
                     echoMode: TextInput.Password
                     placeholderText: "Contraseña"
                     Layout.fillWidth: parent
+                    text: idUsuario=="0" ? "" : empleadoLista.getContrasegna(idUsuario)
                 }
 
                 TextField
@@ -217,6 +403,7 @@ Window {
                     echoMode: TextInput.Password
                     placeholderText: "Confirmación de la Contraseña"
                     Layout.fillWidth: parent
+                    text: idUsuario=="0" ? "" : empleadoLista.getContrasegna(idUsuario)
                 }
 
                 RowLayout
@@ -235,37 +422,127 @@ Window {
                         Material.background: "#008d96"
                         onClicked:
                         {
-                            var sexo
-                            if(radiobtnFemenino.checked)
+                            var camposCorrectos = 0;
+                            var contrasegnaValida = false;
+
+                            if((txtNombre.text == "")||(txtApellidoPaterno.text == "")||(txtApellidoMaterno.text == ""))
                             {
-                                sexo = "Femenino"
+                                nombreIncompleto.open()
                             }
                             else
                             {
-                                sexo = "Masculino"
+                                camposCorrectos++;
+                            }
+                            if(fechaNacimiento.text == "Fecha de Nacimiento")
+                            {
+                                fechaIncompleta.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtTelefono.text == "")
+                            {
+                                telefonoIncompleto.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtSalario.text == "")
+                            {
+                                salarioIncompleto.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtRFC.text == "")
+                            {
+                                _RFCIncompleto.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtSeguroSocial.text == "")
+                            {
+                                seguroIncompleto.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if((txtUsuario.text == "")||(txtContrasegna.text == "")||(txtConfirmacionContrasegna.text == ""))
+                            {
+                                usuarioIncompleto.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtContrasegna.text == txtConfirmacionContrasegna.text)
+                            {
+                                contrasegnaValida = true;
+                            }
+                            else
+                            {
+                                contrasegnaIncorrecta.open()
                             }
 
-                            var categoria = (seleccionCategoria.currentIndex+1)
-                            empleadoLista.altaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
-                                                      sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
-                                                      txtSalario.text, txtTelefono.text, categoria, txtUsuario.text, txtContrasegna)
-                            txtNombre.clear()
-                            txtApellidoPaterno.clear()
-                            txtApellidoMaterno.clear()
-                            fechaNacimiento.text = "Fecha de Nacimiento"
-                            radiobtnMasculino.checked = true
-                            seleccionCategoria.currentIndex = 0
-                            txtRFC.clear()
-                            txtSeguroSocial.clear()
-                            txtSalario.clear()
-                            txtTelefono.clear()
-                            txtUsuario.clear()
-                            txtConfirmacionContrasegna.clear()
-                            txtContrasegna.clear()
 
-                            //empleadoLista.refresh()
+                            if((camposCorrectos==7)&&(contrasegnaValida))
+                            {
+                                var sexo
+                                if(radiobtnFemenino.checked)
+                                {
+                                    sexo = "Femenino"
+                                }
+                                else
+                                {
+                                    sexo = "Masculino"
+                                }
 
-                            mensajeExitoso.open()
+                                var categoria = (seleccionCategoria.currentIndex+1)
+
+                                if(idUsuario=="0")
+                                {
+                                    empleadoLista.altaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
+                                                              sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
+                                                              txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
+                                                              txtContrasegna.text)
+                                    txtNombre.clear()
+                                    txtApellidoPaterno.clear()
+                                    txtApellidoMaterno.clear()
+                                    fechaNacimiento.text = "Fecha de Nacimiento"
+                                    radiobtnMasculino.checked = true
+                                    seleccionCategoria.currentIndex = 0
+                                    txtRFC.clear()
+                                    txtSeguroSocial.clear()
+                                    txtSalario.clear()
+                                    txtTelefono.clear()
+                                    txtUsuario.clear()
+                                    txtConfirmacionContrasegna.clear()
+                                    txtContrasegna.clear()
+
+                                    empleadoLista.refresh()
+
+                                    lblMensajeExitoso.text = "Empleado Registrado Exitosamente"
+                                    mensajeExitoso.open()
+                                }
+                                else
+                                {
+                                    empleadoLista.modificaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
+                                                                  sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
+                                                                  txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
+                                                                  txtContrasegna.text, idUsuario)
+
+                                    empleadoLista.refresh()
+
+                                    lblMensajeExitoso.text = "Cambios Guardados Exitosamente"
+                                    mensajeExitoso.open()
+                                }
+                            }
                         }
                     }
                     Button

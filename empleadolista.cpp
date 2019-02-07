@@ -3,8 +3,10 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
-    db.setUserName("root");
-    db.setPassword("");
+    /*db.setUserName("root");
+    db.setPassword("");*/
+    db.setUserName("Leonardo");
+    db.setPassword("football26398");
     db.setDatabaseName("dorado");
     if(db.open()){
         QSqlQuery query;
@@ -93,60 +95,58 @@ void EmpleadoLista::appendItem()
 
 void EmpleadoLista::refresh()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("127.0.0.1");
-    db.setUserName("root");
-    db.setPassword("");
-    db.setDatabaseName("dorado");
-    if(db.open()){
-        QSqlQuery query;
-        qDebug() << "Se conecto la base de datos! :D";
-        /*
-        if (query.exec("SELECT * FROM persona")) {
-            while (query.next()) {
-                qDebug() << query.value(0).toString() << ", "<< query.value(1).toString() << "," << query.value(2).toString();
+    removeItems();
+
+    QSqlQuery busqueda;
+    bool bandera = false;
+
+    busqueda.prepare("SELECT IdEmpleado, Nombre, ApellidoPaterno, ApellidoMaterno, Categoria_idCategoria "
+                     "from empleado");
+    busqueda.exec();
+
+    while(busqueda.next())
+    {
+        for(int i=0; i<mItems.size(); i++)
+        {
+            qDebug() << "Id Table: " + mItems.at(i).idEmpleado + " Id Lista: " + busqueda.value(0).toString();
+            if(mItems.at(i).idEmpleado==busqueda.value(0).toString())
+            {
+                bandera = true;
+                break;
             }
         }
-        */
-    }else{
-        qDebug() << "Sigue intentando! D:";
-    }
-    //mItems.append({QStringLiteral("1"), QStringLiteral("Oscar"), QStringLiteral("Gerente"), false});
+        if(!bandera)
+        {
+            emit preItemAppended();
 
-    QSqlQuery queryConsulta;
+            ToDoItem item;
+            item.idEmpleado = busqueda.value(0).toString();
+            item.nombreEmpleado = busqueda.value(1).toString() + " " + busqueda.value(2).toString() + " " + busqueda.value(3).toString();
+            switch (busqueda.value(4).toInt()) {
+            case 1:
+                item.puestoEmpleado = "Gerente";
+                break;
+            case 2:
+                item.puestoEmpleado = "Cocinero";
+                break;
+            case 3:
+                item.puestoEmpleado = "Mesero";
+                break;
+            case 4:
+                item.puestoEmpleado = "Anfitrión";
+                break;
+            case 5:
+                item.puestoEmpleado = "Ayudante de Mesero";
+                break;
+            default:
+                break;
+            }
+            item.eleccionEmpleado = false;
+            mItems.append(item);
 
-    queryConsulta.prepare("SELECT IdEmpleado, Nombre, ApellidoPaterno, ApellidoMaterno, Categoria_idCategoria "
-                          "from empleado");
-    queryConsulta.exec();
-
-    while(queryConsulta.next())
-    {
-        ToDoItem empleadoEncontrado;
-
-        empleadoEncontrado.idEmpleado = queryConsulta.value(0).toString();
-        empleadoEncontrado.nombreEmpleado = queryConsulta.value(1).toString() + " " + queryConsulta.value(2).toString() +
-                                            " " + queryConsulta.value(3).toString();
-        switch (queryConsulta.value(4).toInt()) {
-        case 1:
-            empleadoEncontrado.puestoEmpleado = "Gerente";
-            break;
-        case 2:
-            empleadoEncontrado.puestoEmpleado = "Cocinero";
-            break;
-        case 3:
-            empleadoEncontrado.puestoEmpleado = "Mesero";
-            break;
-        case 4:
-            empleadoEncontrado.puestoEmpleado = "Anfitrión";
-            break;
-        case 5:
-            empleadoEncontrado.puestoEmpleado = "Ayudante de Mesero";
-            break;
-        default:
-            break;
+            emit postItemAppended();
         }
-
-        mItems.append(empleadoEncontrado);
+        bandera = false;
     }
 }
 
@@ -169,6 +169,18 @@ void EmpleadoLista::removeCheckedItem()
     }
 }
 
+void EmpleadoLista::removeItems()
+{
+    for(int i=0; i<mItems.size();)
+    {
+        emit preItemRemoved(i);
+
+        mItems.removeAt(i);
+
+        emit postItemRemoved();
+    }
+}
+
 QString EmpleadoLista::getDato(QString comprobacion)
 {
     for(int i=0; i<mItems.size();)
@@ -185,6 +197,126 @@ QString EmpleadoLista::getDato(QString comprobacion)
     }
 
     return comprobacion;
+}
+
+QString EmpleadoLista::getNombre(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT Nombre FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getApellidoPaterno(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT ApellidoPaterno FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getApellidoMaterno(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT ApellidoMaterno FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getFechaNacimiento(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT FechaNacimiento FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getSexo(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT sexo FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+int EmpleadoLista::getPuesto(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT Categoria_idCategoria FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toInt();
+}
+
+QString EmpleadoLista::getTelefono(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT Telefono FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getSalario(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT Sueldo FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getRFC(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT RFC FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getSeguroSocial(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT SeguroSocial FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getUsuario(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT Usuario FROM usuario WHERE IdUsuario = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
+}
+
+QString EmpleadoLista::getContrasegna(QString id)
+{
+    QSqlQuery obtenerDato;
+    obtenerDato.prepare("SELECT Contrasena FROM usuario WHERE IdUsuario = " + id);
+    obtenerDato.exec();
+    obtenerDato.first();
+
+    return obtenerDato.value(0).toString();
 }
 
 void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
@@ -231,6 +363,27 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
         qDebug() << "Ya deidicate a otra cosa :C";
         qDebug() << qryDatosUsuario.lastError();
     }
+}
+
+void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
+                                    QString RFC, QString SeguroSocial, QString FechaNacimiento, QString Sueldo, QString Telefono,
+                                    int idCategoria, QString Usuario, QString Contrasegna, QString idEmpleado)
+{
+    QSqlQuery modificaEmpleado, modificaUsuario;
+    modificaUsuario.prepare("UPDATE usuario SET "
+                            "Usuario = '" + Usuario + "' , Contrasena = '" + Contrasegna + "' "
+                            "WHERE IdUsuario = " + idEmpleado);
+    modificaUsuario.exec();
+
+    modificaEmpleado.prepare("UPDATE empleado SET "
+                             "Nombre = '" + Nombre + "', ApellidoPaterno = '" + ApellidoPaterno + "', "
+                             "ApellidoMaterno = '" + ApellidoMaterno + "', "
+                             "sexo = '" + Sexo + "', RFC = '" + RFC + "', SeguroSocial = '" + SeguroSocial + "', "
+                             "FechaNacimiento = '" + FechaNacimiento + "' , "
+                             "Sueldo = '" + Sueldo + "', Telefono = '" + Telefono + "', "
+                             "Categoria_idCategoria = " + QString::number(idCategoria) + " "
+                             "WHERE IdEmpleado = " + idEmpleado);
+    modificaEmpleado.exec();
 }
 
 void EmpleadoLista::bajaUsuario(QString usuario)
