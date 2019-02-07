@@ -6,5 +6,6 @@
         <file>TablaEmpleados.qml</file>
         <file>Gerente_TabEmpleados.qml</file>
         <file>Gerente_TabAlmacen.qml</file>
+        <file>Gerente_InformacionCompleta.qml</file>
     </qresource>
 </RCC>

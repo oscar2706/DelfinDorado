@@ -15,7 +15,7 @@ Window {
     height: 720
 
     StackLayout{
-        width: 170
+        width: 200
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.top: parent.top

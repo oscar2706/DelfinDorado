@@ -4,15 +4,24 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
+import QtQml.Models 2.3
 
 import Empleado 1.0
 
 Item {
+    property int selectedEmploye: -1
+    property string nombre: ""
+    property string cargo: ""
     id: element
     visible: true
     //title: "Basic layouts"
     width: 1366
     height: 720
+
+    EmpleadoModelo{
+        id: modelo
+        list: empleadoLista
+    }
 
     Pane{
         id: fondo
@@ -25,7 +34,7 @@ Item {
 
     RowLayout{
         id: rowLayout
-        width: 170
+        width: 200
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.left: parent.left
@@ -35,18 +44,17 @@ Item {
         spacing: 0
         Pane{
             id: menuOpciones
-            width: 180
+            width: 200
             Layout.fillWidth: true
             Layout.fillHeight: true
             Material.accent: "#008d96"
             Material.foreground: "#008d96"
-            Material.background: "#FFFFFF"
+            Material.background: "#ffffff"
 
             Material.elevation: 4
 
-
-
             ColumnLayout{
+                anchors.leftMargin: 0
                 anchors.bottomMargin: 70
                 anchors.rightMargin: 0
                 anchors.topMargin: 90
@@ -66,6 +74,7 @@ Item {
                     }
                     Button {
                         text: "Registrar"
+                        font.weight: Font.DemiBold
                         font.pointSize: 14
                         font.family: "Verdana"
                         Layout.fillWidth: true
@@ -95,6 +104,7 @@ Item {
                     }
                     Button {
                         text: "Actualizar"
+                        font.weight: Font.DemiBold
                         font.pointSize: 14
                         Layout.fillWidth: true
                         font.capitalization: Font.MixedCase
@@ -118,6 +128,7 @@ Item {
                     }
                     Button {
                         text: "Eliminar"
+                        font.weight: Font.DemiBold
                         font.pointSize: 14
                         Layout.fillWidth: true
                         font.capitalization: Font.MixedCase
@@ -201,68 +212,85 @@ Item {
     }
 
     RowLayout{
+        id: layoutTablas
+        anchors.left: parent.left
+        anchors.leftMargin: 220
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.top: parent.top
         anchors.rightMargin: 20
-        anchors.leftMargin: 200
         anchors.bottomMargin: 20
         anchors.topMargin: 70
-        anchors.fill: parent
         spacing: 20
 
         Pane
         {
-            id: tablePane
+            id: listaEmpleadosPane
+            Material.background: "#f5f5f5"
             Material.elevation: 4
             Layout.fillHeight: true
             Layout.preferredHeight: 600
             Layout.minimumHeight: 600
             Layout.maximumHeight: 600
-            Layout.minimumWidth: 500
-            Layout.preferredWidth: 500
-            Layout.maximumWidth: 500
-            RowLayout {
-                spacing: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 0
+            Layout.minimumWidth: 550
+            Layout.preferredWidth: 550
+            Layout.maximumWidth: 550
+            Pane{
+                id: listHeader
+                Material.background: "#ffffff"
+                Material.elevation: 1
+                anchors.top: parent.top
                 anchors.left: parent.left
-                anchors.leftMargin: 0
-                Label{
-                    width: 10
-                    color: "#006677"
-                    text: ""
-                    font.pointSize: 10
-                    font.bold: true
-                }
-                Label{
-                    color: "#006677"
-                    text: "Nombre"
-                    font.weight: Font.Bold
-                    font.family: "Verdana"
-                    font.pointSize: 12
-                    font.bold: true
-                    //Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                }
-                Label{
-                    color: "#006677"
-                    text: "Puesto"
-                    font.weight: Font.Bold
-                    font.family: "Verdana"
-                    font.pointSize: 12
-                    font.bold: false
-                    //Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                anchors.right: parent.right
+                RowLayout {
+                    spacing: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    Label{
+                        width: 10
+                        color: "#006677"
+                        text: ""
+                        font.pointSize: 10
+                        font.bold: true
+                    }
+                    Label{
+                        color: "#006677"
+                        text: "Nombre"
+                        font.weight: Font.Bold
+                        font.family: "Verdana"
+                        font.pointSize: 12
+                        font.bold: true
+                        //Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    }
+                    Label{
+                        color: "#006677"
+                        text: "Puesto"
+                        font.weight: Font.Bold
+                        font.family: "Verdana"
+                        font.pointSize: 12
+                        font.bold: true
+                        //Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                    }
                 }
             }
             ListView {
                 id: tablaEmpleados
-                boundsBehavior: Flickable.StopAtBounds
-                anchors.topMargin: 30
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                boundsBehavior: Flickable.VerticalFlick
+                anchors.topMargin: 50
                 anchors.fill: parent
                 spacing: 0
                 clip: true
                 focus: true
-                model: EmpleadoModelo
+                model: modelo
+                /*EmpleadoModelo
                 {
                     list: empleadoLista
-                }
+                }*/
                 delegate: Component {
                     Item{
                         width: parent.width
@@ -278,11 +306,12 @@ Item {
                                     onClicked: {
                                         model.eleccionEmpleado = checked
                                         tablaEmpleados.currentIndex = index
+                                        selectedEmploye = index
                                     }
                                 }
                                 Text{
-                                    Layout.minimumWidth: 200
-                                    Layout.maximumWidth: 200
+                                    Layout.minimumWidth: 250
+                                    Layout.maximumWidth: 250
                                     leftPadding: 0
                                     text: model.nombreEmpleado
                                     font.family: "Verdana"
@@ -299,15 +328,19 @@ Item {
                             }
                             onClicked: {
                                 tablaEmpleados.currentIndex = index
+                                selectedEmploye = index
+                                nombre = model.nombreEmpleado
+                                cargo = model.puestoEmpleado
                             }
                         }
                     }
                 }
-                highlight: RoundButton {
-                    Material.background: "#4db6c8"
-                    Material.elevation: 4
+                highlight: Button {
+                    id: btn
+                    Material.background: "#cfd8dc"
+                    Material.elevation: 2
                     Layout.fillWidth: true
-                    radius: 5
+                    hoverEnabled: true
                 }
                 highlightFollowsCurrentItem: true
                 removeDisplaced: Transition {
@@ -316,16 +349,64 @@ Item {
             }
         }
         Pane{
-            id:paneDatosCompletos
-            Material.elevation: 4
+            id:datosEmpleadoPane
+            Material.background: "#f5f5f5"
             Layout.fillHeight: true
             Layout.maximumHeight: 600
-            Layout.maximumWidth: 500
+            Layout.maximumWidth: 550
             Layout.minimumHeight: 600
-            Layout.minimumWidth: 500
+            Layout.minimumWidth: 550
             Layout.preferredHeight: 600
-            Layout.preferredWidth: 500
+            Layout.preferredWidth: 550
+            Material.elevation: 4
 
+            Pane{
+                id: infoEmpleadoHeader
+                font.weight: Font.DemiBold
+                font.pointSize: 12
+                font.family: "Verdana"
+                Material.elevation: 1
+                Material.background: "#ffffff"
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                Label{
+                    width: 10
+                    color: "#006677"
+                    text: "Datos del empleado: "
+                    font.weight: Font.Bold
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: true
+                }
+            }
+
+            Text{
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.topMargin: 60
+
+                font.weight: Font.Medium
+                font.family: "Verdana"
+                font.pointSize: 12
+                font.bold: false
+
+                text: nombre
+            }
+            Text{
+                anchors.top: parent.top
+                anchors.topMargin: 100
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                font.weight: Font.Medium
+                font.family: "Verdana"
+                font.pointSize: 12
+                font.bold: false
+
+                text: cargo
+            }
         }
     }
 }
@@ -340,15 +421,7 @@ Item {
 
 
 
-
-
-
-
-
-
-
-
 /*##^## Designer {
-    D{i:2;anchors_width:170}
+    D{i:24;anchors_width:1150}
 }
  ##^##*/
