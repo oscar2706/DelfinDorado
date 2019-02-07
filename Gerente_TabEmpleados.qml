@@ -16,14 +16,11 @@ Item {
 
     Pane{
         id: fondo
-        anchors.leftMargin: 150
-        transformOrigin: Item.Center
         anchors.fill: parent
+        transformOrigin: Item.Center
         Layout.fillHeight: true
         Layout.fillWidth: true
         Material.elevation: 0
-        ColumnLayout{
-        }
     }
 
     RowLayout{
@@ -69,6 +66,8 @@ Item {
                     }
                     Button {
                         text: "Registrar"
+                        font.pointSize: 14
+                        font.family: "Verdana"
                         Layout.fillWidth: true
                         font.capitalization: Font.MixedCase
                         focusPolicy: Qt.StrongFocus
@@ -78,11 +77,8 @@ Item {
 
                         Formulario_Empleado{
                             id: form_Empleado
-                            //onClosing: empleadoLista.refresh()
                         }
                         onClicked:  form_Empleado.show()
-
-                        //empleadoLista.refresh()
                     }
                 }
                 RowLayout{
@@ -99,6 +95,7 @@ Item {
                     }
                     Button {
                         text: "Actualizar"
+                        font.pointSize: 14
                         Layout.fillWidth: true
                         font.capitalization: Font.MixedCase
                         focusPolicy: Qt.StrongFocus
@@ -121,6 +118,7 @@ Item {
                     }
                     Button {
                         text: "Eliminar"
+                        font.pointSize: 14
                         Layout.fillWidth: true
                         font.capitalization: Font.MixedCase
                         focusPolicy: Qt.StrongFocus
@@ -202,95 +200,155 @@ Item {
         }
     }
 
-    ColumnLayout{
-        spacing: 20
-        anchors.topMargin: 90
+    RowLayout{
+        anchors.rightMargin: 20
         anchors.leftMargin: 200
+        anchors.bottomMargin: 20
+        anchors.topMargin: 70
         anchors.fill: parent
-        //Layout.alignment: Qt.AlignCenter
-        Label{
-            id: etiqueta
-            width: 60
-            height: 40
-            font.bold: true
-            font.pointSize: 9
-            textFormat: Text.PlainText
-            horizontalAlignment: Text.AlignHCenter
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+        spacing: 20
 
-        }
-
-        Frame
+        Pane
         {
-            ListView
-            {
-                id: tablaEmpleados
+            id: tablePane
+            Material.elevation: 4
+            Layout.fillHeight: true
+            Layout.preferredHeight: 600
+            Layout.minimumHeight: 600
+            Layout.maximumHeight: 600
+            Layout.minimumWidth: 500
+            Layout.preferredWidth: 500
+            Layout.maximumWidth: 500
+            RowLayout {
                 spacing: 10
-                anchors.fill: parent
-                implicitWidth: 600
-                implicitHeight: 500
-                clip: true
-                highlightFollowsCurrentItem : true
-                RowLayout {
-                    spacing: 70
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    Label{
-                        color: "#006677"
-                        text: "Nombre"
-                        font.pointSize: 10
-                        font.bold: true
-                    }
-                    Label{
-                        color: "#006677"
-                        text: "Puesto"
-                        font.pointSize: 10
-                        font.bold: true
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    }
-                    Label{
-                        color: "#006677"
-                        text: "Seleccionado"
-                        font.pointSize: 10
-                        font.bold: true
-                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    }
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                Label{
+                    width: 10
+                    color: "#006677"
+                    text: ""
+                    font.pointSize: 10
+                    font.bold: true
                 }
+                Label{
+                    color: "#006677"
+                    text: "Nombre"
+                    font.weight: Font.Bold
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: true
+                    //Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+                Label{
+                    color: "#006677"
+                    text: "Puesto"
+                    font.weight: Font.Bold
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    //Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                }
+            }
+            ListView {
+                id: tablaEmpleados
+                boundsBehavior: Flickable.StopAtBounds
+                anchors.topMargin: 30
+                anchors.fill: parent
+                spacing: 0
+                clip: true
+                focus: true
                 model: EmpleadoModelo
                 {
                     list: empleadoLista
                 }
-
-                delegate: RowLayout
-                {
-                    width: parent.width
-
-                    /*Label
-                    {
-                        text: model.idEmpleado
-                        Layout.fillWidth: true
-                    }*/
-                    Label
-                    {
-                        text: model.nombreEmpleado
-                        Layout.fillWidth: true
+                delegate: Component {
+                    Item{
+                        width: parent.width
+                        height: 50
+                        MouseArea{
+                            anchors.fill: parent
+                            GridLayout{
+                                anchors.fill: parent
+                                columns: 3
+                                CheckBox{
+                                    Layout.alignment: Qt.AlignLeft
+                                    checked: model.eleccionEmpleado
+                                    onClicked: {
+                                        model.eleccionEmpleado = checked
+                                        tablaEmpleados.currentIndex = index
+                                    }
+                                }
+                                Text{
+                                    Layout.minimumWidth: 200
+                                    Layout.maximumWidth: 200
+                                    leftPadding: 0
+                                    text: model.nombreEmpleado
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                                Text{
+                                    Layout.minimumWidth: 200
+                                    Layout.maximumWidth: 200
+                                    leftPadding: 0
+                                    text: model.puestoEmpleado
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                            }
+                            onClicked: {
+                                tablaEmpleados.currentIndex = index
+                            }
+                        }
                     }
-                    Label
-                    {
-                        text: model.puestoEmpleado
-                        Layout.fillWidth: true
-                    }
-                    CheckBox
-                    {
-                        Layout.alignment: Qt.AlignRight
-                        checked: model.eleccionEmpleado
-                        onClicked: model.eleccionEmpleado = checked
-                    }
+                }
+                highlight: RoundButton {
+                    Material.background: "#4db6c8"
+                    Material.elevation: 4
+                    Layout.fillWidth: true
+                    radius: 5
+                }
+                highlightFollowsCurrentItem: true
+                removeDisplaced: Transition {
+                    NumberAnimation { properties: "x,y"; duration: 300 }
                 }
             }
         }
+        Pane{
+            id:paneDatosCompletos
+            Material.elevation: 4
+            Layout.fillHeight: true
+            Layout.maximumHeight: 600
+            Layout.maximumWidth: 500
+            Layout.minimumHeight: 600
+            Layout.minimumWidth: 500
+            Layout.preferredHeight: 600
+            Layout.preferredWidth: 500
+
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*##^## Designer {
+    D{i:2;anchors_width:170}
+}
+ ##^##*/

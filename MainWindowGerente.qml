@@ -51,18 +51,17 @@ Window {
         //Material.color: Material.Teal
         TabBar {
             id: tabBar
-            width: 600
+            width: 800
             height: 40
             hoverEnabled: false
             antialiasing: true
             focusPolicy: Qt.NoFocus
             font.capitalization: Font.Capitalize
-            font.bold: true
-            font.weight: Font.Bold
+            font.weight: Font.DemiBold
             bottomPadding: 0
             topPadding: 0
             contentHeight: 60
-            contentWidth: 600
+            contentWidth: 700
             currentIndex: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -70,7 +69,7 @@ Window {
             anchors.topMargin: 0
             rightPadding: 0
             leftPadding: 0
-            font.pointSize: 10
+            font.pointSize: 16
             font.family: "Verdana"
             anchors.margins: 8
             spacing: 10
