@@ -214,17 +214,19 @@ void EmpleadoLista::refresh()
     }
 }
 
-void EmpleadoLista::removeCheckedItem()
+void EmpleadoLista::removeCheckedItem(QString idEliminar)
 {
     for(int i=0; i<mItems.size();)
     {
-        if(mItems.at(i).eleccionEmpleado)
+        if(mItems.at(i).idEmpleado == idEliminar)
         {
             emit preItemRemoved(i);
 
             mItems.removeAt(i);
 
             emit postItemRemoved();
+
+            break;
         }
         else
         {

@@ -10,6 +10,7 @@ import Empleado 1.0
 
 Item {
     property int selectedEmploye: -1
+    property string empleadoSeleccionado: ""
     property string idEmployee: ""
     property string nombre: ""
     property string fecha: ""
@@ -129,12 +130,13 @@ Item {
                         onClicked:
                         {
                             var idUsuario = ""
-                            idUsuario = empleadoLista.getDato(idUsuario)
+                            idUsuario = empleadoSeleccionado
 
                             if(idUsuario!="")
                             {
-                                form_Empleado.idUsuario = idUsuario.toString()
+                                form_Empleado.idUsuario = idUsuario
                                 form_Empleado.show()
+                                empleadoSeleccionado = ""
                             }
                             else
                             {
@@ -170,7 +172,7 @@ Item {
                         onClicked:
                         {
                             var idUsuario = ""
-                            idUsuario = empleadoLista.getDato(idUsuario)
+                            idUsuario = empleadoSeleccionado
 
                             if(idUsuario!="")
                                 confirmarEliminacion.open()
@@ -226,19 +228,22 @@ Item {
                     Layout.fillWidth: true
                     onClicked:
                     {
-                        var usuarioEliminado
-                        var idUsuario = ""
-                        usuarioEliminado = empleadoLista.getDato(idUsuario)
-                        empleadoLista.bajaUsuario(usuarioEliminado)
-                        empleadoLista.removeCheckedItem()
+                        var idUsuario = empleadoSeleccionado
+                        empleadoLista.bajaUsuario(empleadoSeleccionado)
+                        empleadoLista.removeCheckedItem(empleadoSeleccionado)
                         confirmarEliminacion.close()
+                        empleadoSeleccionado = ""
                     }
                 }
                 Button
                 {
                     text: "Cancelar"
                     Layout.fillWidth: true
-                    onClicked: confirmarEliminacion.close()
+                    onClicked:
+                    {
+                        confirmarEliminacion.close()
+                        empleadoSeleccionado = ""
+                    }
                 }
             }
         }
@@ -281,13 +286,13 @@ Item {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    Label{
+                    /*Label{
                         width: 10
                         color: "#006677"
                         text: ""
                         font.pointSize: 10
                         font.bold: true
-                    }
+                    }*/
                     Label{
                         color: "#006677"
                         text: "Nombre"
@@ -328,8 +333,8 @@ Item {
                             anchors.fill: parent
                             GridLayout{
                                 anchors.fill: parent
-                                columns: 3
-                                CheckBox{
+                                columns: 2
+                                /*CheckBox{
                                     Layout.alignment: Qt.AlignLeft
                                     checked: model.eleccionEmpleado
                                     onClicked: {
@@ -337,7 +342,7 @@ Item {
                                         tablaEmpleados.currentIndex = index
                                         selectedEmploye = index
                                     }
-                                }
+                                }*/
                                 Text{
                                     Layout.minimumWidth: 250
                                     Layout.maximumWidth: 250
@@ -359,6 +364,7 @@ Item {
                                 tablaEmpleados.currentIndex = index
                                 selectedEmploye = index
 
+                                empleadoSeleccionado = model.idEmpleado
                                 idEmployee = "Id: " + model.idEmpleado
                                 nombre = model.nombreEmpleado
                                 _rfc = "RFC: " + model.rfc

@@ -56,7 +56,7 @@ signals:
 public slots:
     void appendItem();
     void refresh();
-    void removeCheckedItem();
+    void removeCheckedItem(QString);
     void removeItems();
 
     QString getDato(QString);
