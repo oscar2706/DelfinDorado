@@ -14,7 +14,6 @@ Item {
     property string cargo: ""
     id: element
     visible: true
-    //title: "Basic layouts"
     width: 1366
     height: 720
 

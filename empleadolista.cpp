@@ -461,7 +461,7 @@ void EmpleadoLista::insertarBD(QString urlEnviada, QString idEmpleado)
 QString EmpleadoLista::visualizarImg(int id_foto)
 {
     QSqlQuery select;
-    if(select.exec("SELECT archivo FROM foto WHERE id_foto ='"+QString::number(id_foto)+"'"))
+    if(select.exec("SELECT foto FROM empleado WHERE idEmpleado = " + QString::number(id_foto) + ""))
     {
         if(select.next())
         {

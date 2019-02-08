@@ -238,13 +238,17 @@ Window {
                     width: 200
                     height: 200
                     x: 25
+                    anchors.left: parent.left
+                    source: idUsuario == "0" ? "" : empleadoLista.visualizarImg(parseInt(idUsuario))
                 }
 
                 Button
                 {
                     id: btnImagen
                     text: "Seleccionar imagen"
-                    Layout.alignment: Qt.AlignCenter
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.margins: 0
                     property string url: ""
                     onClicked:
                     {
@@ -313,7 +317,7 @@ Window {
                                 x: 0
                                 y: 0
                                 visibleYear: 1995
-                                visibleMonth: 6
+                                visibleMonth: 2
                                 minimumDate: "1960-01-01"
                                 maximumDate: "2000-12-31"
                                 onClicked: {
