@@ -7,5 +7,8 @@
         <file>Gerente_TabEmpleados.qml</file>
         <file>Gerente_TabAlmacen.qml</file>
         <file>Gerente_InformacionCompleta.qml</file>
+        <file>Gerente_TabMenu.qml</file>
+        <file>Menu_EditarPlatillo.qml</file>
+        <file>Menu_RegistrarPlatillo.qml</file>
     </qresource>
 </RCC>

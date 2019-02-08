@@ -312,8 +312,10 @@ Window {
                                 height: 300
                                 x: 0
                                 y: 0
-                                visibleYear: 1996
+                                visibleYear: 1995
                                 visibleMonth: 6
+                                minimumDate: "1960-01-01"
+                                maximumDate: "2000-12-31"
                                 onClicked: {
                                     ventanaFechaNacimiento.close()
                                     fechaNacimiento.text = Qt.formatDate(selectedDate, "yyyy-MM-dd")

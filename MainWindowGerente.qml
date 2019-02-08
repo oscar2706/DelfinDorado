@@ -30,7 +30,7 @@ Window {
         Gerente_TabAlmacen{
             id: tabAlmacen
         }
-        Item {
+        Gerente_TabMenu {
             id: tabMenu
         }
     }
