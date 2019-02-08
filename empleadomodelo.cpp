@@ -29,8 +29,30 @@ QVariant EmpleadoModelo::data(const QModelIndex &index, int role) const
         return QVariant(item.idEmpleado);
     case nombreRole:
         return QVariant(item.nombreEmpleado);
+    case apellidoPaternoRole:
+        return QVariant(item.apellidoPaterno);
+    case apellidoMaternoRole:
+        return QVariant(item.apellidoMaterno);
+    case rfcRole:
+        return QVariant(item.rfc);
+    case seguroSocialRole:
+        return QVariant(item.seguroSocial);
+    case fechaNacimientoRole:
+        return QVariant(item.fechaNacimiento);
+    case sueldoRole:
+        return QVariant(item.sueldo);
+    case fotoRole:
+        return QVariant(item.foto);
+    case telefonoRole:
+        return QVariant(item.telefono);
     case puestoRole:
         return QVariant(item.puestoEmpleado);
+    case sexoRole:
+        return QVariant(item.sexo);
+    case usuarioRole:
+        return QVariant(item.usuario);
+    case contrasegnaRole:
+        return QVariant(item.contrasegna);
     case eleccionRole:
         return QVariant(item.eleccionEmpleado);
     }
@@ -55,8 +77,41 @@ bool EmpleadoModelo::setData(const QModelIndex &index, const QVariant &value, in
     case nombreRole:
         item.nombreEmpleado = value.toString();
         break;
+    case apellidoPaternoRole:
+        item.apellidoPaterno = value.toString();
+        break;
+    case apellidoMaternoRole:
+        item.apellidoMaterno = value.toString();
+        break;
+    case rfcRole:
+        item.rfc = value.toString();
+        break;
+    case seguroSocialRole:
+        item.seguroSocial = value.toString();
+        break;
+    case fechaNacimientoRole:
+        item.fechaNacimiento = value.toString();
+        break;
+    case sueldoRole:
+        item.sueldo = value.toString();
+        break;
+    case fotoRole:
+        item.foto = value.toString();
+        break;
+    case telefonoRole:
+        item.telefono = value.toString();
+        break;
     case puestoRole:
         item.puestoEmpleado = value.toString();
+        break;
+    case sexoRole:
+        item.sexo = value.toString();
+        break;
+    case usuarioRole:
+        item.usuario = value.toString();
+        break;
+    case contrasegnaRole:
+        item.contrasegna = value.toString();
         break;
     case eleccionRole:
         item.eleccionEmpleado = value.toBool();
@@ -83,7 +138,18 @@ QHash<int, QByteArray> EmpleadoModelo::roleNames() const
     QHash<int, QByteArray> names;
     names[idRole] = "idEmpleado";
     names[nombreRole] = "nombreEmpleado";
+    names[apellidoPaternoRole] = "apellidoPaterno";
+    names[apellidoMaternoRole] = "apellidoMaterno";
+    names[rfcRole] = "rfc";
+    names[seguroSocialRole] = "seguroSocial";
+    names[fechaNacimientoRole] = "fechaNacimiento";
+    names[sueldoRole] = "sueldo";
+    names[fotoRole] = "foto";
+    names[telefonoRole] = "telefono";
     names[puestoRole] = "puestoEmpleado";
+    names[sexoRole] = "sexo";
+    names[usuarioRole] = "usuario";
+    names[contrasegnaRole] = "contrasegna";
     names[eleccionRole] = "eleccionEmpleado";
 
     return names;

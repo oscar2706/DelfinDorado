@@ -17,7 +17,18 @@ public:
     {
         idRole,
         nombreRole,
+        apellidoPaternoRole,
+        apellidoMaternoRole,
+        rfcRole,
+        seguroSocialRole,
+        fechaNacimientoRole,
+        sueldoRole,
+        fotoRole,
+        telefonoRole,
         puestoRole,
+        sexoRole,
+        usuarioRole,
+        contrasegnaRole,
         eleccionRole = Qt::UserRole
     };
 

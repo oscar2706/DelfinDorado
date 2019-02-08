@@ -83,7 +83,7 @@ Item
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
 
-                        Menu_EditarPlatillo
+                        Menu_RegistrarPlatillo
                         {
                             id: form_Platillo
                         }
@@ -119,7 +119,7 @@ Item
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
 
-                        Menu_RegistrarPlatillo
+                        Menu_EditarPlatillo
                         {
                             id: mod_Platillo
                         }

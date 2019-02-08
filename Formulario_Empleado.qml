@@ -558,12 +558,12 @@ Window {
 
                                 var categoria = (seleccionCategoria.currentIndex+1)
 
+                                var path = openDialog.fileUrl.toString();
+                                path = path.replace(/^(file:\/{3})/,"");
+
+
                                 if(idUsuario=="0")
                                 {
-                                    //cargado de imagenes
-                                    var path = openDialog.fileUrl.toString();
-                                    path = path.replace(/^(file:\/{3})/,"");
-
                                     empleadoLista.altaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
                                                               sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
                                                               txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
@@ -595,7 +595,7 @@ Window {
                                     empleadoLista.modificaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
                                                                   sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
                                                                   txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
-                                                                  txtContrasegna.text, idUsuario)
+                                                                  txtContrasegna.text, idUsuario, path.toString())
 
                                     empleadoLista.refresh()
 

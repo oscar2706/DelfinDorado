@@ -17,7 +17,18 @@ struct ToDoItem
 {
     QString idEmpleado;
     QString nombreEmpleado;
+    QString apellidoPaterno;
+    QString apellidoMaterno;
+    QString rfc;
+    QString seguroSocial;
+    QString fechaNacimiento;
+    QString sueldo;
+    QString foto;
+    QString telefono;
     QString puestoEmpleado;
+    QString sexo;
+    QString usuario;
+    QString contrasegna;
     bool eleccionEmpleado;
 };
 
@@ -64,7 +75,8 @@ public slots:
     QString getContrasegna(QString id);
 
     void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
-    void modificaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
+    void modificaUsuario(QString, QString, QString, QString, QString, QString,
+                         QString, QString, QString, int, QString, QString, QString, QString);
     void bajaUsuario(QString);
 
     int getUltimoId();

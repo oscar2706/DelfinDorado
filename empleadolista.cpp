@@ -15,20 +15,43 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
         qDebug() << "Sigue intentando! D:";
     }
 
-    QSqlQuery queryConsulta;
+    QSqlQuery queryConsulta, queryUsuario;
 
-    queryConsulta.prepare("SELECT idEmpleado, nombre, apellidoPaterno, apellidoMaterno, idCategoria "
-                          "from empleado");
+    queryConsulta.prepare("SELECT * FROM empleado");
     queryConsulta.exec();
+
+    queryUsuario.prepare("SELECT * FROM usuario");
+    queryUsuario.exec();
 
     while(queryConsulta.next())
     {
+        queryUsuario.next();
+
         ToDoItem empleadoEncontrado;
 
         empleadoEncontrado.idEmpleado = queryConsulta.value(0).toString();
+        qDebug() << "Id: " <<  empleadoEncontrado.idEmpleado;
         empleadoEncontrado.nombreEmpleado = queryConsulta.value(1).toString() + " " + queryConsulta.value(2).toString() +
                                             " " + queryConsulta.value(3).toString();
-        switch (queryConsulta.value(4).toInt()) {
+        qDebug() << "Nombre: " << empleadoEncontrado.nombreEmpleado;
+        empleadoEncontrado.apellidoPaterno = queryConsulta.value(2).toString();
+        empleadoEncontrado.apellidoMaterno = queryConsulta.value(3).toString();
+        empleadoEncontrado.rfc = queryConsulta.value(4).toString();
+        qDebug() << "RFC: " << empleadoEncontrado.rfc;
+        empleadoEncontrado.seguroSocial = queryConsulta.value(5).toString();
+        qDebug() << "Seguro Social: " << empleadoEncontrado.seguroSocial;
+        empleadoEncontrado.fechaNacimiento = queryConsulta.value(6).toString();
+        qDebug() << "Fecha Nacimiento: " << empleadoEncontrado.fechaNacimiento;
+        empleadoEncontrado.sueldo = queryConsulta.value(7).toString();
+        qDebug() << "Sueldo: " << empleadoEncontrado.sueldo;
+
+        empleadoEncontrado.foto = visualizarImg(queryConsulta.value(0).toInt());
+        qDebug() << "Foto: " << empleadoEncontrado.foto;
+
+        empleadoEncontrado.telefono = queryConsulta.value(9).toString();
+        qDebug() << "Telefono: " << empleadoEncontrado.telefono;
+
+        switch (queryConsulta.value(10).toInt()) {
         case 1:
             empleadoEncontrado.puestoEmpleado = "Gerente";
             break;
@@ -47,6 +70,25 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
         default:
             break;
         }
+        qDebug() << "Puesto: " << empleadoEncontrado.puestoEmpleado;
+
+        if(queryConsulta.value(11).toInt() == 1)
+        {
+            empleadoEncontrado.sexo = "Masculino";
+        }
+        else
+        {
+            empleadoEncontrado.sexo = "Femenino";
+        }
+        qDebug() << "Sexo: " << empleadoEncontrado.sexo;
+
+        empleadoEncontrado.usuario = queryUsuario.value(1).toString();
+        qDebug() << "Usuario: " << empleadoEncontrado.usuario;
+        empleadoEncontrado.contrasegna = queryUsuario.value(2).toString();
+        qDebug() << "Contraseña: " << empleadoEncontrado.contrasegna;
+        qDebug() << "-----------------------------------------------";
+
+        empleadoEncontrado.eleccionEmpleado = false;
 
         mItems.append(empleadoEncontrado);
     }
@@ -67,7 +109,12 @@ bool EmpleadoLista::setItemAt(int indice, const ToDoItem &item)
     const ToDoItem &oldItem = mItems.at(indice);
 
     if((item.eleccionEmpleado == oldItem.eleccionEmpleado)&&(item.idEmpleado == oldItem.idEmpleado) &&
-            (item.nombreEmpleado == oldItem.idEmpleado) && (item.puestoEmpleado == oldItem.puestoEmpleado))
+            (item.nombreEmpleado == oldItem.idEmpleado) && (item.apellidoPaterno == oldItem.apellidoPaterno) &&
+            (item.apellidoMaterno == oldItem.apellidoMaterno) && (item.rfc == oldItem.rfc) &&
+            (item.seguroSocial == oldItem.seguroSocial) && (item.fechaNacimiento == oldItem.fechaNacimiento) &&
+            (item.sueldo == oldItem.sueldo) && (item.foto == oldItem.foto) && (item.telefono == oldItem.telefono) &&
+            (item.puestoEmpleado == oldItem.puestoEmpleado) && (item.sexo == oldItem.sexo) &&
+            (item.usuario == oldItem.usuario) && (item.contrasegna == oldItem.contrasegna))
     {
         return false;
     }
@@ -90,55 +137,80 @@ void EmpleadoLista::refresh()
 {
     removeItems();
 
-    QSqlQuery busqueda;
-    bool bandera = false;
+    QSqlQuery queryConsulta, queryUsuario;
 
-    busqueda.prepare("SELECT idEmpleado, nombre, apellidoPaterno, apellidoMaterno, idCategoria "
-                     "from empleado");
-    busqueda.exec();
+    queryConsulta.prepare("SELECT * FROM empleado");
+    queryConsulta.exec();
 
-    while(busqueda.next())
+    queryUsuario.prepare("SELECT * FROM usuario");
+    queryUsuario.exec();
+
+    while(queryConsulta.next())
     {
-        for(int i=0; i<mItems.size(); i++)
-        {
-            if(mItems.at(i).idEmpleado==busqueda.value(0).toString())
-            {
-                bandera = true;
-                break;
-            }
-        }
-        if(!bandera)
-        {
-            emit preItemAppended();
+        queryUsuario.next();
 
-            ToDoItem item;
-            item.idEmpleado = busqueda.value(0).toString();
-            item.nombreEmpleado = busqueda.value(1).toString() + " " + busqueda.value(2).toString() + " " + busqueda.value(3).toString();
-            switch (busqueda.value(4).toInt()) {
-            case 1:
-                item.puestoEmpleado = "Gerente";
-                break;
-            case 2:
-                item.puestoEmpleado = "Cocinero";
-                break;
-            case 3:
-                item.puestoEmpleado = "Mesero";
-                break;
-            case 4:
-                item.puestoEmpleado = "Anfitrión";
-                break;
-            case 5:
-                item.puestoEmpleado = "Ayudante de Mesero";
-                break;
-            default:
-                break;
-            }
-            item.eleccionEmpleado = false;
-            mItems.append(item);
+        emit preItemAppended();
 
-            emit postItemAppended();
+        ToDoItem empleadoEncontrado;
+
+        empleadoEncontrado.idEmpleado = queryConsulta.value(0).toString();
+        empleadoEncontrado.nombreEmpleado = queryConsulta.value(1).toString() + " " + queryConsulta.value(2).toString() +
+                                            " " + queryConsulta.value(3).toString();
+        empleadoEncontrado.apellidoPaterno = queryConsulta.value(2).toString();
+        empleadoEncontrado.apellidoMaterno = queryConsulta.value(3).toString();
+        empleadoEncontrado.rfc = queryConsulta.value(4).toString();
+        empleadoEncontrado.seguroSocial = queryConsulta.value(5).toString();
+        empleadoEncontrado.fechaNacimiento = queryConsulta.value(6).toString();
+        empleadoEncontrado.sueldo = queryConsulta.value(7).toString();
+
+        QImage myImage;
+        QByteArray bArray=queryConsulta.value(8).toByteArray();
+        QBuffer buffer(&bArray);
+        buffer.open(QIODevice::WriteOnly);
+        myImage.save(&buffer, "JPEG");
+        QString image("data:image/jpg;base64,");
+        image.append(QString::fromLatin1(bArray.toBase64().data()));
+        empleadoEncontrado.foto = image;
+
+        empleadoEncontrado.telefono = queryConsulta.value(9).toString();
+
+        switch (queryConsulta.value(10).toInt()) {
+        case 1:
+            empleadoEncontrado.puestoEmpleado = "Gerente";
+            break;
+        case 2:
+            empleadoEncontrado.puestoEmpleado = "Cocinero";
+            break;
+        case 3:
+            empleadoEncontrado.puestoEmpleado = "Mesero";
+            break;
+        case 4:
+            empleadoEncontrado.puestoEmpleado = "Anfitrión";
+            break;
+        case 5:
+            empleadoEncontrado.puestoEmpleado = "Ayudante de Mesero";
+            break;
+        default:
+            break;
         }
-        bandera = false;
+
+        if(queryConsulta.value(11).toInt() == 1)
+        {
+            empleadoEncontrado.sexo = "Masculino";
+        }
+        else
+        {
+            empleadoEncontrado.sexo = "Femenino";
+        }
+
+        empleadoEncontrado.usuario = queryUsuario.value(1).toString();
+        empleadoEncontrado.contrasegna = queryUsuario.value(2).toString();
+
+        empleadoEncontrado.eleccionEmpleado = false;
+
+        mItems.append(empleadoEncontrado);
+
+        emit postItemAppended();
     }
 }
 
@@ -367,8 +439,12 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
 
 void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
                                     QString RFC, QString SeguroSocial, QString FechaNacimiento, QString Sueldo, QString Telefono,
-                                    int idCategoria, QString Usuario, QString Contrasegna, QString idEmpleado)
+                                    int idCategoria, QString Usuario, QString Contrasegna, QString idEmpleado, QString urlEnviada)
 {
+    QFile imgArchivo(urlEnviada);
+    imgArchivo.open(QIODevice::ReadOnly);
+    QByteArray bytesFoto=imgArchivo.readAll();
+
     QSqlQuery modificaEmpleado, modificaUsuario;
     modificaUsuario.prepare("UPDATE usuario SET "
                             "usuario = '" + Usuario + "' , contrasena = '" + Contrasegna + "' "
@@ -379,10 +455,12 @@ void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QSt
                              "nombre = '" + Nombre + "', apellidoPaterno = '" + ApellidoPaterno + "', "
                              "apellidoMaterno = '" + ApellidoMaterno + "', "
                              "idSexo = " + Sexo + ", rfc = '" + RFC + "', seguroSocial = '" + SeguroSocial + "', "
-                             "fechaNacimiento = '" + FechaNacimiento + "' , "
+                             "foto = :archivo, fechaNacimiento = '" + FechaNacimiento + "' , "
                              "sueldo = " + Sueldo + ", telefono = '" + Telefono + "', "
                              "idCategoria = " + QString::number(idCategoria) + " "
                              "WHERE idEmpleado = " + idEmpleado);
+    modificaEmpleado.bindValue(":archivo",bytesFoto);
+
     modificaEmpleado.exec();
 }
 

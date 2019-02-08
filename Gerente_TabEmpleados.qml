@@ -10,8 +10,18 @@ import Empleado 1.0
 
 Item {
     property int selectedEmploye: -1
+    property string idEmployee: ""
     property string nombre: ""
+    property string fecha: ""
+    property string tel: ""
+    property string salario: ""
+    property string _rfc: ""
+    property string seguro: ""
+    property string url: ""
     property string cargo: ""
+    property string genero: ""
+    property string user: ""
+    property string contrasena: ""
     id: element
     visible: true
     width: 1366
@@ -348,8 +358,19 @@ Item {
                             onClicked: {
                                 tablaEmpleados.currentIndex = index
                                 selectedEmploye = index
+
+                                idEmployee = "Id: " + model.idEmpleado
                                 nombre = model.nombreEmpleado
-                                cargo = model.puestoEmpleado
+                                _rfc = "RFC: " + model.rfc
+                                seguro = "Numero del Seguro Social: " + model.seguroSocial
+                                fecha = "Fecha de Nacimiento: " + model.fechaNacimiento
+                                salario = "Salario: $" + model.sueldo
+                                tel = "Telefono: " + model.telefono
+                                cargo = model.puestoEmpleado + ":"
+                                genero = "Sexo: " + model.sexo
+                                user = "Usuario: " + model.usuario
+                                contrasena = "Contraseña: " + model.contrasegna
+                                url = model.foto
                             }
                         }
                     }
@@ -400,31 +421,172 @@ Item {
                 }
             }
 
-            Text{
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
+            Pane
+            {
+                id: infoEmpleadoCard
+                font.weight: Font.DemiBold
+                font.pointSize: 12
+                font.family: "Verdana"
+                Material.elevation: 5
+                Material.background: "#ffffff"
                 anchors.topMargin: 60
-
-                font.weight: Font.Medium
-                font.family: "Verdana"
-                font.pointSize: 12
-                font.bold: false
-
-                text: nombre
-            }
-            Text{
-                anchors.top: parent.top
-                anchors.topMargin: 100
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.top: parent.top
 
-                font.weight: Font.Medium
-                font.family: "Verdana"
-                font.pointSize: 12
-                font.bold: false
+                Image
+                {
+                    width: 150
+                    height: 150
+                    source: url
+                    anchors.top: parent.top
+                    anchors.topMargin: 5
+                    Material.elevation: 1
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 5
 
-                text: cargo
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: idEmployee
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.topMargin: 65
+                    x: 200
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: cargo
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.topMargin: 85
+                    x: 200
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: nombre
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 180
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: fecha
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 240
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: tel
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 240
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: genero
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 300
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: seguro
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 360
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: _rfc
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 360
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: salario
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 420
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: user
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 420
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: contrasena
+                }
             }
         }
     }

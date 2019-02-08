@@ -164,6 +164,7 @@ ApplicationWindow{
                     id: ventanaError
                     width: 200
                     height: 50
+                    x: -40
 
                     Label
                     {
