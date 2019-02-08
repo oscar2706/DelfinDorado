@@ -9,6 +9,9 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QDebug>
+//cargado de imagenes
+#include <QQuickView>
+#include <QFile>
 
 struct ToDoItem
 {
@@ -27,6 +30,10 @@ public:
     QVector<ToDoItem> items() const;
 
     bool setItemAt(int indice, const ToDoItem &item);
+
+    //cargado de imagenes
+    Q_INVOKABLE void insertarBD(QString, QString);
+    Q_INVOKABLE QString visualizarImg(int);
 
 signals:
     void preItemAppended();
@@ -56,9 +63,12 @@ public slots:
     QString getUsuario(QString id);
     QString getContrasegna(QString id);
 
-    void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString);
+    void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
     void modificaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
     void bajaUsuario(QString);
+
+    int getUltimoId();
+    int buscarCategoria(QString, QString);
 private:
     QVector<ToDoItem> mItems;
 };

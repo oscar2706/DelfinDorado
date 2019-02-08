@@ -128,7 +128,7 @@ ApplicationWindow{
                 wheelEnabled: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 MainWindowGerente{
-                    id: mainWindiwGerente
+                    id: mainWindowGerente
                     title: qsTr("Gerente")
                     visible: false
                 }
@@ -136,31 +136,38 @@ ApplicationWindow{
                 {
                     if(txtUsuario.text==""||txtContrasegna.text=="")
                     {
-                        ventanaErrorVacio.open()
+                        ventanaError.open()
                     }
                     else
                     {
-                        if(txtUsuario.text=="Gerente"&&txtContrasegna.text=="admin")
+                        switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                         {
+                        case 0:
+                            lblVentanaError.text = "Usuario Incorrecto"
+                            ventanaError.open()
+                            txtContrasegna.clear()
+                        break;
+                        case 1:
+                            mainWindowGerente.show()
                             txtUsuario.clear()
                             txtContrasegna.clear()
-                            mainWindiwGerente.show()
-                        }
-                        else
-                        {
-
+                        break;
+                        default:
+                            lblVentanaError.text = "Error Desconocido"
+                            ventanaError.open()
                         }
                     }
                 }
 
                 Popup
                 {
-                    id: ventanaErrorVacio
+                    id: ventanaError
                     width: 200
                     height: 50
 
                     Label
                     {
+                        id: lblVentanaError
                         text: "Campos Vacios Encontrados"
                     }
                 }

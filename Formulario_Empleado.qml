@@ -5,6 +5,8 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.4 as Fecha
+//cargado de imagenes
+import QtQuick.Dialogs 1.2
 
 import Empleado 1.0
 
@@ -15,6 +17,22 @@ Window {
     modality: Qt.WindowModal
     property string idUsuario: "0"
 
+    Popup
+    {
+        id: fotoFaltante
+        width: 150
+        height: 35
+        Material.background: "#DBAB0D"
+        x: 40
+        y: 200
+
+        Label
+        {
+            id: lblFotoFaltante
+            text: "Foto no seleccionada"
+            color: "black"
+        }
+    }
     Popup
     {
         width: 250
@@ -189,24 +207,37 @@ Window {
             anchors.fill: parent
             spacing: 40
 
-            ColumnLayout
+            Column
             {
                 id: columnaImagen
                 spacing: 20
+                Layout.alignment: Qt.AlignCenter
 
-                /*Image {
-                    id: imagenTrabajador
-                    source: "Imagenes/foto"
-                    width: 300
-                    height: 300
-                }*/
-                Rectangle
+                //cargado de imagenes
+                FileDialog
+                {
+                    id: openDialog
+                    title: "Abrir archivo"
+                    folder: shortcuts.home
+                    selectExisting: true
+                    nameFilters: ["*.jpg *.png"]
+                    onAccepted:
+                    {
+                        imagenTrabajador.source = fileUrl
+                        btnImagen.url = fileUrl
+                    }
+                    onRejected:
+                    {
+                        fileUrl = ""
+                    }
+                }
+
+                Image
                 {
                     id: imagenTrabajador
                     width: 200
                     height: 200
-                    color: "black"
-                    Layout.alignment: Qt.AlignCenter
+                    x: 25
                 }
 
                 Button
@@ -214,6 +245,11 @@ Window {
                     id: btnImagen
                     text: "Seleccionar imagen"
                     Layout.alignment: Qt.AlignCenter
+                    property string url: ""
+                    onClicked:
+                    {
+                        openDialog.open();
+                    }
                 }
             }
 
@@ -276,6 +312,8 @@ Window {
                                 height: 300
                                 x: 0
                                 y: 0
+                                visibleYear: 1996
+                                visibleMonth: 6
                                 onClicked: {
                                     ventanaFechaNacimiento.close()
                                     fechaNacimiento.text = Qt.formatDate(selectedDate, "yyyy-MM-dd")
@@ -293,7 +331,7 @@ Window {
                                  }
                                  else
                                  {
-                                    if(empleadoLista.getSexo(idUsuario) === "Masculino")
+                                    if(empleadoLista.getSexo(idUsuario) === "1")
                                     {
                                         return true;
                                     }
@@ -315,7 +353,7 @@ Window {
                                  }
                                  else
                                  {
-                                    if(empleadoLista.getSexo(idUsuario) === "Femenino")
+                                    if(empleadoLista.getSexo(idUsuario) === "2")
                                     {
                                         return true;
                                     }
@@ -481,6 +519,15 @@ Window {
                             {
                                 camposCorrectos++;
                             }
+                            if(btnImagen.url == "")
+                            {
+                                fotoFaltante.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+
                             if(txtContrasegna.text == txtConfirmacionContrasegna.text)
                             {
                                 contrasegnaValida = true;
@@ -491,26 +538,31 @@ Window {
                             }
 
 
-                            if((camposCorrectos==7)&&(contrasegnaValida))
+                            if((camposCorrectos==8)&&(contrasegnaValida))
                             {
                                 var sexo
                                 if(radiobtnFemenino.checked)
                                 {
-                                    sexo = "Femenino"
+                                    sexo = "2"
                                 }
                                 else
                                 {
-                                    sexo = "Masculino"
+                                    sexo = "1"
                                 }
 
                                 var categoria = (seleccionCategoria.currentIndex+1)
 
                                 if(idUsuario=="0")
                                 {
+                                    //cargado de imagenes
+                                    var path = openDialog.fileUrl.toString();
+                                    path = path.replace(/^(file:\/{3})/,"");
+
                                     empleadoLista.altaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
                                                               sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
                                                               txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
-                                                              txtContrasegna.text)
+                                                              txtContrasegna.text, path.toString())
+
                                     txtNombre.clear()
                                     txtApellidoPaterno.clear()
                                     txtApellidoMaterno.clear()
@@ -524,6 +576,8 @@ Window {
                                     txtUsuario.clear()
                                     txtConfirmacionContrasegna.clear()
                                     txtContrasegna.clear()
+                                    imagenTrabajador.source = ""
+                                    btnImagen.url = ""
 
                                     empleadoLista.refresh()
 

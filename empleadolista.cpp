@@ -11,21 +11,13 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
     if(db.open()){
         QSqlQuery query;
         qDebug() << "Se conecto la base de datos! :D";
-        /*
-        if (query.exec("SELECT * FROM persona")) {
-            while (query.next()) {
-                qDebug() << query.value(0).toString() << ", "<< query.value(1).toString() << "," << query.value(2).toString();
-            }
-        }
-        */
     }else{
         qDebug() << "Sigue intentando! D:";
     }
-    //mItems.append({QStringLiteral("1"), QStringLiteral("Oscar"), QStringLiteral("Gerente"), false});
 
     QSqlQuery queryConsulta;
 
-    queryConsulta.prepare("SELECT IdEmpleado, Nombre, ApellidoPaterno, ApellidoMaterno, Categoria_idCategoria "
+    queryConsulta.prepare("SELECT idEmpleado, nombre, apellidoPaterno, apellidoMaterno, idCategoria "
                           "from empleado");
     queryConsulta.exec();
 
@@ -74,7 +66,8 @@ bool EmpleadoLista::setItemAt(int indice, const ToDoItem &item)
 
     const ToDoItem &oldItem = mItems.at(indice);
 
-    if((item.eleccionEmpleado == oldItem.eleccionEmpleado)&&(item.idEmpleado == oldItem.idEmpleado) && (item.nombreEmpleado == oldItem.idEmpleado) && (item.puestoEmpleado == oldItem.puestoEmpleado))
+    if((item.eleccionEmpleado == oldItem.eleccionEmpleado)&&(item.idEmpleado == oldItem.idEmpleado) &&
+            (item.nombreEmpleado == oldItem.idEmpleado) && (item.puestoEmpleado == oldItem.puestoEmpleado))
     {
         return false;
     }
@@ -100,7 +93,7 @@ void EmpleadoLista::refresh()
     QSqlQuery busqueda;
     bool bandera = false;
 
-    busqueda.prepare("SELECT IdEmpleado, Nombre, ApellidoPaterno, ApellidoMaterno, Categoria_idCategoria "
+    busqueda.prepare("SELECT idEmpleado, nombre, apellidoPaterno, apellidoMaterno, idCategoria "
                      "from empleado");
     busqueda.exec();
 
@@ -108,7 +101,6 @@ void EmpleadoLista::refresh()
     {
         for(int i=0; i<mItems.size(); i++)
         {
-            qDebug() << "Id Table: " + mItems.at(i).idEmpleado + " Id Lista: " + busqueda.value(0).toString();
             if(mItems.at(i).idEmpleado==busqueda.value(0).toString())
             {
                 bandera = true;
@@ -202,7 +194,7 @@ QString EmpleadoLista::getDato(QString comprobacion)
 QString EmpleadoLista::getNombre(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT Nombre FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT nombre FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -212,7 +204,7 @@ QString EmpleadoLista::getNombre(QString id)
 QString EmpleadoLista::getApellidoPaterno(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT ApellidoPaterno FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT apellidoPaterno FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -222,7 +214,7 @@ QString EmpleadoLista::getApellidoPaterno(QString id)
 QString EmpleadoLista::getApellidoMaterno(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT ApellidoMaterno FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT apellidoMaterno FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -232,7 +224,7 @@ QString EmpleadoLista::getApellidoMaterno(QString id)
 QString EmpleadoLista::getFechaNacimiento(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT FechaNacimiento FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT fechaNacimiento FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -242,7 +234,7 @@ QString EmpleadoLista::getFechaNacimiento(QString id)
 QString EmpleadoLista::getSexo(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT sexo FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT idSexo FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -252,7 +244,7 @@ QString EmpleadoLista::getSexo(QString id)
 int EmpleadoLista::getPuesto(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT Categoria_idCategoria FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT idCategoria FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -262,7 +254,7 @@ int EmpleadoLista::getPuesto(QString id)
 QString EmpleadoLista::getTelefono(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT Telefono FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT telefono FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -272,7 +264,7 @@ QString EmpleadoLista::getTelefono(QString id)
 QString EmpleadoLista::getSalario(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT Sueldo FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT sueldo FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -282,7 +274,7 @@ QString EmpleadoLista::getSalario(QString id)
 QString EmpleadoLista::getRFC(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT RFC FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT rfc FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -292,7 +284,7 @@ QString EmpleadoLista::getRFC(QString id)
 QString EmpleadoLista::getSeguroSocial(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT SeguroSocial FROM empleado WHERE IdEmpleado = " + id);
+    obtenerDato.prepare("SELECT seguroSocial FROM empleado WHERE idEmpleado = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -302,7 +294,7 @@ QString EmpleadoLista::getSeguroSocial(QString id)
 QString EmpleadoLista::getUsuario(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT Usuario FROM usuario WHERE IdUsuario = " + id);
+    obtenerDato.prepare("SELECT usuario FROM usuario WHERE idUsuario = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -312,7 +304,7 @@ QString EmpleadoLista::getUsuario(QString id)
 QString EmpleadoLista::getContrasegna(QString id)
 {
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT Contrasena FROM usuario WHERE IdUsuario = " + id);
+    obtenerDato.prepare("SELECT contrasena FROM usuario WHERE idUsuario = " + id);
     obtenerDato.exec();
     obtenerDato.first();
 
@@ -321,19 +313,27 @@ QString EmpleadoLista::getContrasegna(QString id)
 
 void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
                                 QString RFC, QString SeguroSocial, QString FechaNacimiento, QString Sueldo, QString Telefono,
-                                int idCategoria, QString Usuario, QString Contrasegna)
+                                int idCategoria, QString Usuario, QString Contrasegna, QString urlEnviada)
 {
-    QSqlQuery qryDatosEmpleados,qryDatosUsuario;
-    qryDatosEmpleados.prepare("INSERT INTO empleado(IdEmpleado,Nombre,ApellidoPaterno,ApellidoMaterno,"
-                              "sexo,RFC,SeguroSocial,FechaNacimiento,FechaContratacion,Sueldo,Telefono,"
-                              "Categoria_idCategoria) "
-                              "VALUES(:idIdEmpleado, :idNombre, :idApellidoPaterno,"
-                              ":idApellidoMaterno, :idSexo, :idRFC, :idSeguroSocial, :idFechaNacimiento,"
-                              "NOW(), :idSueldo, :idTelefono, :idCategoria)");
+    QFile imgArchivo(urlEnviada);
+    imgArchivo.open(QIODevice::ReadOnly);
+    QByteArray bytesFoto=imgArchivo.readAll();
 
-    qryDatosUsuario.prepare("INSERT INTO usuario(IdUsuario,Usuario,Contrasena,Empleado_idEmpleado) VALUES"
-                            "(:idIdUsuario, :idUsuario, :idContrasena, :idEmpleado)");
-    qryDatosEmpleados.bindValue(":idIdEmpleado",Telefono.toInt());
+    QSqlQuery qryDatosEmpleados,qryDatosUsuario, idEmpleado;
+    qryDatosEmpleados.prepare("INSERT INTO empleado(nombre, apellidoPaterno, apellidoMaterno,"
+                              "idSexo, rfc, seguroSocial, fechaNacimiento, sueldo, telefono,"
+                              "idCategoria, foto) "
+                              "VALUES(:idNombre, :idApellidoPaterno,"
+                              ":idApellidoMaterno, :idSexo, :idRFC, :idSeguroSocial, :idFechaNacimiento,"
+                              ":idSueldo, :idTelefono, :idCategoria, :archivo)");
+
+    idEmpleado.prepare("SELECT idEmpleado FROM empleado ORDER BY idEmpleado DESC");
+    idEmpleado.exec();
+    idEmpleado.first();
+
+    qryDatosUsuario.prepare("INSERT INTO usuario(usuario, contrasena, idEmpleado) VALUES"
+                            "(:idUsuario, :idContrasena, :idEmpleado)");
+
     qryDatosEmpleados.bindValue(":idNombre",Nombre);
     qryDatosEmpleados.bindValue(":idApellidoPaterno",ApellidoPaterno);
     qryDatosEmpleados.bindValue(":idApellidoMaterno",ApellidoMaterno);
@@ -344,11 +344,11 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
     qryDatosEmpleados.bindValue(":idSueldo",Sueldo);
     qryDatosEmpleados.bindValue(":idTelefono",Telefono);
     qryDatosEmpleados.bindValue(":idCategoria",idCategoria);
+    qryDatosEmpleados.bindValue(":archivo",bytesFoto);
 
-    qryDatosUsuario.bindValue(":idIdUsuario", Telefono.toInt());
     qryDatosUsuario.bindValue(":idUsuario", Usuario);
     qryDatosUsuario.bindValue(":idContrasena", Contrasegna);
-    qryDatosUsuario.bindValue(":idEmpleado", Telefono.toInt());
+    qryDatosUsuario.bindValue(":idEmpleado", idEmpleado.value(0));
 
     if(qryDatosEmpleados.exec())
         qDebug() << "Se inserto el empleado! :D";
@@ -371,27 +371,27 @@ void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QSt
 {
     QSqlQuery modificaEmpleado, modificaUsuario;
     modificaUsuario.prepare("UPDATE usuario SET "
-                            "Usuario = '" + Usuario + "' , Contrasena = '" + Contrasegna + "' "
-                            "WHERE IdUsuario = " + idEmpleado);
+                            "usuario = '" + Usuario + "' , contrasena = '" + Contrasegna + "' "
+                            "WHERE idUsuario = " + idEmpleado);
     modificaUsuario.exec();
 
     modificaEmpleado.prepare("UPDATE empleado SET "
-                             "Nombre = '" + Nombre + "', ApellidoPaterno = '" + ApellidoPaterno + "', "
-                             "ApellidoMaterno = '" + ApellidoMaterno + "', "
-                             "sexo = '" + Sexo + "', RFC = '" + RFC + "', SeguroSocial = '" + SeguroSocial + "', "
-                             "FechaNacimiento = '" + FechaNacimiento + "' , "
-                             "Sueldo = '" + Sueldo + "', Telefono = '" + Telefono + "', "
-                             "Categoria_idCategoria = " + QString::number(idCategoria) + " "
-                             "WHERE IdEmpleado = " + idEmpleado);
+                             "nombre = '" + Nombre + "', apellidoPaterno = '" + ApellidoPaterno + "', "
+                             "apellidoMaterno = '" + ApellidoMaterno + "', "
+                             "idSexo = " + Sexo + ", rfc = '" + RFC + "', seguroSocial = '" + SeguroSocial + "', "
+                             "fechaNacimiento = '" + FechaNacimiento + "' , "
+                             "sueldo = " + Sueldo + ", telefono = '" + Telefono + "', "
+                             "idCategoria = " + QString::number(idCategoria) + " "
+                             "WHERE idEmpleado = " + idEmpleado);
     modificaEmpleado.exec();
 }
 
 void EmpleadoLista::bajaUsuario(QString usuario)
 {
     QSqlQuery bajaEmpleado, bajaUsuario;
-    bajaUsuario.prepare("DELETE FROM usuario WHERE Empleado_idEmpleado = " + usuario);
+    bajaUsuario.prepare("DELETE FROM usuario WHERE idEmpleado = " + usuario);
     bajaUsuario.exec();
-    bajaEmpleado.prepare("DELETE FROM empleado WHERE IdEmpleado = " + usuario);
+    bajaEmpleado.prepare("DELETE FROM empleado WHERE idEmpleado = " + usuario);
     bajaEmpleado.exec();
 
     if(bajaEmpleado.exec())
@@ -406,5 +406,88 @@ void EmpleadoLista::bajaUsuario(QString usuario)
     else{
         qDebug() << "Ya deidicate a otra cosa :C";
         qDebug() << bajaUsuario.lastError();
+    }
+}
+
+int EmpleadoLista::getUltimoId()
+{
+    QSqlQuery ultimo;
+    ultimo.prepare("SELECT idEmpleado FROM empleado ORDER BY idEmpleado DESC");
+    ultimo.exec();
+    ultimo.first();
+
+    return ultimo.value(0).toInt();
+}
+
+int EmpleadoLista::buscarCategoria(QString nombreUsuario, QString contrasegna)
+{
+    int idUsuario = 0;
+
+    QSqlQuery busqueda;
+    busqueda.prepare("SELECT idEmpleado FROM usuario WHERE "
+                     "usuario = '" + nombreUsuario + "' AND contrasena = '" + contrasegna + "'");
+
+    if(busqueda.exec())
+    {
+        busqueda.first();
+
+        QSqlQuery puesto;
+        puesto.prepare("SELECT idCategoria FROM empleado WHERE "
+                       "idEmpleado = " + busqueda.value(0).toString() + "");
+        puesto.exec();
+        puesto.first();
+
+        qDebug() << "Sale " << puesto.value(0).toString();
+
+        return puesto.value(0).toInt();
+    }
+    else
+        return idUsuario;
+}
+
+//cargado de imagenes
+void EmpleadoLista::insertarBD(QString urlEnviada, QString idEmpleado)
+{
+    QSqlQuery insert;
+    QFile imgArchivo(urlEnviada);
+    imgArchivo.open(QIODevice::ReadOnly);
+    QByteArray bytesFoto=imgArchivo.readAll();
+    insert.prepare("INSERT INTO empleado(archivo) values(:archivo) WHERE idEmpleado = " + idEmpleado);
+    insert.bindValue(":archivo",bytesFoto);
+    if(!insert.exec())
+        qDebug ()<<"ERROR EN LA INSERCION: "<<insert.lastError().text();
+}
+
+QString EmpleadoLista::visualizarImg(int id_foto)
+{
+    QSqlQuery select;
+    if(select.exec("SELECT archivo FROM foto WHERE id_foto ='"+QString::number(id_foto)+"'"))
+    {
+        if(select.next())
+        {
+            if(select.value(0).toByteArray()!=nullptr)
+            {
+                 QImage myImage;
+                 QByteArray bArray=select.value(0).toByteArray();
+                 QBuffer buffer(&bArray);
+                 buffer.open(QIODevice::WriteOnly);
+                 myImage.save(&buffer, "JPEG");
+                 QString image("data:image/jpg;base64,");
+                 image.append(QString::fromLatin1(bArray.toBase64().data()));
+                 return image;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        else
+        {
+            return "";
+        }
+    }
+    else
+    {
+        return "";
     }
 }
