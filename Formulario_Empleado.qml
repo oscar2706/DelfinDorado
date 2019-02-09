@@ -234,7 +234,6 @@ Window {
                         txtContrasegna.clear()
                         imagenTrabajador.source = ""
                         btnImagen.url = ""
-                        idUsuario = "0"
 
                         confirmarSalida.close()
                         form_Empleado.close()
@@ -275,21 +274,20 @@ Window {
                 onClicked:
                 {
                     txtNombre.clear()
-                                            txtApellidoPaterno.clear()
-                                            txtApellidoMaterno.clear()
-                                            fechaNacimiento.text = "Fecha de Nacimiento"
-                                            radiobtnMasculino.checked = true
-                                            seleccionCategoria.currentIndex = 0
-                                            txtRFC.clear()
-                                            txtSeguroSocial.clear()
-                                            txtSalario.clear()
-                                            txtTelefono.clear()
-                                            txtUsuario.clear()
-                                            txtConfirmacionContrasegna.clear()
-                                            txtContrasegna.clear()
-                                            imagenTrabajador.source = ""
-                                            btnImagen.url = ""
-                                            idUsuario = "0"
+                    txtApellidoPaterno.clear()
+                    txtApellidoMaterno.clear()
+                    fechaNacimiento.text = "Fecha de Nacimiento"
+                    radiobtnMasculino.checked = true
+                    seleccionCategoria.currentIndex = 0
+                    txtRFC.clear()
+                    txtSeguroSocial.clear()
+                    txtSalario.clear()
+                    txtTelefono.clear()
+                    txtUsuario.clear()
+                    txtConfirmacionContrasegna.clear()
+                    txtContrasegna.clear()
+                    imagenTrabajador.source = ""
+                    btnImagen.url = ""
 
                     form_Empleado.close()
                 }
