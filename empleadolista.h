@@ -76,6 +76,8 @@ public slots:
 
     void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
     void modificaUsuario(QString, QString, QString, QString, QString, QString,
+                         QString, QString, QString, int, QString, QString, QString);
+    void modificaUsuarioImagen(QString, QString, QString, QString, QString, QString,
                          QString, QString, QString, int, QString, QString, QString, QString);
     void bajaUsuario(QString);
 

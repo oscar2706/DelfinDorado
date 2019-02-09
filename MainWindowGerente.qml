@@ -118,5 +118,18 @@ Window {
                 //MessageDialogs { anchors.fill:parent }
             }
         }
+        Image {
+            id: btnSalida
+            source: "img/exit_White.png"
+            width: 40
+            height: 40
+            x: 1300
+
+            MouseArea
+            {
+                anchors.fill: parent
+                onClicked: window.close()
+            }
+        }
     }
 }

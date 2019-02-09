@@ -16,6 +16,7 @@ Window {
     height: 600
     modality: Qt.WindowModal
     property string idUsuario: "0"
+    property int idUsuarioInt: Number(idUsuario)
 
     Popup
     {
@@ -193,6 +194,64 @@ Window {
             color: "black"
         }
     }
+    Popup
+    {
+        id: confirmarSalida
+        width: 288
+        height: 95
+        x: 317
+        y: 500
+        Material.background: "#006677"
+
+        ColumnLayout
+        {
+            Label
+            {
+                text: "Se perderán los cambios sin guardar al salir"
+                color: "white"
+            }
+
+            RowLayout
+            {
+                Button
+                {
+                    text: "Aceptar"
+                    Layout.fillWidth: true
+                    onClicked:
+                    {
+                        txtNombre.clear()
+                        txtApellidoPaterno.clear()
+                        txtApellidoMaterno.clear()
+                        fechaNacimiento.text = "Fecha de Nacimiento"
+                        radiobtnMasculino.checked = true
+                        seleccionCategoria.currentIndex = 0
+                        txtRFC.clear()
+                        txtSeguroSocial.clear()
+                        txtSalario.clear()
+                        txtTelefono.clear()
+                        txtUsuario.clear()
+                        txtConfirmacionContrasegna.clear()
+                        txtContrasegna.clear()
+                        imagenTrabajador.source = ""
+                        btnImagen.url = ""
+                        idUsuario = "0"
+
+                        confirmarSalida.close()
+                        form_Empleado.close()
+                    }
+                }
+                Button
+                {
+                    text: "Cancelar"
+                    Layout.fillWidth: true
+                    onClicked:
+                    {
+                        confirmarSalida.close()
+                    }
+                }
+            }
+        }
+    }
 
     Pane
     {
@@ -201,6 +260,41 @@ Window {
         Material.accent: "#008d96"
         Material.foreground: "#008d96"
         Material.background: "#FFFFFF"
+
+        Image
+        {
+            id: btnRegresar
+            source: "img/back_Blue.png"
+            width: 40
+            height: 40
+            x: 0
+
+            MouseArea
+            {
+                anchors.fill: parent
+                onClicked:
+                {
+                    txtNombre.clear()
+                                            txtApellidoPaterno.clear()
+                                            txtApellidoMaterno.clear()
+                                            fechaNacimiento.text = "Fecha de Nacimiento"
+                                            radiobtnMasculino.checked = true
+                                            seleccionCategoria.currentIndex = 0
+                                            txtRFC.clear()
+                                            txtSeguroSocial.clear()
+                                            txtSalario.clear()
+                                            txtTelefono.clear()
+                                            txtUsuario.clear()
+                                            txtConfirmacionContrasegna.clear()
+                                            txtContrasegna.clear()
+                                            imagenTrabajador.source = ""
+                                            btnImagen.url = ""
+                                            idUsuario = "0"
+
+                    form_Empleado.close()
+                }
+            }
+        }
         RowLayout
         {
             id: filaPanel
@@ -221,10 +315,13 @@ Window {
                     folder: shortcuts.home
                     selectExisting: true
                     nameFilters: ["*.jpg *.png"]
+                    property int dialogoAbierto: 0
                     onAccepted:
                     {
                         imagenTrabajador.source = fileUrl
                         btnImagen.url = fileUrl
+                        console.log("FileUrl: " + fileUrl)
+                        dialogoAbierto = 1
                     }
                     onRejected:
                     {
@@ -239,7 +336,7 @@ Window {
                     height: 200
                     x: 25
                     anchors.left: parent.left
-                    source: idUsuario == "0" ? "" : empleadoLista.visualizarImg(parseInt(idUsuario))
+                    source: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuarioInt)
                 }
 
                 Button
@@ -249,7 +346,7 @@ Window {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.margins: 0
-                    property string url: ""
+                    property string url: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuarioInt)
                     onClicked:
                     {
                         openDialog.open();
@@ -558,12 +655,14 @@ Window {
 
                                 var categoria = (seleccionCategoria.currentIndex+1)
 
-                                var path = openDialog.fileUrl.toString();
-                                path = path.replace(/^(file:\/{3})/,"");
-
-
                                 if(idUsuario=="0")
                                 {
+                                    var path = openDialog.fileUrl.toString();
+                                    path = path.replace(/^(file:\/{3})/,"");
+
+                                    console.log("URL: " + btnImagen.url)
+                                    console.log("Path: " + path)
+
                                     empleadoLista.altaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
                                                               sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
                                                               txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
@@ -584,6 +683,7 @@ Window {
                                     txtContrasegna.clear()
                                     imagenTrabajador.source = ""
                                     btnImagen.url = ""
+                                    idUsuario = "0"
 
                                     empleadoLista.refresh()
 
@@ -592,15 +692,35 @@ Window {
                                 }
                                 else
                                 {
-                                    empleadoLista.modificaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
-                                                                  sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
-                                                                  txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
-                                                                  txtContrasegna.text, idUsuario, path.toString())
+                                    if(openDialog.dialogoAbierto)
+                                    {
+                                        path = btnImagen.url
+                                        path = path.replace(/^(file:\/{3})/,"");
 
-                                    empleadoLista.refresh()
+                                        empleadoLista.modificaUsuarioImagen(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
+                                                                      sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
+                                                                      txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
+                                                                      txtContrasegna.text, idUsuario, path.toString())
 
-                                    lblMensajeExitoso.text = "Cambios Guardados Exitosamente"
-                                    mensajeExitoso.open()
+                                        empleadoLista.refresh()
+
+                                        lblMensajeExitoso.text = "Cambios Guardados Exitosamente"
+                                        mensajeExitoso.open()
+
+                                        openDialog.dialogoAbierto = 0
+                                    }
+                                    else
+                                    {
+                                        empleadoLista.modificaUsuario(txtNombre.text, txtApellidoPaterno.text, txtApellidoMaterno.text,
+                                                                      sexo, txtRFC.text, txtSeguroSocial.text, fechaNacimiento.text,
+                                                                      txtSalario.text, txtTelefono.text, categoria, txtUsuario.text,
+                                                                      txtContrasegna.text, idUsuario)
+
+                                        empleadoLista.refresh()
+
+                                        lblMensajeExitoso.text = "Cambios Guardados Exitosamente"
+                                        mensajeExitoso.open()
+                                    }
                                 }
                             }
                         }
@@ -609,7 +729,28 @@ Window {
                     {
                         id: btnCancelar
                         text: "Cancelar"
-                        onClicked: formulario.close()
+                        onClicked:
+                        {
+                            if(idUsuario=="0")
+                            {
+                                if((txtNombre.text!="")||(txtApellidoPaterno.text!="")||(txtApellidoMaterno.text!="")||
+                                        (fechaNacimiento.text!="Fecha de Nacimiento")||(txtRFC.text!="")||
+                                        (txtTelefono.text!="")||(txtSalario.text!="")||(txtSeguroSocial.text!="")||
+                                        (txtUsuario.text!="")||(txtContrasegna.text!="")||(txtConfirmacionContrasegna.text!="")||
+                                        (radiobtnFemenino.checked)||(seleccionCategoria.currentIndex!=0)||btnImagen.url!="")
+                                {
+                                    confirmarSalida.open()
+                                }
+                                else
+                                {
+                                    form_Empleado.close()
+                                }
+                            }
+                            else
+                            {
+                                form_Empleado.close()
+                            }
+                        }
                         //Material.accent: "#008d96"
                         Material.foreground: "#FFFFFF"
                         Material.background: "#008d96"

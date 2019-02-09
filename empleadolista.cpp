@@ -401,13 +401,6 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
                               ":idApellidoMaterno, :idSexo, :idRFC, :idSeguroSocial, :idFechaNacimiento,"
                               ":idSueldo, :idTelefono, :idCategoria, :archivo)");
 
-    idEmpleado.prepare("SELECT idEmpleado FROM empleado ORDER BY idEmpleado DESC");
-    idEmpleado.exec();
-    idEmpleado.first();
-
-    qryDatosUsuario.prepare("INSERT INTO usuario(usuario, contrasena, idEmpleado) VALUES"
-                            "(:idUsuario, :idContrasena, :idEmpleado)");
-
     qryDatosEmpleados.bindValue(":idNombre",Nombre);
     qryDatosEmpleados.bindValue(":idApellidoPaterno",ApellidoPaterno);
     qryDatosEmpleados.bindValue(":idApellidoMaterno",ApellidoMaterno);
@@ -420,10 +413,6 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
     qryDatosEmpleados.bindValue(":idCategoria",idCategoria);
     qryDatosEmpleados.bindValue(":archivo",bytesFoto);
 
-    qryDatosUsuario.bindValue(":idUsuario", Usuario);
-    qryDatosUsuario.bindValue(":idContrasena", Contrasegna);
-    qryDatosUsuario.bindValue(":idEmpleado", idEmpleado.value(0));
-
     if(qryDatosEmpleados.exec())
         qDebug() << "Se inserto el empleado! :D";
     else{
@@ -431,8 +420,19 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
         qDebug() << qryDatosEmpleados.lastError();
     }
 
+    idEmpleado.prepare("SELECT idEmpleado FROM empleado ORDER BY idEmpleado DESC");
+    idEmpleado.exec();
+    idEmpleado.first();
+
+    qryDatosUsuario.prepare("INSERT INTO usuario(usuario, contrasena, idEmpleado) VALUES"
+                            "(:idUsuario, :idContrasena, :idEmpleado)");
+
+    qryDatosUsuario.bindValue(":idUsuario", Usuario);
+    qryDatosUsuario.bindValue(":idContrasena", Contrasegna);
+    qryDatosUsuario.bindValue(":idEmpleado", idEmpleado.value(0).toInt());
+
     if(qryDatosUsuario.exec())
-        qDebug() << "Se inserto el empleado! :D";
+        qDebug() << "Se inserto el usuario! :D";
     else{
         qDebug() << "Ya deidicate a otra cosa :C";
         qDebug() << qryDatosUsuario.lastError();
@@ -441,8 +441,49 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
 
 void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
                                     QString RFC, QString SeguroSocial, QString FechaNacimiento, QString Sueldo, QString Telefono,
+                                    int idCategoria, QString Usuario, QString Contrasegna, QString idEmpleado)
+{
+    QSqlQuery modificaEmpleado, modificaUsuario;
+    modificaUsuario.prepare("UPDATE usuario SET "
+                            "usuario = '" + Usuario + "' , contrasena = '" + Contrasegna + "' "
+                            "WHERE idUsuario = " + idEmpleado);
+    modificaUsuario.exec();
+
+    if(modificaUsuario.exec())
+        qDebug() << "Se modificó el usuario :D";
+    else
+    {
+        qDebug() << "Ya dedícate a otra cosa";
+        qDebug() << modificaUsuario.lastError();
+    }
+
+
+    modificaEmpleado.prepare("UPDATE empleado SET "
+                             "nombre = '" + Nombre + "', apellidoPaterno = '" + ApellidoPaterno + "', "
+                             "apellidoMaterno = '" + ApellidoMaterno + "', "
+                             "idSexo = " + Sexo + ", rfc = '" + RFC + "', seguroSocial = '" + SeguroSocial + "', "
+                             "fechaNacimiento = '" + FechaNacimiento + "' , "
+                             "sueldo = " + Sueldo + ", telefono = '" + Telefono + "', "
+                             "idCategoria = " + QString::number(idCategoria) + " "
+                             "WHERE idEmpleado = " + idEmpleado);
+
+    modificaEmpleado.exec();
+
+    if(modificaEmpleado.exec())
+        qDebug() << "Se modificó el usuario :D";
+    else
+    {
+        qDebug() << "Ya dedícate a otra cosa";
+        qDebug() << modificaEmpleado.lastError();
+    }
+}
+
+void EmpleadoLista::modificaUsuarioImagen(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
+                                    QString RFC, QString SeguroSocial, QString FechaNacimiento, QString Sueldo, QString Telefono,
                                     int idCategoria, QString Usuario, QString Contrasegna, QString idEmpleado, QString urlEnviada)
 {
+    qDebug() << urlEnviada;
+
     QFile imgArchivo(urlEnviada);
     imgArchivo.open(QIODevice::ReadOnly);
     QByteArray bytesFoto=imgArchivo.readAll();
@@ -452,6 +493,15 @@ void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QSt
                             "usuario = '" + Usuario + "' , contrasena = '" + Contrasegna + "' "
                             "WHERE idUsuario = " + idEmpleado);
     modificaUsuario.exec();
+
+    if(modificaUsuario.exec())
+        qDebug() << "Se modificó el usuario :D";
+    else
+    {
+        qDebug() << "Ya dedícate a otra cosa";
+        qDebug() << modificaUsuario.lastError();
+    }
+
 
     modificaEmpleado.prepare("UPDATE empleado SET "
                              "nombre = '" + Nombre + "', apellidoPaterno = '" + ApellidoPaterno + "', "
@@ -464,6 +514,14 @@ void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QSt
     modificaEmpleado.bindValue(":archivo",bytesFoto);
 
     modificaEmpleado.exec();
+
+    if(modificaEmpleado.exec())
+        qDebug() << "Se modificó el usuario :D";
+    else
+    {
+        qDebug() << "Ya dedícate a otra cosa";
+        qDebug() << modificaEmpleado.lastError();
+    }
 }
 
 void EmpleadoLista::bajaUsuario(QString usuario)
@@ -482,7 +540,7 @@ void EmpleadoLista::bajaUsuario(QString usuario)
     }
 
     if(bajaUsuario.exec())
-        qDebug() << "Se elimino el empleado! :D";
+        qDebug() << "Se elimino el usuario! :D";
     else{
         qDebug() << "Ya deidicate a otra cosa :C";
         qDebug() << bajaUsuario.lastError();
@@ -517,7 +575,7 @@ int EmpleadoLista::buscarCategoria(QString nombreUsuario, QString contrasegna)
         puesto.exec();
         puesto.first();
 
-        qDebug() << "Sale " << puesto.value(0).toString();
+        //qDebug() << "Sale " << puesto.value(0).toString();
 
         return puesto.value(0).toInt();
     }
@@ -540,11 +598,14 @@ void EmpleadoLista::insertarBD(QString urlEnviada, QString idEmpleado)
 
 QString EmpleadoLista::visualizarImg(int id_foto)
 {
+    //qDebug() << "Imagen: entra";
     QSqlQuery select;
     if(select.exec("SELECT foto FROM empleado WHERE idEmpleado = " + QString::number(id_foto) + ""))
     {
-        if(select.next())
-        {
+        //qDebug() << "Imagen: query";
+        select.next();
+
+            //qDebug() << "Imagen: registro";
             if(select.value(0).toByteArray()!=nullptr)
             {
                  QImage myImage;
@@ -553,18 +614,16 @@ QString EmpleadoLista::visualizarImg(int id_foto)
                  buffer.open(QIODevice::WriteOnly);
                  myImage.save(&buffer, "JPEG");
                  QString image("data:image/jpg;base64,");
+                 //qDebug() << "Imagen: " << image;
                  image.append(QString::fromLatin1(bArray.toBase64().data()));
+                 //qDebug() << "Imagen: " << image;
                  return image;
             }
             else
             {
+                //qDebug() << "Imagen: sale";
                 return "";
             }
-        }
-        else
-        {
-            return "";
-        }
     }
     else
     {

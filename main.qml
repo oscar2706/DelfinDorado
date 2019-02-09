@@ -7,6 +7,7 @@ import QtQuick.Layouts 1.0
 //import QtQuick.Dialogs 1.2
 
 ApplicationWindow{
+    id: login
     visible: true
     width: 1366
     height: 720
@@ -83,9 +84,34 @@ ApplicationWindow{
                     text: qsTr("Empleado:")
                 }
                 TextField {
-                    //placeholderText: qsTr("User name")
                     id: txtUsuario
-                    //onTextChanged: persona.getUserName = text
+                    onAccepted:
+                    {
+                        if(txtUsuario.text==""||txtContrasegna.text=="")
+                        {
+                            ventanaError.open()
+                        }
+                        else
+                        {
+                            switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
+                            {
+                            case 0:
+                                lblVentanaError.text = "Usuario Incorrecto"
+                                ventanaError.open()
+                                txtContrasegna.clear()
+                            break;
+                            case 1:
+                                mainWindowGerente.show()
+                                ventanaError.close()
+                                txtUsuario.clear()
+                                txtContrasegna.clear()
+                            break;
+                            default:
+                                lblVentanaError.text = "Error Desconocido"
+                                ventanaError.open()
+                            }
+                        }
+                    }
                 }
             }
 
@@ -96,10 +122,35 @@ ApplicationWindow{
                     text: qsTr("Contraseña:")
                 }
                 TextField {
-                    //placeholderText: qsTr("User name")
                     id: txtContrasegna
                     echoMode: TextInput.Password
-                    //onTextChanged: persona.getUserName = text
+                    onAccepted:
+                    {
+                        if(txtUsuario.text==""||txtContrasegna.text=="")
+                        {
+                            ventanaError.open()
+                        }
+                        else
+                        {
+                            switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
+                            {
+                            case 0:
+                                lblVentanaError.text = "Usuario Incorrecto"
+                                ventanaError.open()
+                                txtContrasegna.clear()
+                            break;
+                            case 1:
+                                mainWindowGerente.show()
+                                ventanaError.close()
+                                txtUsuario.clear()
+                                txtContrasegna.clear()
+                            break;
+                            default:
+                                lblVentanaError.text = "Error Desconocido"
+                                ventanaError.open()
+                            }
+                        }
+                    }
                 }
             }
             RoundButton{
@@ -173,17 +224,6 @@ ApplicationWindow{
                     }
                 }
             }
-            /*
-            RowLayout{
-                width: 150
-                height: 50
-                Layout.fillHeight: false
-                Layout.fillWidth: false
-                Layout.alignment: Qt.AlignHCenter
-            }
-            */
-
         }
     }
-
 }

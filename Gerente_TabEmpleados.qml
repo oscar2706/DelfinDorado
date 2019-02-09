@@ -135,7 +135,9 @@ Item {
                             if(idUsuario!="")
                             {
                                 form_Empleado.idUsuario = idUsuario
+                                console.log(empleadoLista.visualizarImg(parseInt(idUsuario)))
                                 form_Empleado.show()
+                                console.log(form_Empleado.idUsuarioInt)
                                 empleadoSeleccionado = ""
                             }
                             else

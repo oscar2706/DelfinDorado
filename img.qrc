@@ -9,5 +9,9 @@
         <file>img/addMenu.png</file>
         <file>img/editMenu.png</file>
         <file>img/removeMenu.png</file>
+        <file>img/back_Blue.png</file>
+        <file>img/back_White.png</file>
+        <file>img/exit_Blue.png</file>
+        <file>img/exit_White.png</file>
     </qresource>
 </RCC>
