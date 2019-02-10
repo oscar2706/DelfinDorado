@@ -45,12 +45,9 @@ PlatilloModel::PlatilloModel(QObject *parent) : QAbstractListModel(parent)
         qDebug() << "";
     }
     /*
-    addPlatillo(new Platillo("Coctel camaron", "50", "Muy rico :D" ,"Cocteles"));
-    addPlatillo(new Platillo("Coctel jaiba", "50", "Muy rico :D" ,"Cocteles"));
-    addPlatillo(new Platillo("Coctel pulo", "50", "Muy rico :D" ,"Cocteles"));
-    addPlatillo(new Platillo("Tostada camaron", "100", "Muy rico :D" ,"Tostadas"));
-    addPlatillo(new Platillo("Tostada pulo", "80", "Muy rico :D" ,"Tostadas"));
-    addPlatillo(new Platillo("Camarones empanizados", "300", "Muy rico :D" ,"Entradas"));
+    Platillo* nuevoPlatillo = new Platillo(1,"","",100,"No tiene","Coctel","Disponible",this);
+    addPlatillo(nuevoPlatillo);
+    printPlatillos();
     */
 }
 

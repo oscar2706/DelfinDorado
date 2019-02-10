@@ -4,7 +4,7 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
     db.setUserName("root");
-    db.setPassword("");
+    db.setPassword("Spat2706");
     /*
     db.setUserName("Leonardo");
     db.setPassword("football26398");
@@ -494,10 +494,10 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
     QSqlQuery qryDatosEmpleados,qryDatosUsuario, idEmpleado;
     qryDatosEmpleados.prepare("INSERT INTO empleado(nombre, apellidoPaterno, apellidoMaterno,"
                               "idSexo, rfc, seguroSocial, fechaNacimiento, sueldo, telefono,"
-                              "idCategoria, foto) "
+                              "idPuesto, foto) "
                               "VALUES(:idNombre, :idApellidoPaterno,"
                               ":idApellidoMaterno, :idSexo, :idRFC, :idSeguroSocial, :idFechaNacimiento,"
-                              ":idSueldo, :idTelefono, :idCategoria, :archivo)");
+                              ":idSueldo, :idTelefono, :idPuesto, :archivo)");
 
     qryDatosEmpleados.bindValue(":idNombre",Nombre);
     qryDatosEmpleados.bindValue(":idApellidoPaterno",ApellidoPaterno);
@@ -508,7 +508,7 @@ void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString
     qryDatosEmpleados.bindValue(":idFechaNacimiento",FechaNacimiento);
     qryDatosEmpleados.bindValue(":idSueldo",Sueldo);
     qryDatosEmpleados.bindValue(":idTelefono",Telefono);
-    qryDatosEmpleados.bindValue(":idCategoria",idCategoria);
+    qryDatosEmpleados.bindValue(":idPuesto",idCategoria);
     qryDatosEmpleados.bindValue(":archivo",bytesFoto);
 
     if(qryDatosEmpleados.exec())
@@ -562,7 +562,7 @@ void EmpleadoLista::modificaUsuario(QString Nombre, QString ApellidoPaterno, QSt
                              "idSexo = " + Sexo + ", rfc = '" + RFC + "', seguroSocial = '" + SeguroSocial + "', "
                              "fechaNacimiento = '" + FechaNacimiento + "' , "
                              "sueldo = " + Sueldo + ", telefono = '" + Telefono + "', "
-                             "idCategoria = " + QString::number(idCategoria) + " "
+                             "idPuesto = " + QString::number(idCategoria) + " "
                              "WHERE idEmpleado = " + idEmpleado);
 
     modificaEmpleado.exec();
@@ -607,7 +607,7 @@ void EmpleadoLista::modificaUsuarioImagen(QString Nombre, QString ApellidoPatern
                              "idSexo = " + Sexo + ", rfc = '" + RFC + "', seguroSocial = '" + SeguroSocial + "', "
                              "foto = :archivo, fechaNacimiento = '" + FechaNacimiento + "' , "
                              "sueldo = " + Sueldo + ", telefono = '" + Telefono + "', "
-                             "idCategoria = " + QString::number(idCategoria) + " "
+                             "idPuesto = " + QString::number(idCategoria) + " "
                              "WHERE idEmpleado = " + idEmpleado);
     modificaEmpleado.bindValue(":archivo",bytesFoto);
 
@@ -668,7 +668,7 @@ int EmpleadoLista::buscarCategoria(QString nombreUsuario, QString contrasegna)
         busqueda.first();
 
         QSqlQuery puesto;
-        puesto.prepare("SELECT idCategoria FROM empleado WHERE "
+        puesto.prepare("SELECT idPuesto FROM empleado WHERE "
                        "idEmpleado = " + busqueda.value(0).toString() + "");
         puesto.exec();
         puesto.first();
