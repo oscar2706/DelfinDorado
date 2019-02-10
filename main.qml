@@ -93,6 +93,7 @@ ApplicationWindow{
                         }
                         else
                         {
+                            console.log(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                             switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                             {
                             case 0:
@@ -101,10 +102,28 @@ ApplicationWindow{
                                 txtContrasegna.clear()
                             break;
                             case 1:
+                                //gerente
                                 mainWindowGerente.show()
-                                ventanaError.close()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                            break;
+                            case 2:
+                                //cocinero
+                            break;
+                            case 3:
+                                //mesero
+                                mainWindowMesero.show()
+                                txtUsuario.clear()
+                                txtContrasegna.clear()
+                            break;
+                            case 4:
+                                //anfitrion
+                                mainWindowAnfitrion.show()
+                                txtUsuario.clear()
+                                txtContrasegna.clear()
+                            break;
+                            case 5:
+                                //anfitrion
                             break;
                             default:
                                 lblVentanaError.text = "Error Desconocido"
@@ -132,6 +151,7 @@ ApplicationWindow{
                         }
                         else
                         {
+                            console.log(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                             switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                             {
                             case 0:
@@ -140,10 +160,28 @@ ApplicationWindow{
                                 txtContrasegna.clear()
                             break;
                             case 1:
+                                //gerente
                                 mainWindowGerente.show()
-                                ventanaError.close()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                            break;
+                            case 2:
+                                //cocinero
+                            break;
+                            case 3:
+                                //mesero
+                                mainWindowMesero.show()
+                                txtUsuario.clear()
+                                txtContrasegna.clear()
+                            break;
+                            case 4:
+                                //anfitrion
+                                mainWindowAnfitrion.show()
+                                txtUsuario.clear()
+                                txtContrasegna.clear()
+                            break;
+                            case 5:
+                                //anfitrion
                             break;
                             default:
                                 lblVentanaError.text = "Error Desconocido"
@@ -183,6 +221,17 @@ ApplicationWindow{
                     title: qsTr("Gerente")
                     visible: false
                 }
+                MainWindowAnfitrion{
+                    id: mainWindowAnfitrion
+                    title: qsTr("Anfitrion")
+                    visible: false
+                }
+                MainWindowMesero
+                {
+                    id: mainWindowMesero
+                    title: qsTr("Mesero")
+                    visible: false
+                }
                 onClicked:
                 {
                     if(txtUsuario.text==""||txtContrasegna.text=="")
@@ -191,6 +240,7 @@ ApplicationWindow{
                     }
                     else
                     {
+                        console.log(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                         switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
                         {
                         case 0:
@@ -199,9 +249,28 @@ ApplicationWindow{
                             txtContrasegna.clear()
                         break;
                         case 1:
+                            //gerente
                             mainWindowGerente.show()
                             txtUsuario.clear()
                             txtContrasegna.clear()
+                        break;
+                        case 2:
+                            //cocinero
+                        break;
+                        case 3:
+                            //mesero
+                            mainWindowMesero.show()
+                            txtUsuario.clear()
+                            txtContrasegna.clear()
+                        break;
+                        case 4:
+                            //anfitrion
+                            mainWindowAnfitrion.show()
+                            txtUsuario.clear()
+                            txtContrasegna.clear()
+                        break;
+                        case 5:
+                            //anfitrion
                         break;
                         default:
                             lblVentanaError.text = "Error Desconocido"

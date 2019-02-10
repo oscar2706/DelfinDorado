@@ -100,6 +100,7 @@ Item {
                         onClicked:
                         {
                             form_Empleado.idUsuario = "0"
+                            form_Empleado.idUsuarioInt = 0
                             form_Empleado.show()
                         }
                     }
@@ -135,9 +136,12 @@ Item {
                             if(idUsuario!="")
                             {
                                 form_Empleado.idUsuario = idUsuario
-                                console.log(empleadoLista.visualizarImg(parseInt(idUsuario)))
+                                form_Empleado.idUsuarioInt = parseInt(idUsuario)
+                                console.log("idUsuario: " + form_Empleado.idUsuario)
+                                console.log("idUsuarioInt: " + form_Empleado.idUsuarioInt)
+                                //console.log(empleadoLista.visualizarImg(parseInt(idUsuario)))
                                 form_Empleado.show()
-                                console.log(form_Empleado.idUsuarioInt)
+                                //console.log(form_Empleado.idUsuarioInt)
                                 empleadoSeleccionado = ""
                             }
                             else

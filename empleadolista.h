@@ -44,7 +44,7 @@ public:
 
     //cargado de imagenes
     Q_INVOKABLE void insertarBD(QString, QString);
-    Q_INVOKABLE QString visualizarImg(int);
+    //Q_INVOKABLE QString visualizarImg(int);
 
 signals:
     void preItemAppended();
@@ -73,6 +73,8 @@ public slots:
     QString getSeguroSocial(QString id);
     QString getUsuario(QString id);
     QString getContrasegna(QString id);
+
+    QString visualizarImg(QString);
 
     void altaUsuario(QString, QString, QString, QString, QString, QString, QString, QString, QString, int, QString, QString, QString);
     void modificaUsuario(QString, QString, QString, QString, QString, QString,

@@ -3,12 +3,14 @@
         <file>main.qml</file>
         <file>MainWindowGerente.qml</file>
         <file>Formulario_Empleado.qml</file>
-        <file>TablaEmpleados.qml</file>
         <file>Gerente_TabEmpleados.qml</file>
         <file>Gerente_TabAlmacen.qml</file>
-        <file>Gerente_InformacionCompleta.qml</file>
         <file>Gerente_TabMenu.qml</file>
         <file>Menu_EditarPlatillo.qml</file>
         <file>Menu_RegistrarPlatillo.qml</file>
+        <file>Formulario_Asignar.qml</file>
+        <file>MainWindowAnfitrion.qml</file>
+        <file>MainWindowMesero.qml</file>
+        <file>Mesa.qml</file>
     </qresource>
 </RCC>

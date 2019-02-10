@@ -30,26 +30,26 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
         ToDoItem empleadoEncontrado;
 
         empleadoEncontrado.idEmpleado = queryConsulta.value(0).toString();
-        qDebug() << "Id: " <<  empleadoEncontrado.idEmpleado;
+        //qDebug() << "Id: " <<  empleadoEncontrado.idEmpleado;
         empleadoEncontrado.nombreEmpleado = queryConsulta.value(1).toString() + " " + queryConsulta.value(2).toString() +
                                             " " + queryConsulta.value(3).toString();
-        qDebug() << "Nombre: " << empleadoEncontrado.nombreEmpleado;
+        //qDebug() << "Nombre: " << empleadoEncontrado.nombreEmpleado;
         empleadoEncontrado.apellidoPaterno = queryConsulta.value(2).toString();
         empleadoEncontrado.apellidoMaterno = queryConsulta.value(3).toString();
         empleadoEncontrado.rfc = queryConsulta.value(4).toString();
-        qDebug() << "RFC: " << empleadoEncontrado.rfc;
+        //qDebug() << "RFC: " << empleadoEncontrado.rfc;
         empleadoEncontrado.seguroSocial = queryConsulta.value(5).toString();
-        qDebug() << "Seguro Social: " << empleadoEncontrado.seguroSocial;
+        //qDebug() << "Seguro Social: " << empleadoEncontrado.seguroSocial;
         empleadoEncontrado.fechaNacimiento = queryConsulta.value(6).toString();
-        qDebug() << "Fecha Nacimiento: " << empleadoEncontrado.fechaNacimiento;
+        //qDebug() << "Fecha Nacimiento: " << empleadoEncontrado.fechaNacimiento;
         empleadoEncontrado.sueldo = queryConsulta.value(7).toString();
-        qDebug() << "Sueldo: " << empleadoEncontrado.sueldo;
+        //qDebug() << "Sueldo: " << empleadoEncontrado.sueldo;
 
-        empleadoEncontrado.foto = visualizarImg(queryConsulta.value(0).toInt());
-        qDebug() << "Foto: " << empleadoEncontrado.foto;
+        empleadoEncontrado.foto = visualizarImg(queryConsulta.value(0).toString());
+        //qDebug() << "Foto: " << empleadoEncontrado.foto;
 
         empleadoEncontrado.telefono = queryConsulta.value(9).toString();
-        qDebug() << "Telefono: " << empleadoEncontrado.telefono;
+        //qDebug() << "Telefono: " << empleadoEncontrado.telefono;
 
         switch (queryConsulta.value(10).toInt()) {
         case 1:
@@ -70,7 +70,7 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
         default:
             break;
         }
-        qDebug() << "Puesto: " << empleadoEncontrado.puestoEmpleado;
+        //qDebug() << "Puesto: " << empleadoEncontrado.puestoEmpleado;
 
         if(queryConsulta.value(11).toInt() == 1)
         {
@@ -80,13 +80,13 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
         {
             empleadoEncontrado.sexo = "Femenino";
         }
-        qDebug() << "Sexo: " << empleadoEncontrado.sexo;
+        //qDebug() << "Sexo: " << empleadoEncontrado.sexo;
 
         empleadoEncontrado.usuario = queryUsuario.value(1).toString();
-        qDebug() << "Usuario: " << empleadoEncontrado.usuario;
+        //qDebug() << "Usuario: " << empleadoEncontrado.usuario;
         empleadoEncontrado.contrasegna = queryUsuario.value(2).toString();
-        qDebug() << "Contraseña: " << empleadoEncontrado.contrasegna;
-        qDebug() << "-----------------------------------------------";
+        //qDebug() << "Contraseña: " << empleadoEncontrado.contrasegna;
+        //qDebug() << "-----------------------------------------------";
 
         empleadoEncontrado.eleccionEmpleado = false;
 
@@ -267,122 +267,218 @@ QString EmpleadoLista::getDato(QString comprobacion)
 
 QString EmpleadoLista::getNombre(QString id)
 {
+    qDebug() << "Entra nombre";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT nombre FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getApellidoPaterno(QString id)
 {
+    qDebug() << "Entra apeP";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT apellidoPaterno FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getApellidoMaterno(QString id)
 {
+    qDebug() << "Entra apM";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT apellidoMaterno FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getFechaNacimiento(QString id)
 {
+    qDebug() << "Entra fecha";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT fechaNacimiento FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getSexo(QString id)
 {
+    qDebug() << "Entra sexo";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT idSexo FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 int EmpleadoLista::getPuesto(QString id)
 {
+    qDebug() << "Entra puesto";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT idCategoria FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toInt();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toInt();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return 0;
+    }
 }
 
 QString EmpleadoLista::getTelefono(QString id)
 {
+    qDebug() << "Entra telefono";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT telefono FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getSalario(QString id)
 {
+    qDebug() << "Entra salario";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT sueldo FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getRFC(QString id)
 {
+    qDebug() << "Entra rfc";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT rfc FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getSeguroSocial(QString id)
 {
+    qDebug() << "Entra ss";
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT seguroSocial FROM empleado WHERE idEmpleado = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getUsuario(QString id)
 {
+    qDebug() << "Entra usuario";
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT usuario FROM usuario WHERE idUsuario = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
+    obtenerDato.prepare("SELECT usuario FROM usuario WHERE idEmpleado = " + id);
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 QString EmpleadoLista::getContrasegna(QString id)
 {
+    qDebug() << "Entra contrasegna";
     QSqlQuery obtenerDato;
-    obtenerDato.prepare("SELECT contrasena FROM usuario WHERE idUsuario = " + id);
-    obtenerDato.exec();
-    obtenerDato.first();
+    obtenerDato.prepare("SELECT contrasena FROM usuario WHERE idEmpleado = " + id);
 
-    return obtenerDato.value(0).toString();
+    if(obtenerDato.exec())
+    {
+        obtenerDato.first();
+        return obtenerDato.value(0).toString();
+    }
+    else
+    {
+        qDebug() << obtenerDato.lastError();
+        return "";
+    }
 }
 
 void EmpleadoLista::altaUsuario(QString Nombre, QString ApellidoPaterno, QString ApellidoMaterno, QString Sexo,
@@ -575,7 +671,7 @@ int EmpleadoLista::buscarCategoria(QString nombreUsuario, QString contrasegna)
         puesto.exec();
         puesto.first();
 
-        //qDebug() << "Sale " << puesto.value(0).toString();
+        qDebug() << "Sale " << puesto.value(0).toString();
 
         return puesto.value(0).toInt();
     }
@@ -596,25 +692,26 @@ void EmpleadoLista::insertarBD(QString urlEnviada, QString idEmpleado)
         qDebug ()<<"ERROR EN LA INSERCION: "<<insert.lastError().text();
 }
 
-QString EmpleadoLista::visualizarImg(int id_foto)
+QString EmpleadoLista::visualizarImg(QString id_foto)
 {
     //qDebug() << "Imagen: entra";
-    QSqlQuery select;
-    if(select.exec("SELECT foto FROM empleado WHERE idEmpleado = " + QString::number(id_foto) + ""))
-    {
-        //qDebug() << "Imagen: query";
-        select.next();
+    QSqlQuery busqueda;
+    busqueda.exec("SELECT foto FROM empleado WHERE idEmpleado = " + id_foto + "");
 
+        qDebug() << "entra foto";
+        //qDebug() << "Imagen: query";
+        busqueda.next();
             //qDebug() << "Imagen: registro";
-            if(select.value(0).toByteArray()!=nullptr)
+            if(busqueda.value(0).toByteArray()!=nullptr)
             {
                  QImage myImage;
-                 QByteArray bArray=select.value(0).toByteArray();
+                 QByteArray bArray=busqueda.value(0).toByteArray();
                  QBuffer buffer(&bArray);
                  buffer.open(QIODevice::WriteOnly);
                  myImage.save(&buffer, "JPEG");
                  QString image("data:image/jpg;base64,");
-                 //qDebug() << "Imagen: " << image;
+                 //qDebug() << "Imagen: " << image << "\nExtra: ";
+                 //qDebug() << QString::fromLatin1(bArray.toBase64().data());
                  image.append(QString::fromLatin1(bArray.toBase64().data()));
                  //qDebug() << "Imagen: " << image;
                  return image;
@@ -624,9 +721,13 @@ QString EmpleadoLista::visualizarImg(int id_foto)
                 //qDebug() << "Imagen: sale";
                 return "";
             }
-    }
-    else
+        /*else
+        {
+            return "";
+        }*/
+
+    /*else
     {
         return "";
-    }
+    }*/
 }

@@ -235,8 +235,8 @@ Window {
                         imagenTrabajador.source = ""
                         btnImagen.url = ""
 
-                        confirmarSalida.close()
                         form_Empleado.close()
+                        confirmarSalida.close()
                     }
                 }
                 Button
@@ -332,9 +332,10 @@ Window {
                     id: imagenTrabajador
                     width: 200
                     height: 200
+                    cache: false
                     x: 25
                     anchors.left: parent.left
-                    source: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuarioInt)
+                    source: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuario)
                 }
 
                 Button
@@ -344,7 +345,7 @@ Window {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.margins: 0
-                    property string url: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuarioInt)
+                    property string url: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuario)
                     onClicked:
                     {
                         openDialog.open();
@@ -426,7 +427,9 @@ Window {
                     RadioButton
                     {
                         id: radiobtnMasculino
-                        checked: if(idUsuario=="0")
+                        checked:
+                        {
+                            if(idUsuario=="0")
                                  {
                                      return true;
                                  }
@@ -441,14 +444,16 @@ Window {
                                         return false;
                                     }
                                  }
-
+                        }
                         text: "Masculino"
                     }
 
                     RadioButton
                     {
                         id: radiobtnFemenino
-                        checked: if(idUsuario=="0")
+                        checked:
+                        {
+                                 if(idUsuario=="0")
                                  {
                                      return false;
                                  }
@@ -463,6 +468,7 @@ Window {
                                         return false;
                                     }
                                  }
+                        }
                         text: "Femenino"
                     }
 

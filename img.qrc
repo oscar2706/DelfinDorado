@@ -13,5 +13,22 @@
         <file>img/back_White.png</file>
         <file>img/exit_Blue.png</file>
         <file>img/exit_White.png</file>
+        <file>img/asignar.png</file>
+        <file>img/atendido.png</file>
+        <file>img/cobrada.png</file>
+        <file>img/cocina.jpg</file>
+        <file>img/editar.png</file>
+        <file>img/fondoPiso.jpg</file>
+        <file>img/jardin.jpg</file>
+        <file>img/MesaChica_Disponible.png</file>
+        <file>img/MesaChica_Ocupada.png</file>
+        <file>img/MesaChica_Sucia.png</file>
+        <file>img/MesaGrande_Ocupada.png</file>
+        <file>img/MesaGrande_Sucia.png</file>
+        <file>img/MesaGrandeDisponible.png</file>
+        <file>img/pendiente.png</file>
+        <file>img/salir.png</file>
+        <file>img/sanitario.png</file>
+        <file>img/visualizar.png</file>
     </qresource>
 </RCC>
