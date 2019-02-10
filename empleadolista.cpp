@@ -3,10 +3,12 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
-    /*db.setUserName("root");
-    db.setPassword("");*/
+    db.setUserName("root");
+    db.setPassword("");
+    /*
     db.setUserName("Leonardo");
     db.setPassword("football26398");
+    */
     db.setDatabaseName("dorado");
     if(db.open()){
         QSqlQuery query;

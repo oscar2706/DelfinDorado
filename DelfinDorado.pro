@@ -17,7 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     empleadolista.cpp \
-    empleadomodelo.cpp
+    empleadomodelo.cpp \
+    platillo.cpp \
+    platillomodel.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -35,4 +37,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     empleadolista.h \
-    empleadomodelo.h
+    empleadomodelo.h \
+    platillo.h \
+    platillomodel.h

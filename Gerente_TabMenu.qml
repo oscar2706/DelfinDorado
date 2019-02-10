@@ -249,39 +249,64 @@ Item
                 spacing: 0
                 clip: true
                 focus: true
-                model: modelo
+                model: modeloPlatillos
                 delegate: Component {
                     Item{
                         width: parent.width
-                        height: 50
+                        height: 300
                         MouseArea{
                             anchors.fill: parent
-                            GridLayout{
+                            ColumnLayout{
                                 anchors.fill: parent
-                                columns: 3
-                                CheckBox{
-                                    Layout.alignment: Qt.AlignLeft
-                                }
-                                Text{
-                                    Layout.minimumWidth: 250
-                                    Layout.maximumWidth: 250
-                                    leftPadding: 0
+                                //columns: 3
+                                TextField{
                                     font.family: "Verdana"
                                     font.pointSize: 10
+                                    text: model.id
                                 }
-                                Text{
-                                    Layout.minimumWidth: 200
-                                    Layout.maximumWidth: 200
-                                    leftPadding: 0
+                                TextField{
                                     font.family: "Verdana"
                                     font.pointSize: 10
+                                    text: model.name
+                                    onEditingFinished: {
+                                        model.name = text
+
+                                    }
                                 }
-                            }
-                            onClicked: {
-                                tablaPlatillos.currentIndex = index
-                                selectedEmploye = index
-                                nombre = model.nombreEmpleado
-                                cargo = model.puestoEmpleado
+                                Image
+                                {
+                                    width: 50
+                                    height: 50
+                                    Layout.maximumHeight: 50
+                                    Layout.maximumWidth: 50
+                                    fillMode: Image.PreserveAspectFit
+                                    Layout.alignment: Qt.AlignHLeft | Qt.AlignVCenter
+                                    antialiasing: true
+                                    source: model.image
+                                    Material.elevation: 1
+                                }
+                                TextField{
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                    text: model.price
+                                    onEditingFinished: model.price = text
+                                }
+                                TextField{
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                    text: model.description
+                                    onEditingFinished: model.description = text
+                                }
+                                TextField{
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                    text: model.category
+                                }
+                                TextField{
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                    text: model.status
+                                }
                             }
                         }
                     }
@@ -342,8 +367,7 @@ Item
                 font.family: "Verdana"
                 font.pointSize: 12
                 font.bold: false
-
-                text: nombre
+                text: "nombre"
             }
             Text{
                 anchors.top: parent.top
@@ -355,8 +379,7 @@ Item
                 font.family: "Verdana"
                 font.pointSize: 12
                 font.bold: false
-
-                text: cargo
+                text: "cargo"
             }
         }
     }
