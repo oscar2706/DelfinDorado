@@ -8,11 +8,18 @@ import QtQml.Models 2.3
 
 Item
 {
+    property int selectedEmploye: -1
+    property string nombre: ""
+    property string foto: ""
+    property string precio: ""
+    property string descripcion: ""
+    property string categoria: ""
+    property string estado: ""
+
     id: element
     visible: true
     width: 1366
     height: 720
-
     Pane
     {
         id: fondo
@@ -83,14 +90,23 @@ Item
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
 
+                        onClicked:
+                        {
+                            form_Platillo.openDialog();
+                        }
                         Menu_RegistrarPlatillo
                         {
                             id: form_Platillo
+                            onInputAccepted:{
+                                var pathFoto;
+                                pathFoto = d_url.toString();
+                                pathFoto = pathFoto.replace(/^(file:\/{3})/,"");
+
+                                modeloPlatillos.addPlatillo(d_nombre, pathFoto , d_precio, d_descripcion, d_categoria, d_estado)
+                                clearDialog()
+                            }
                         }
-                        onClicked:
-                        {
-                            form_Platillo.show()
-                        }
+
                     }
                 }
                 RowLayout
@@ -110,6 +126,7 @@ Item
                     Button
                     {
                         text: "Editar"
+                        font.family: "Verdana"
                         font.weight: Font.DemiBold
                         font.pointSize: 14
                         Layout.fillWidth: true
@@ -119,14 +136,66 @@ Item
                         Material.background: "#FFFFFF"
                         Material.elevation: 0
 
-                        Menu_EditarPlatillo
-                        {
-                            id: mod_Platillo
-                        }
-
                         onClicked:
                         {
-                            mod_Platillo.show()
+                            //edit_Platillo.setOldValues(tablaPlatillos.model.name)
+                            edit_Platillo.openDialog()
+                            //edit_Platillo.setDatosActuales(mode.name,model.price)
+                        }
+                        Menu_EditarPlatillo
+                        {
+                            id: edit_Platillo
+                            nombreActual: nombre
+                            precioActual: precio
+                            descripcionActual: descripcion
+                            categoriaActual: categoria
+                            estadoActual: estado
+                            fotoActual: foto
+
+                            onInputAccepted:{
+                                modeloPlatillos.modifyPlatillo(selectedEmploye, d_nombre, foto ,d_precio, d_descripcion, d_categoria, d_estado)
+                                clearDialog()
+                                /*nombre = ""
+                                precio = ""
+                                foto = ""
+                                descripcion = ""
+                                categoria = ""
+                                estado = ""*/
+                            }
+                        }
+
+                    }
+                }
+                RowLayout
+                {
+                    Image
+                    {
+                        id: iconDeleteDish
+                        width: 50
+                        height: 50
+                        Layout.maximumHeight: 50
+                        Layout.maximumWidth: 50
+                        fillMode: Image.PreserveAspectFit
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                        antialiasing: true
+                        source: "img/removeMenu.png"
+                    }
+                    Button
+                    {
+                        text: "Remover"
+                        font.family: "Verdana"
+                        font.weight: Font.DemiBold
+                        font.pointSize: 14
+                        Layout.fillWidth: true
+                        font.capitalization: Font.MixedCase
+                        focusPolicy: Qt.StrongFocus
+                        display: AbstractButton.TextBesideIcon
+                        Material.background: "#FFFFFF"
+                        Material.elevation: 0
+                        onClicked:
+                        {
+                            //modeloPlatillos.modifyPlatillo(4,"Pasta");
+                            modeloPlatillos.removePlatillo(selectedEmploye)
                         }
                     }
                 }
@@ -218,67 +287,6 @@ Item
                 clip: true
                 focus: true
                 model: modeloPlatillos
-                delegate: Component {
-                    Item{
-                        width: parent.width
-                        height: 300
-                        MouseArea{
-                            anchors.fill: parent
-                            ColumnLayout{
-                                anchors.fill: parent
-                                //columns: 3
-                                TextField{
-                                    font.family: "Verdana"
-                                    font.pointSize: 10
-                                    text: model.id
-                                }
-                                TextField{
-                                    font.family: "Verdana"
-                                    font.pointSize: 10
-                                    text: model.name
-                                    onEditingFinished: {
-                                        model.name = text
-
-                                    }
-                                }
-                                Image
-                                {
-                                    width: 50
-                                    height: 50
-                                    Layout.maximumHeight: 50
-                                    Layout.maximumWidth: 50
-                                    fillMode: Image.PreserveAspectFit
-                                    Layout.alignment: Qt.AlignHLeft | Qt.AlignVCenter
-                                    antialiasing: true
-                                    source: model.image
-                                    Material.elevation: 1
-                                }
-                                TextField{
-                                    font.family: "Verdana"
-                                    font.pointSize: 10
-                                    text: model.price
-                                    onEditingFinished: model.price = text
-                                }
-                                TextField{
-                                    font.family: "Verdana"
-                                    font.pointSize: 10
-                                    text: model.description
-                                    onEditingFinished: model.description = text
-                                }
-                                TextField{
-                                    font.family: "Verdana"
-                                    font.pointSize: 10
-                                    text: model.category
-                                }
-                                TextField{
-                                    font.family: "Verdana"
-                                    font.pointSize: 10
-                                    text: model.status
-                                }
-                            }
-                        }
-                    }
-                }
                 highlight: Button {
                     id: btn
                     Material.background: "#cfd8dc"
@@ -289,6 +297,55 @@ Item
                 highlightFollowsCurrentItem: true
                 removeDisplaced: Transition {
                     NumberAnimation { properties: "x,y"; duration: 300 }
+                }
+                delegate: Component {
+                    Item{
+                        width: parent.width
+                        height: 50
+                        MouseArea{
+                            anchors.fill: parent
+                            GridLayout{
+                                anchors.fill: parent
+                                columns: 2
+                                /*CheckBox{
+                                    Layout.alignment: Qt.AlignLeft
+                                    checked: model.eleccionEmpleado
+                                    onClicked: {
+                                        model.eleccionEmpleado = checked
+                                        tablaEmpleados.currentIndex = index
+                                        selectedEmploye = index
+                                    }
+                                }*/
+                                Text{
+                                    Layout.minimumWidth: 250
+                                    Layout.maximumWidth: 250
+                                    leftPadding: 0
+                                    text: model.name
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                                Text{
+                                    Layout.minimumWidth: 200
+                                    Layout.maximumWidth: 200
+                                    leftPadding: 0
+                                    text: model.price
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                            }
+                            onClicked: {
+                                tablaPlatillos.currentIndex = index
+                                selectedEmploye = index
+
+                                nombre = model.name
+                                foto = model.image
+                                precio = model.price
+                                descripcion = model.description
+                                categoria = model.category
+                                estado = model.status
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -317,7 +374,7 @@ Item
                 Label{
                     width: 10
                     color: "#006677"
-                    text: "Datos del empleado: "
+                    text: "Infomración del platillo: "
                     font.weight: Font.Bold
                     font.family: "Verdana"
                     font.pointSize: 12
@@ -325,29 +382,98 @@ Item
                 }
             }
 
-            Text{
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
+            Pane
+            {
+                id: infoPlatillo
+                font.weight: Font.DemiBold
+                font.pointSize: 12
+                font.family: "Verdana"
+                Material.elevation: 5
+                Material.background: "#ffffff"
                 anchors.topMargin: 60
-
-                font.weight: Font.Medium
-                font.family: "Verdana"
-                font.pointSize: 12
-                font.bold: false
-                text: "nombre"
-            }
-            Text{
-                anchors.top: parent.top
-                anchors.topMargin: 100
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.top: parent.top
 
-                font.weight: Font.Medium
-                font.family: "Verdana"
-                font.pointSize: 12
-                font.bold: false
-                text: "cargo"
+                Image
+                {
+                    width: 150
+                    height: 150
+                    source: foto
+                    anchors.top: parent.top
+                    anchors.topMargin: 5
+                    Material.elevation: 1
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 5
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.topMargin: 65
+                    x: 200
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: "Nombre: "+nombre
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.topMargin: 85
+                    x: 200
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: "Precio: "+precio
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 180
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: "Descripcion: "+descripcion
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 240
+
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: "Categoria: "+categoria
+                }
+                Text{
+                    anchors.top: parent.top
+                    anchors.topMargin: 300
+                    anchors.left: parent.left
+                    font.weight: Font.Medium
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    font.bold: false
+                    Material.elevation: 1
+
+                    text: "Estado: "+estado
+                }
             }
         }
     }

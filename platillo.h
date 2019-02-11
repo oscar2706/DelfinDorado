@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QImage>
+#include <QFile>
+#include <QBuffer>
 
 class Platillo : public QObject
 {
@@ -10,7 +13,7 @@ class Platillo : public QObject
     Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString image READ image WRITE setImage NOTIFY imageChanged)
-    Q_PROPERTY(QString price READ price WRITE setPrice NOTIFY priceChanged)
+    Q_PROPERTY(float price READ price WRITE setPrice NOTIFY priceChanged)
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
     Q_PROPERTY(QString category READ category WRITE setCategory NOTIFY categoryChanged)
     Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)

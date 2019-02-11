@@ -36,17 +36,23 @@ public:
 
     void addPlatillo(Platillo *nuevoPlatillo);
 
-    void printPlatillos();
     //Metodos accesibles en QML
     Q_INVOKABLE void addPlatillo();
-    Q_INVOKABLE void addPlatillo(const QString &name, const QString &price);
+    Q_INVOKABLE void addPlatillo(const QString &name, const QString &url, const QString &price, const QString &description, const QString &category, const QString &status);
+    Q_INVOKABLE void modifyPlatillo(const int id, const QString &name, const QString &url, const QString &price, const QString &description, const QString &category, const QString &status);
     Q_INVOKABLE void removePlatillo(int index);
     Q_INVOKABLE void removeLastPlatillo();
-signals:
+    Q_INVOKABLE QString byteArrayToString(QByteArray &img);
 
-public slots:
 private:
-    QString byteArrayToString(QByteArray &img);
+    bool insertPlatilloInDataBase(Platillo *platilloToSave);
+    bool deletePlatilloInDataBase(Platillo *platilloToDelete);
+    bool updatePlatilloInDataBase(Platillo *platilloToUpdate);
+
+    int getIdCategoria(QString categoria);
+    int getIdEstado(QString estado);
+    void printPlatillos();
+
     QList<Platillo *>::iterator itr;
     QList<Platillo*> misPlatilos;
 };

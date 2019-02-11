@@ -99,6 +99,18 @@ void Platillo::setImage(QString image)
         return;
 
     m_image = image;
+    /*
+    QFile imgArchivo(m_image);
+    imgArchivo.open(QIODevice::ReadOnly);
+    QByteArray bytesFoto=imgArchivo.readAll();
+    QImage myImage;
+    QBuffer buffer(&bytesFoto);
+    buffer.open(QIODevice::WriteOnly);
+    myImage.save(&buffer, "JPEG");
+    QString imageLoaded("data:image/jpg;base64,");
+    imageLoaded.append(QString::fromLatin1(bytesFoto.toBase64().data()));
+    m_image = imageLoaded;
+    */
     emit imageChanged(m_image);
 }
 
