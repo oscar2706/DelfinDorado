@@ -8,7 +8,7 @@ import QtQuick.Controls 1.4 as Fecha
 
 Window {
     id: formulario
-    width: 700
+    width: 750
     height: 400
     color: "#0aa0c1"
     modality: Qt.WindowModal
@@ -19,13 +19,62 @@ Window {
         height: 60
         id: mensajeExitoso
         Material.background: "#006677"
-        x: 350
-        y: 500
+        x: 275
+        y: 300
 
         Label
         {
-            text: "Producto Registrado Exitosamente"
+            text: "Cambios Guardados Exitosamente"
             color: "white"
+        }
+    }
+
+    Popup
+    {
+        id: nombreFaltante
+        width: 150
+        height: 35
+        Material.background: "#DBAB0D"
+        x: 420
+        y: 85
+
+        Label
+        {
+            id: lblNombreFaltante
+            text: "Nombre incompleto"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        id: descripcionFaltante
+        width: 166
+        height: 35
+        Material.background: "#DBAB0D"
+        x: 407
+        y: 135
+
+        Label
+        {
+            id: lblDescripcionFaltante
+            text: "Descripcion incompleta"
+            color: "black"
+        }
+    }
+    Popup
+    {
+        id: precioFaltante
+        width: 140
+        height: 35
+        Material.background: "#DBAB0D"
+        x: 425
+        y: 245
+
+        Label
+        {
+            id: lblPrecioFaltante
+            text: "Precio incompleto"
+            color: "black"
         }
     }
 
@@ -39,6 +88,30 @@ Window {
         Material.accent: "#008d96"
         Material.foreground: "#008d96"
         Material.background: "#FFFFFF"
+
+        Image
+        {
+            id: btnRegresar
+            source: "img/back_Blue.png"
+            anchors.left: parent.left
+            anchors.top: parent.top
+            width: 40
+            height: 40
+
+            MouseArea
+            {
+                anchors.fill: parent
+                onClicked:
+                {
+                    txtNombre.clear()
+                    txtDescripcion.clear()
+                    seleccionCategoria.currentIndex=0
+                    txtSalario.clear()
+                    formulario.close()
+                }
+            }
+        }
+
         RowLayout
         {
             id: filaPanel
@@ -52,12 +125,6 @@ Window {
                 enabled: true
                 spacing: 20
 
-                /*Image {
-                    id: imagenTrabajador
-                    source: "Imagenes/foto"
-                    width: 300
-                    height: 300
-                }*/
                 Rectangle
                 {
                     id: imagenTrabajador
@@ -87,11 +154,6 @@ Window {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 //Layout.fillHeight: true
                 Layout.fillWidth: true
-                //anchors.top: parent.top
-                //anchors.bottom: parent.bottom
-                //anchors.topMargin: 40
-                //anchors.bottomMargin: 10
-                //spacing: 10
 
                 Text {
                     id: text1
@@ -154,12 +216,44 @@ Window {
                     {
                         id:btnRegistrar
                         text: "Guardar"
-                        //Material.accent: "#008d96"
                         Material.foreground: "#FFFFFF"
                         Material.background: "#008d96"
                         onClicked:
                         {
-                            mensajeExitoso.open()
+                            var camposCorrectos = 0
+
+                            if(txtNombre.text=="")
+                            {
+                                nombreFaltante.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtDescripcion.text=="")
+                            {
+                                descripcionFaltante.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+                            if(txtSalario.text=="")
+                            {
+                                precioFaltante.open()
+                            }
+                            else
+                            {
+                                camposCorrectos++;
+                            }
+
+                            if(camposCorrectos==3)
+                            {
+                                mensajeExitoso.open()
+                                txtNombre.clear()
+                                txtDescripcion.clear()
+                                txtSalario.clear()
+                            }
                         }
                     }
                     Button
@@ -174,15 +268,6 @@ Window {
                 }
 
             }
-        }
-
-        Image {
-            id: image
-            x: 11
-            y: 144
-            width: 195
-            height: 190
-            //source: "img/mari.jpg"
         }
     }
 }

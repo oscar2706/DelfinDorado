@@ -264,9 +264,10 @@ Window {
         {
             id: btnRegresar
             source: "img/back_Blue.png"
+            anchors.left: parent.left
+            anchors.top: parent.top
             width: 40
             height: 40
-            x: 0
 
             MouseArea
             {
@@ -364,7 +365,7 @@ Window {
                     id: txtNombre
                     placeholderText: "Nombre"
                     Layout.fillWidth: parent
-                    text: idUsuario=="0" ? "" : empleadoLista.getNombre(idUsuario)
+                    text: empleadoLista.getNombre(idUsuario)
                 }
 
                 TextField
@@ -372,7 +373,7 @@ Window {
                     id: txtApellidoPaterno
                     placeholderText: "Apellido Paterno"
                     Layout.fillWidth: parent
-                    text: idUsuario=="0" ? "" : empleadoLista.getApellidoPaterno(idUsuario)
+                    text: empleadoLista.getApellidoPaterno(idUsuario)
                 }
 
                 TextField
@@ -380,7 +381,7 @@ Window {
                     id: txtApellidoMaterno
                     placeholderText: "Apellido Materno"
                     Layout.fillWidth: parent
-                    text: idUsuario=="0" ? "" : empleadoLista.getApellidoMaterno(idUsuario)
+                    text: empleadoLista.getApellidoMaterno(idUsuario)
                 }
 
                 RowLayout
@@ -394,7 +395,7 @@ Window {
                         Material.background: "#FFFFFF"
                         Material.foreground: "#000000"
                         Material.elevation: 0
-                        text: idUsuario=="0" ? "Fecha de Nacimiento" : empleadoLista.getFechaNacimiento(idUsuario)
+                        text: empleadoLista.getFechaNacimiento(idUsuario)
                         antialiasing: true
                         onClicked: ventanaFechaNacimiento.open()
 
@@ -477,7 +478,7 @@ Window {
                         id: seleccionCategoria
                         model: ["Gerente", "Cocinero", "Mesero", "Anfitrión", "Ayudante de Mesero"]
                         Layout.fillWidth: true
-                        currentIndex: idUsuario=="0" ? 0 : (empleadoLista.getPuesto(idUsuario)-1)
+                        currentIndex: (empleadoLista.getPuesto(idUsuario)-1)
                     }
                 }
 
@@ -491,7 +492,7 @@ Window {
                         id: txtTelefono
                         placeholderText: "Tel/Cel"
                         Layout.fillWidth: parent
-                        text: idUsuario=="0" ? "" : empleadoLista.getTelefono(idUsuario)
+                        text: empleadoLista.getTelefono(idUsuario)
                     }
 
                     TextField
@@ -499,7 +500,7 @@ Window {
                         id: txtSalario
                         placeholderText: "Salario"
                         Layout.fillWidth: parent
-                        text: idUsuario=="0" ? "" : empleadoLista.getSalario(idUsuario)
+                        text: empleadoLista.getSalario(idUsuario)
                     }
                 }
 
@@ -513,7 +514,7 @@ Window {
                         id: txtRFC
                         placeholderText: "RFC"
                         Layout.fillWidth: parent
-                        text: idUsuario=="0" ? "" : empleadoLista.getRFC(idUsuario)
+                        text: empleadoLista.getRFC(idUsuario)
                     }
 
                     TextField
@@ -521,7 +522,7 @@ Window {
                         id: txtSeguroSocial
                         placeholderText: "Numero Seguro Social"
                         Layout.fillWidth: parent
-                        text: idUsuario=="0" ? "" : empleadoLista.getSeguroSocial(idUsuario)
+                        text: empleadoLista.getSeguroSocial(idUsuario)
                     }
                 }
 
@@ -530,7 +531,7 @@ Window {
                     id: txtUsuario
                     placeholderText: "Usuario"
                     Layout.fillWidth: parent
-                    text: idUsuario=="0" ? "" : empleadoLista.getUsuario(idUsuario)
+                    text: empleadoLista.getUsuario(idUsuario)
                 }
 
                 TextField
@@ -539,7 +540,7 @@ Window {
                     echoMode: TextInput.Password
                     placeholderText: "Contraseña"
                     Layout.fillWidth: parent
-                    text: idUsuario=="0" ? "" : empleadoLista.getContrasegna(idUsuario)
+                    text: empleadoLista.getContrasegna(idUsuario)
                 }
 
                 TextField
@@ -548,7 +549,7 @@ Window {
                     echoMode: TextInput.Password
                     placeholderText: "Confirmación de la Contraseña"
                     Layout.fillWidth: parent
-                    text: idUsuario=="0" ? "" : empleadoLista.getContrasegna(idUsuario)
+                    text: empleadoLista.getContrasegna(idUsuario)
                 }
 
                 RowLayout

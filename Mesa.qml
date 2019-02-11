@@ -26,7 +26,7 @@ Item {
 
 
             onClicked:{
-                mainWindiwAsignar.show()
+                mainWindowAsignar.show()
             }
         }
     }

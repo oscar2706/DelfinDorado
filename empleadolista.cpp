@@ -3,12 +3,12 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
-    db.setUserName("root");
+    /*db.setUserName("root");
     db.setPassword("");
-    /*
+    */
     db.setUserName("Leonardo");
     db.setPassword("football26398");
-    */
+
     db.setDatabaseName("dorado");
     if(db.open()){
         QSqlQuery query;
@@ -269,7 +269,9 @@ QString EmpleadoLista::getDato(QString comprobacion)
 
 QString EmpleadoLista::getNombre(QString id)
 {
-    qDebug() << "Entra nombre";
+    //qDebug() << "Entra nombre";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT nombre FROM empleado WHERE idEmpleado = " + id);
 
@@ -283,11 +285,18 @@ QString EmpleadoLista::getNombre(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getApellidoPaterno(QString id)
 {
-    qDebug() << "Entra apeP";
+    //qDebug() << "Entra apeP";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT apellidoPaterno FROM empleado WHERE idEmpleado = " + id);
 
@@ -301,11 +310,18 @@ QString EmpleadoLista::getApellidoPaterno(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getApellidoMaterno(QString id)
 {
-    qDebug() << "Entra apM";
+    //qDebug() << "Entra apM";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT apellidoMaterno FROM empleado WHERE idEmpleado = " + id);
 
@@ -319,11 +335,18 @@ QString EmpleadoLista::getApellidoMaterno(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getFechaNacimiento(QString id)
 {
-    qDebug() << "Entra fecha";
+    //qDebug() << "Entra fecha";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT fechaNacimiento FROM empleado WHERE idEmpleado = " + id);
 
@@ -337,11 +360,18 @@ QString EmpleadoLista::getFechaNacimiento(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "Fecha de Nacimiento";
+    }
 }
 
 QString EmpleadoLista::getSexo(QString id)
 {
-    qDebug() << "Entra sexo";
+    //qDebug() << "Entra sexo";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT idSexo FROM empleado WHERE idEmpleado = " + id);
 
@@ -355,11 +385,18 @@ QString EmpleadoLista::getSexo(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "1";
+    }
 }
 
 int EmpleadoLista::getPuesto(QString id)
 {
-    qDebug() << "Entra puesto";
+    //qDebug() << "Entra puesto";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT idCategoria FROM empleado WHERE idEmpleado = " + id);
 
@@ -371,13 +408,20 @@ int EmpleadoLista::getPuesto(QString id)
     else
     {
         qDebug() << obtenerDato.lastError();
-        return 0;
+        return 1;
+    }
+    }
+    else
+    {
+        return 1;
     }
 }
 
 QString EmpleadoLista::getTelefono(QString id)
 {
-    qDebug() << "Entra telefono";
+    //qDebug() << "Entra telefono";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT telefono FROM empleado WHERE idEmpleado = " + id);
 
@@ -391,11 +435,18 @@ QString EmpleadoLista::getTelefono(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getSalario(QString id)
 {
-    qDebug() << "Entra salario";
+    //qDebug() << "Entra salario";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT sueldo FROM empleado WHERE idEmpleado = " + id);
 
@@ -409,11 +460,18 @@ QString EmpleadoLista::getSalario(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getRFC(QString id)
 {
-    qDebug() << "Entra rfc";
+    //qDebug() << "Entra rfc";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT rfc FROM empleado WHERE idEmpleado = " + id);
 
@@ -427,11 +485,18 @@ QString EmpleadoLista::getRFC(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getSeguroSocial(QString id)
 {
-    qDebug() << "Entra ss";
+    //qDebug() << "Entra ss";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT seguroSocial FROM empleado WHERE idEmpleado = " + id);
 
@@ -445,11 +510,18 @@ QString EmpleadoLista::getSeguroSocial(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getUsuario(QString id)
 {
-    qDebug() << "Entra usuario";
+    //qDebug() << "Entra usuario";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT usuario FROM usuario WHERE idEmpleado = " + id);
 
@@ -463,11 +535,18 @@ QString EmpleadoLista::getUsuario(QString id)
         qDebug() << obtenerDato.lastError();
         return "";
     }
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString EmpleadoLista::getContrasegna(QString id)
 {
-    qDebug() << "Entra contrasegna";
+    //qDebug() << "Entra contrasegna";
+    if(id!="0")
+    {
     QSqlQuery obtenerDato;
     obtenerDato.prepare("SELECT contrasena FROM usuario WHERE idEmpleado = " + id);
 
@@ -479,6 +558,11 @@ QString EmpleadoLista::getContrasegna(QString id)
     else
     {
         qDebug() << obtenerDato.lastError();
+        return "";
+    }
+    }
+    else
+    {
         return "";
     }
 }

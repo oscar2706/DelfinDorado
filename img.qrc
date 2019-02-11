@@ -18,7 +18,6 @@
         <file>img/cobrada.png</file>
         <file>img/cocina.jpg</file>
         <file>img/editar.png</file>
-        <file>img/fondoPiso.jpg</file>
         <file>img/jardin.jpg</file>
         <file>img/MesaChica_Disponible.png</file>
         <file>img/MesaChica_Ocupada.png</file>
@@ -30,5 +29,12 @@
         <file>img/salir.png</file>
         <file>img/sanitario.png</file>
         <file>img/visualizar.png</file>
+        <file>img/estufa.jpg</file>
+        <file>img/lavabo.jpg</file>
+        <file>img/pedido_anfitrion.png</file>
+        <file>img/entrada.jpg</file>
+        <file>img/barra.png</file>
+        <file>img/maceta.png</file>
+        <file>img/puerta.png</file>
     </qresource>
 </RCC>

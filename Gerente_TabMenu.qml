@@ -130,38 +130,6 @@ Item
                         }
                     }
                 }
-                RowLayout
-                {
-                    Image
-                    {
-                        id: iconDeleteDish
-                        width: 50
-                        height: 50
-                        Layout.maximumHeight: 50
-                        Layout.maximumWidth: 50
-                        fillMode: Image.PreserveAspectFit
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                        antialiasing: true
-                        source: "img/removeMenu.png"
-                    }
-                    Button
-                    {
-                        text: "Remover"
-                        font.weight: Font.DemiBold
-                        font.pointSize: 14
-                        Layout.fillWidth: true
-                        font.capitalization: Font.MixedCase
-                        focusPolicy: Qt.StrongFocus
-                        display: AbstractButton.TextBesideIcon
-                        Material.background: "#FFFFFF"
-                        Material.elevation: 0
-
-                        onClicked:
-                        {
-
-                        }
-                    }
-                }
             }
         }
     }

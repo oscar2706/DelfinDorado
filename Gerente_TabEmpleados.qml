@@ -130,18 +130,13 @@ Item {
 
                         onClicked:
                         {
-                            var idUsuario = ""
-                            idUsuario = empleadoSeleccionado
-
-                            if(idUsuario!="")
+                            if(empleadoSeleccionado!="")
                             {
-                                form_Empleado.idUsuario = idUsuario
-                                form_Empleado.idUsuarioInt = parseInt(idUsuario)
-                                console.log("idUsuario: " + form_Empleado.idUsuario)
-                                console.log("idUsuarioInt: " + form_Empleado.idUsuarioInt)
-                                //console.log(empleadoLista.visualizarImg(parseInt(idUsuario)))
+                                form_Empleado.idUsuario = empleadoSeleccionado
+                                form_Empleado.idUsuarioInt = parseInt(empleadoSeleccionado)
+                                console.log(empleadoSeleccionado)
                                 form_Empleado.show()
-                                //console.log(form_Empleado.idUsuarioInt)
+
                                 empleadoSeleccionado = ""
                             }
                             else
@@ -177,10 +172,7 @@ Item {
 
                         onClicked:
                         {
-                            var idUsuario = ""
-                            idUsuario = empleadoSeleccionado
-
-                            if(idUsuario!="")
+                            if(empleadoSeleccionado!="")
                                 confirmarEliminacion.open()
                             else
                             {
@@ -234,7 +226,6 @@ Item {
                     Layout.fillWidth: true
                     onClicked:
                     {
-                        var idUsuario = empleadoSeleccionado
                         empleadoLista.bajaUsuario(empleadoSeleccionado)
                         empleadoLista.removeCheckedItem(empleadoSeleccionado)
                         confirmarEliminacion.close()

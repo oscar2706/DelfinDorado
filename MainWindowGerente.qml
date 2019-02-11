@@ -45,6 +45,8 @@ Window {
         height: 60
         anchors.top: parent.top
         anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
         Layout.fillWidth: true
         //Material.background: Material.Teal
         Material.elevation: 4
@@ -67,6 +69,8 @@ Window {
             anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 50
             rightPadding: 0
             leftPadding: 0
             font.pointSize: 16
@@ -123,7 +127,8 @@ Window {
             source: "img/exit_White.png"
             width: 40
             height: 40
-            x: 1300
+            anchors.right: parent.right
+            anchors.top: parent.top
 
             MouseArea
             {

@@ -106,6 +106,7 @@ ApplicationWindow{
                                 mainWindowGerente.show()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                                ventanaError.close()
                             break;
                             case 2:
                                 //cocinero
@@ -115,15 +116,17 @@ ApplicationWindow{
                                 mainWindowMesero.show()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                                ventanaError.close()
                             break;
                             case 4:
                                 //anfitrion
                                 mainWindowAnfitrion.show()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                                ventanaError.close()
                             break;
                             case 5:
-                                //anfitrion
+                                //busboy
                             break;
                             default:
                                 lblVentanaError.text = "Error Desconocido"
@@ -164,6 +167,7 @@ ApplicationWindow{
                                 mainWindowGerente.show()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                                ventanaError.close()
                             break;
                             case 2:
                                 //cocinero
@@ -173,15 +177,17 @@ ApplicationWindow{
                                 mainWindowMesero.show()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                                ventanaError.close()
                             break;
                             case 4:
                                 //anfitrion
                                 mainWindowAnfitrion.show()
                                 txtUsuario.clear()
                                 txtContrasegna.clear()
+                                ventanaError.close()
                             break;
                             case 5:
-                                //anfitrion
+                                //busboy
                             break;
                             default:
                                 lblVentanaError.text = "Error Desconocido"
@@ -253,6 +259,7 @@ ApplicationWindow{
                             mainWindowGerente.show()
                             txtUsuario.clear()
                             txtContrasegna.clear()
+                            ventanaError.close()
                         break;
                         case 2:
                             //cocinero
@@ -262,15 +269,17 @@ ApplicationWindow{
                             mainWindowMesero.show()
                             txtUsuario.clear()
                             txtContrasegna.clear()
+                            ventanaError.close()
                         break;
                         case 4:
                             //anfitrion
                             mainWindowAnfitrion.show()
                             txtUsuario.clear()
                             txtContrasegna.clear()
+                            ventanaError.close()
                         break;
                         case 5:
-                            //anfitrion
+                            //busboy
                         break;
                         default:
                             lblVentanaError.text = "Error Desconocido"
