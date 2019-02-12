@@ -5,13 +5,13 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
     db.setHostName("127.0.0.1");
 
     db.setUserName("root");
-    db.setPassword("");
+    db.setPassword("Spat2706");
 
     /*
     db.setUserName("Leonardo");
     db.setPassword("football26398");*/
 
-    db.setDatabaseName("dorado");
+    db.setDatabaseName("delfinDorado");
     if(db.open()){
         QSqlQuery query;
         qDebug() << "Se conecto la base de datos! :D";

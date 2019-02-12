@@ -7,8 +7,8 @@ import QtQuick.Layouts 1.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 800
-    height: 1280
+    width: 480
+    height: 800
     title: qsTr("Stack")
 
     header: ToolBar {
