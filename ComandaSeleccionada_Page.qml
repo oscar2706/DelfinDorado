@@ -321,7 +321,7 @@ Item {
                 text: "Agregar"
                 onClicked: {
                     popup.close()
-                    ejemploOrden.append({
+                    orden.append({
                                             "cantidad": 1,
                                             "nombrePlatillo": inputPlatilloPorAgregar.currentText,
                                             "precioUnidad": modeloPlatillos.getPrecioPlatillo(inputPlatilloPorAgregar.currentText),

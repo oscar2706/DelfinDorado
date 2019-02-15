@@ -170,7 +170,6 @@ void PlatilloModel::addPlatillo(Platillo *nuevoPlatillo)
     //printPlatillos();
 }
 
-<<<<<<< HEAD
 QStringList PlatilloModel::getNamesModel()
 {
     QStringList namesModel;
@@ -191,8 +190,6 @@ float PlatilloModel::getPrecioPlatillo(QString name)
     return 0;
 }
 
-=======
->>>>>>> a3ad55609f1c643c231860c30603fdc8a0a1446a
 void PlatilloModel::addPlatillo()
 {
     int nuevoId = misPlatilos.last()->id()+1;
