@@ -137,6 +137,33 @@ Item
                         Material.elevation: 0
 
                         onClicked:
+<<<<<<< HEAD
+                        {
+                            //edit_Platillo.setOldValues(tablaPlatillos.model.name)
+                            edit_Platillo.openDialog()
+                            //edit_Platillo.setDatosActuales(mode.name,model.price)
+                        }
+                        Menu_EditarPlatillo
+                        {
+                            id: edit_Platillo
+                            nombreActual: nombre
+                            precioActual: precio
+                            descripcionActual: descripcion
+                            categoriaActual: categoria
+                            estadoActual: estado
+                            fotoActual: foto
+
+                            onInputAccepted:{
+                                modeloPlatillos.modifyPlatillo(selectedEmploye, d_nombre, foto ,d_precio, d_descripcion, d_categoria, d_estado)
+                                clearDialog()
+                                /*nombre = ""
+                                precio = ""
+                                foto = ""
+                                descripcion = ""
+                                categoria = ""
+                                estado = ""*/
+                            }
+=======
                         {
                             //edit_Platillo.setOldValues(tablaPlatillos.model.name)
                             edit_Platillo.openDialog()
@@ -196,7 +223,9 @@ Item
                         {
                             //modeloPlatillos.modifyPlatillo(4,"Pasta");
                             modeloPlatillos.removePlatillo(selectedEmploye)
+>>>>>>> a3ad55609f1c643c231860c30603fdc8a0a1446a
                         }
+
                     }
                 }
             }

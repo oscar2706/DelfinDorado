@@ -119,6 +119,7 @@ Item {
                     }
                     Button {
                         text: "Actualizar"
+                        font.family: "Verdana"
                         font.weight: Font.DemiBold
                         font.pointSize: 14
                         Layout.fillWidth: true
@@ -161,6 +162,7 @@ Item {
                     }
                     Button {
                         text: "Eliminar"
+                        font.family: "Verdana"
                         font.weight: Font.DemiBold
                         font.pointSize: 14
                         Layout.fillWidth: true
@@ -391,6 +393,7 @@ Item {
                 }
             }
         }
+
         Pane{
             id:datosEmpleadoPane
             Material.background: "#f5f5f5"
@@ -594,18 +597,3 @@ Item {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-/*##^## Designer {
-    D{i:24;anchors_width:1150}
-}
- ##^##*/

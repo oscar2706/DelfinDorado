@@ -11,6 +11,12 @@
         <file>Formulario_Asignar.qml</file>
         <file>MainWindowMesero.qml</file>
         <file>Mesa.qml</file>
+<<<<<<< HEAD
+        <file>ComandaSeleccionada_Page.qml</file>
+        <file>Comandas_Page.qml</file>
+=======
         <file>MainWindowAnfitrion.qml</file>
+>>>>>>> a3ad55609f1c643c231860c30603fdc8a0a1446a
     </qresource>
+    <qresource prefix="/mesero"/>
 </RCC>

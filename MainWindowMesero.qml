@@ -5,16 +5,21 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.0
 
 ApplicationWindow {
+    property int selectedComanda: -1
+    property int selectedMesa: -1
+    property string selectedFecha: ""
     id: window
     visible: true
     width: 480
     height: 800
     title: qsTr("Stack")
-
+    Component.onCompleted: {
+        setX(screen.width / 2 - width / 2);
+        setY(screen.height / 2 - height / 2);
+    }
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
         Material.background: "#ffb03a"
-
 
         ToolButton {
             id: toolButton
@@ -27,11 +32,6 @@ ApplicationWindow {
                     drawer.open()
                 }
             }
-        }
-
-        Label {
-            text: stackView.currentItem.title
-            anchors.centerIn: parent
         }
     }
 
@@ -64,8 +64,9 @@ ApplicationWindow {
                 text: qsTr("    Todas")
                 width: parent.width
                 onClicked: {
-                    //stackView.push("Page1Form.ui.qml")
-                    //drawer.close()
+                    stackView.clear()
+                    stackView.push(listaComandas)
+                    drawer.close()
                 }
             }
             ItemDelegate {
@@ -80,8 +81,11 @@ ApplicationWindow {
                 text: qsTr("    Pendientes")
                 width: parent.width
                 onClicked: {
-                    //stackView.push("Page1Form.ui.qml")
-                    //drawer.close()
+                    stackView.clear()
+                    stackView.push(listaComandasTerminadas)
+                    //stackView.initialItem = listaComandasTerminadas
+                    //stackView.push(listaComandasTerminadas)
+                    drawer.close()
                 }
             }
             ItemDelegate {
@@ -128,113 +132,209 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        initialItem: "HomeForm.ui.qml"
+        initialItem: listaComandas
         anchors.fill: parent
-
     }
-    GridLayout{
-        id: panelCentral
-        columns: 2
-        anchors.fill:parent
 
-        Rectangle{
-            id:rect1
-            width: 400
-            height: 400
-            Pane{
-                anchors.fill: parent
-                Material.background: "white"
-                Material.elevation: 8
+    ListModel{
+        id:modelComandas
+        ListElement{
+            idComanda: 1
+            idMesa:1
+        }
+        ListElement{
+            idComanda: 8
+            idMesa:3
+        }
+        ListElement{
+            idComanda: 6
+            idMesa:2
+        }
+        ListElement{
+            idComanda: 4
+            idMesa:4
+        }
+        ListElement{
+            idComanda: 5
+            idMesa:5
+        }
+        ListElement{
+            idComanda: 14
+            idMesa:7
+        }
+    }
 
-                Image {
-                    id: comando1
-                    source: "img/editar.png"
-                    width: 200
-                    height: 200
-                    anchors.verticalCenter: parent.verticalCenter
+    ListView {
+        id: listaComandas
+        boundsBehavior: Flickable.VerticalFlick
+        //anchors.fill: parent
+        spacing: 4
+        clip: true
+        focus: true
+        model: modeloComandas
+        highlight: Button {
+            id: btn2
+            Material.background: "#cfd8dc"
+            Material.elevation: 4
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            hoverEnabled: true
+        }
+        highlightFollowsCurrentItem: true
+        removeDisplaced: Transition {
+            NumberAnimation { properties: "x,y"; duration: 300 }
+        }
+        delegate: Component {
+            Item{
+                width: parent.width
+                height: 50
+                property string select: "#ffffff"
+                property int elevacion: 2
+                //property bool selectedItem: false
+                Pane{
+                    anchors.fill: parent
+                    Material.background: select
+                    Material.elevation: elevacion
                 }
-                Text {
-                    id: textImg1
-                    text: qsTr("\t\tComanda 1")
-                    font.pointSize: 14
+                Text{
+                    Layout.minimumWidth: 250
+                    Layout.maximumWidth: 250
+                    topPadding: 20
+                    leftPadding: 50
+                    text: "N° Comanda:"+idComanda
                     font.family: "Verdana"
-                    anchors.centerIn: parent
+                    font.pointSize: 10
+                }
+                Text{
+                    Layout.minimumWidth: 200
+                    Layout.maximumWidth: 200
+                    topPadding: 20
+                    leftPadding: 150
+                    text: "Mesa:"+idMesa
+                    font.family: "Verdana"
+                    font.pointSize: 10
                 }
 
+                MouseArea{
+                    anchors.fill: parent
+                    onPressed: {
+                        console.log("Se presiono la comanda: "+ idComanda)
+                        console.log("su mesa es la:"+idMesa)
+                        select = "#cfd8dc"
+                        selectedComanda  = idComanda
+                        selectedMesa = idMesa
+                        selectedFecha = fecha
+                        comandaCompleta.fechaSeleccionada
+                    }
+                    onReleased: {
+                        select = "#ffffff"
+                        stackView.push(comandaCompleta)
+                    }
+                    onClicked: {
+                        //Abrir la pestaña de la comanda
+                    }
+                }
             }
         }
-        Rectangle{
-            id:rect2
-            width: 400
-            height: 400
-            Pane{
-                anchors.fill: parent
-                Material.background: "white"
-                Material.elevation: 8
+    }
 
-                Image {
-                    id: comando2
-                    source: "img/editar.png"
-                    width: 200
-                    height: 200
-                    anchors.verticalCenter: parent.verticalCenter
+
+    ListModel{
+        id:modelComandasTerminadas
+        ListElement{
+            idComanda: 6
+            idMesa:6
+        }
+        ListElement{
+            idComanda: 6
+            idMesa:6
+        }
+        ListElement{
+            idComanda: 6
+            idMesa:6
+        }
+        ListElement{
+            idComanda: 1
+            idMesa:1
+        }
+        ListElement{
+            idComanda: 1
+            idMesa:1
+        }
+    }
+
+    ListView {
+        id: listaComandasTerminadas
+        boundsBehavior: Flickable.VerticalFlick
+        //anchors.fill: parent
+        spacing: 4
+        clip: true
+        focus: true
+        model: modelComandasTerminadas
+        removeDisplaced: Transition {
+            NumberAnimation { properties: "x,y"; duration: 300 }
+        }
+        delegate: Component {
+            Item{
+                width: parent.width
+                height: 50
+                property string select: "#ffffff"
+                property int elevacion: 2
+                //property bool selectedItem: false
+                Pane{
+                    anchors.fill: parent
+                    Material.background: select
+                    Material.elevation: elevacion
                 }
-                Text {
-                    id: textImg2
-                    text: qsTr("\t\tComanda 2")
-                    font.pointSize: 14
+                Text{
+                    Layout.minimumWidth: 250
+                    Layout.maximumWidth: 250
+                    topPadding: 20
+                    leftPadding: 50
+                    text: "N° Comanda:"+idComanda
                     font.family: "Verdana"
-                    anchors.centerIn: parent
+                    font.pointSize: 10
+                }
+                Text{
+                    Layout.minimumWidth: 200
+                    Layout.maximumWidth: 200
+                    topPadding: 20
+                    leftPadding: 150
+                    text: "Mesa:"+idMesa
+                    font.family: "Verdana"
+                    font.pointSize: 10
+                }
+
+                MouseArea{
+                    anchors.fill: parent
+                    onPressed: {
+                        console.log("Se presiono la comanda: "+ idComanda)
+                        console.log("su mesa es la:"+idMesa)
+                        select = "#cfd8dc"
+                        selectedComanda  = idComanda
+                        selectedMesa = idMesa
+
+                    }
+                    onReleased: {
+                        select = "#ffffff"
+                        stackView.push(comandaCompleta)
+                    }
+                    onClicked: {
+                        //Abrir la pestaña de la comanda
+                    }
                 }
             }
         }
-        Rectangle{
-            id:rect3
-            width: 400
-            height: 400
-            Pane{
-                anchors.fill: parent
-                Material.background: "white"
-                Material.elevation: 8
-                Image {
-                    id: comando3
-                    source: "img/editar.png"
-                    width: 200
-                    height: 200
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    id: textImg3
-                    text: qsTr("\t\tComanda 3")
-                    font.pointSize: 14
-                    font.family: "Verdana"
-                    anchors.centerIn: parent
-                }
-            }
-        }
-        Rectangle{
-            id:rect4
-            width: 400
-            height: 400
-            Pane{
-                anchors.fill: parent
-                Material.background: "white"
-                Material.elevation: 8
-                Image {
-                    id: comando4
-                    source: "img/editar.png"
-                    width: 200
-                    height: 200
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    id: textImg4
-                    text: qsTr("\t\tComanda 4")
-                    font.pointSize: 14
-                    font.family: "Verdana"
-                    anchors.centerIn: parent
-                }
-            }
+    }
+
+
+    Component{
+        id: comandaCompleta
+        ComandaSeleccionada_Page{
+            id: comanda
+            idComanda: selectedComanda
+            mesaAsignada: selectedMesa
+            fechaComanda: selectedFecha
         }
     }
 }

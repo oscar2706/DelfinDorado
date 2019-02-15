@@ -170,6 +170,29 @@ void PlatilloModel::addPlatillo(Platillo *nuevoPlatillo)
     //printPlatillos();
 }
 
+<<<<<<< HEAD
+QStringList PlatilloModel::getNamesModel()
+{
+    QStringList namesModel;
+    for (itr = misPlatilos.begin(); itr != misPlatilos.end(); itr++) {
+        if((*itr)->status() == "Disponible")
+            namesModel.append((*itr)->name());
+    }
+    namesModel.sort();
+    return namesModel;
+}
+
+float PlatilloModel::getPrecioPlatillo(QString name)
+{
+    for (itr = misPlatilos.begin(); itr != misPlatilos.end(); itr++) {
+        if((*itr)->name() == name)
+            return (*itr)->price();
+    }
+    return 0;
+}
+
+=======
+>>>>>>> a3ad55609f1c643c231860c30603fdc8a0a1446a
 void PlatilloModel::addPlatillo()
 {
     int nuevoId = misPlatilos.last()->id()+1;

@@ -19,7 +19,11 @@ SOURCES += \
     empleadolista.cpp \
     empleadomodelo.cpp \
     platillo.cpp \
-    platillomodel.cpp
+    platillomodel.cpp \
+    comanda.cpp \
+    comandamodelo.cpp \
+    platillocomanda.cpp \
+    platillocomandamodel.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -39,4 +43,8 @@ HEADERS += \
     empleadolista.h \
     empleadomodelo.h \
     platillo.h \
-    platillomodel.h
+    platillomodel.h \
+    comanda.h \
+    comandamodelo.h \
+    platillocomanda.h \
+    platillocomandamodel.h

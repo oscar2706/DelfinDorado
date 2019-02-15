@@ -43,6 +43,11 @@ public:
     Q_INVOKABLE void removePlatillo(int index);
     Q_INVOKABLE void removeLastPlatillo();
     Q_INVOKABLE QString byteArrayToString(QByteArray &img);
+<<<<<<< HEAD
+    Q_INVOKABLE QStringList getNamesModel();
+    Q_INVOKABLE float getPrecioPlatillo(QString name);
+=======
+>>>>>>> a3ad55609f1c643c231860c30603fdc8a0a1446a
 
 private:
     bool insertPlatilloInDataBase(Platillo *platilloToSave);

@@ -12,7 +12,13 @@ ApplicationWindow{
     width: 1366
     height: 720
     title: qsTr("Prueba inicial")
-
+    Component.onCompleted: {
+        setX(screen.width / 2 - width / 2);
+        setY(screen.height / 2 - height / 2);
+    }
+    onActiveFocusControlChanged: {
+    visible: false
+    }
     Image {
         id: name
         fillMode: Image.Tile
@@ -258,6 +264,7 @@ ApplicationWindow{
                             //gerente
                             mainWindowGerente.show()
                             txtUsuario.clear()
+
                             txtContrasegna.clear()
                             ventanaError.close()
                         break;
@@ -266,6 +273,7 @@ ApplicationWindow{
                         break;
                         case 3:
                             //mesero
+                            login.visible = false
                             mainWindowMesero.show()
                             txtUsuario.clear()
                             txtContrasegna.clear()
