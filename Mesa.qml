@@ -8,14 +8,17 @@ import QtQuick.Dialogs 1.2
 Item {
     property string imagen
     property int ancho
+    property string numMesa
+    property int estadoMesa
+
     width: ancho
     height: 90
     Rectangle{
-        id: rect1
+        id: rect
         anchors.fill: parent
         color:"transparent"
         Image {
-            id: imgMesa1
+            id: imgMesa
             anchors.fill: parent
             x: 368
             y: 63
@@ -23,11 +26,30 @@ Item {
         }
         MouseArea{
             anchors.fill: parent
-
-
             onClicked:{
-                mainWindowAsignar.show()
+                if(estadoMesa==1){
+                    mainWindiwAsignar.mesa = numMesa;
+                    mainWindiwAsignar.show()
+                }
+                else
+                {
+                    switch(numMesa)
+                    {
+                       case "1": popupMesero1.open(); break;
+                       case "2": popupMesero2.open(); break;
+                       case "3": popupMesero3.open(); break;
+                       case "4": popupMesero4.open(); break;
+                       case "5": popupMesero5.open(); break;
+                       case "6": popupMesero6.open(); break;
+                       case "7": popupMesero7.open(); break;
+                       case "8": popupMesero8.open(); break;
+                       case "9": popupMesero9.open(); break;
+                       case "10":popupMesero10.open(); break;
+                       case "11":popupMesero11.open(); break;
+                    }
+                }
             }
         }
     }
 }
+
