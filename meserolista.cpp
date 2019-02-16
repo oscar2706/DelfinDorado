@@ -5,7 +5,7 @@ meseroLista::meseroLista(QObject *parent) : QObject(parent)
 {
     QSqlQuery select;
 
-    select.prepare("SELECT idEmpleado,nombre FROM empleado WHERE idPuesto = 2");
+    select.prepare("SELECT idEmpleado,nombre FROM empleado WHERE idPuesto = 3");
     select.exec();
 
     while(select.next())

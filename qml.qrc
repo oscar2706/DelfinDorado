@@ -10,10 +10,11 @@
         <file>Menu_RegistrarPlatillo.qml</file>
         <file>Formulario_Asignar.qml</file>
         <file>MainWindowMesero.qml</file>
-        <file>Mesa.qml</file>
         <file>ComandaSeleccionada_Page.qml</file>
         <file>Comandas_Page.qml</file>
         <file>MainWindowAnfitrion.qml</file>
+        <file>MainWindowAsignar.qml</file>
+        <file>Mesa.qml</file>
     </qresource>
     <qresource prefix="/mesero"/>
 </RCC>

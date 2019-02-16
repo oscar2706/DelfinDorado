@@ -9,6 +9,8 @@
 #include "platillomodel.h"
 #include "comandamodelo.h"
 #include "platillocomandamodel.h"
+#include "meseromodelo.h"
+#include "meserolista.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +34,12 @@ int main(int argc, char *argv[])
 
     PlatilloComandaModel modeloPlatillosComanda;
     engine.rootContext()->setContextProperty("modeloPlatillosComandas", &modeloPlatillosComanda);
+
+    qmlRegisterType<meseroModelo>("ModeloMesero",1,0,"MeseroModelo");
+    qmlRegisterUncreatableType<meseroLista>("ModeloMesero",1,0,"MeseroLista",QStringLiteral("mesero lista"));
+
+    meseroLista meseroListaObj;
+    engine.rootContext()->setContextProperty(QStringLiteral("meseroLista2"),&meseroListaObj);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

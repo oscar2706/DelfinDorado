@@ -13,7 +13,7 @@ ApplicationWindow {
     title: "Mapa mesas"
     width: 1366
     height: 720
-    background: BorderImage {source: "img/fondoPiso.jpg" }
+    //background: BorderImage {source: "img/fondoPiso.jpg" }
     property int i:0
 
     Image {
