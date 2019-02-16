@@ -168,10 +168,50 @@ void ComandaModelo::addComanda(const QString &fecha, const int &idEmpleado, cons
     }
 }
 
-QList<Comanda *> ComandaModelo::getComandasMesero(int idMesero)
+void ComandaModelo::getComandasMesero(int idMesero, int EstadoComanda)
 {
+    //qDebug() << "SE CARGAN SOLO LAS COMANDAS ESPECIFICAS";
 
-    return misComandas;
+    while(misComandas.size()>0)
+    {
+        beginRemoveRows(QModelIndex(),0,0);
+        misComandas.removeAt(0);
+        endRemoveRows();
+    }
+
+    QSqlQuery comandasBD;
+
+    if(EstadoComanda==0)
+        comandasBD.prepare("SELECT idComanda, fecha, idEmpleado, idMesa, idEstadoComanda FROM comanda "
+                        "WHERE idEmpleado = " + QString::number(idMesero) + "");
+    else
+        comandasBD.prepare("SELECT idComanda, fecha, idEmpleado, idMesa, idEstadoComanda FROM comanda "
+                        "WHERE idEmpleado = " + QString::number(idMesero) + " AND idEstadoComanda = " + QString::number(EstadoComanda) +"");
+
+    comandasBD.exec();
+
+    int id;
+    QString fecha;
+    int idEmpleado;
+    int idMesa;
+    int idEstadoComanda;
+
+    while (comandasBD.next())
+    {
+        id = comandasBD.value(0).toInt();
+        fecha = comandasBD.value(1).toString();
+        idEmpleado = comandasBD.value(2).toInt();
+        idMesa = comandasBD.value(3).toInt();
+        idEstadoComanda = comandasBD.value(4).toInt();
+
+        /*qDebug() << "Comanda " << id;
+        qDebug() << "Fecha " << fecha;
+        qDebug() << "Empleado " << idEmpleado;
+        qDebug() << "Mesa " << idMesa;
+        qDebug() << "Estado " << idEstadoComanda;*/
+
+        addComanda(new Comanda(id, fecha, idEmpleado, idMesa, idEstadoComanda));
+    }
 }
 
 bool ComandaModelo::insertComandaInDataBase(Comanda *comandaNueva)

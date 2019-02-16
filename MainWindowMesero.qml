@@ -8,6 +8,7 @@ ApplicationWindow {
     property int selectedComanda: -1
     property int selectedMesa: -1
     property string selectedFecha: ""
+    property int idMesero: 0
     id: window
     visible: true
     width: 480
@@ -47,10 +48,6 @@ ApplicationWindow {
 
                 text: qsTr("Mis comandas")
                 width: parent.width
-                onClicked: {
-                    //stackView.push("Page1Form.ui.qml")
-                    //drawer.close()
-                }
             }
             ItemDelegate {
                 Image {
@@ -65,7 +62,8 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     stackView.clear()
-                    stackView.push(listaComandas)
+                    modeloComandas.getComandasMesero(idMesero, 0);
+                    stackView.push(comandasTodas)
                     drawer.close()
                 }
             }
@@ -82,9 +80,8 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     stackView.clear()
-                    stackView.push(listaComandasTerminadas)
-                    //stackView.initialItem = listaComandasTerminadas
-                    //stackView.push(listaComandasTerminadas)
+                    modeloComandas.getComandasMesero(idMesero, 1);
+                    stackView.push(comandasTodas)
                     drawer.close()
                 }
             }
@@ -96,11 +93,13 @@ ApplicationWindow {
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
                 }
-                text: qsTr("    Atendidos")
+                text: qsTr("    Atendidas")
                 width: parent.width
                 onClicked: {
-                    //stackView.push("Page1Form.ui.qml")
-                    //drawer.close()
+                    stackView.clear()
+                    modeloComandas.getComandasMesero(idMesero, 2);
+                    stackView.push(comandasTodas)
+                    drawer.close()
                 }
             }
             ItemDelegate {
@@ -115,226 +114,32 @@ ApplicationWindow {
                 text: qsTr("    Cobradas")
                 width: parent.width
                 onClicked: {
-                    //stackView.push("Page1Form.ui.qml")
-                    //drawer.close()
+                    stackView.clear()
+                    modeloComandas.getComandasMesero(idMesero, 3);
+                    stackView.push(comandasTodas)
+                    drawer.close()
                 }
             }
             ItemDelegate {
                 text: qsTr("Platillos")
                 width: parent.width
-                onClicked: {
-                    //stackView.push("Page1Form.ui.qml")
-                    //drawer.close()
-                }
             }
         }
     }
 
     StackView {
         id: stackView
-        initialItem: listaComandas
+        initialItem: comandasTodas
         anchors.fill: parent
     }
 
-    ListModel{
-        id:modelComandas
-        ListElement{
-            idComanda: 1
-            idMesa:1
-        }
-        ListElement{
-            idComanda: 8
-            idMesa:3
-        }
-        ListElement{
-            idComanda: 6
-            idMesa:2
-        }
-        ListElement{
-            idComanda: 4
-            idMesa:4
-        }
-        ListElement{
-            idComanda: 5
-            idMesa:5
-        }
-        ListElement{
-            idComanda: 14
-            idMesa:7
-        }
-    }
+    Component
+    {
+        id: comandasTodas
 
-    ListView {
-        id: listaComandas
-        boundsBehavior: Flickable.VerticalFlick
-        //anchors.fill: parent
-        spacing: 4
-        clip: true
-        focus: true
-        model: modeloComandas
-        highlight: Button {
-            id: btn2
-            Material.background: "#cfd8dc"
-            Material.elevation: 4
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            hoverEnabled: true
-        }
-        highlightFollowsCurrentItem: true
-        removeDisplaced: Transition {
-            NumberAnimation { properties: "x,y"; duration: 300 }
-        }
-        delegate: Component {
-            Item{
-                width: parent.width
-                height: 50
-                property string select: "#ffffff"
-                property int elevacion: 2
-                //property bool selectedItem: false
-                Pane{
-                    anchors.fill: parent
-                    Material.background: select
-                    Material.elevation: elevacion
-                }
-                Text{
-                    Layout.minimumWidth: 250
-                    Layout.maximumWidth: 250
-                    topPadding: 20
-                    leftPadding: 50
-                    text: "N° Comanda:"+idComanda
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-                Text{
-                    Layout.minimumWidth: 200
-                    Layout.maximumWidth: 200
-                    topPadding: 20
-                    leftPadding: 150
-                    text: "Mesa:"+idMesa
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-
-                MouseArea{
-                    anchors.fill: parent
-                    onPressed: {
-                        console.log("Se presiono la comanda: "+ idComanda)
-                        console.log("su mesa es la:"+idMesa)
-                        select = "#cfd8dc"
-                        selectedComanda  = idComanda
-                        selectedMesa = idMesa
-                        selectedFecha = fecha
-                        comandaCompleta.fechaSeleccionada
-                    }
-                    onReleased: {
-                        select = "#ffffff"
-                        stackView.push(comandaCompleta)
-                    }
-                    onClicked: {
-                        //Abrir la pestaña de la comanda
-                    }
-                }
-            }
-        }
-    }
-
-
-    ListModel{
-        id:modelComandasTerminadas
-        ListElement{
-            idComanda: 6
-            idMesa:6
-        }
-        ListElement{
-            idComanda: 6
-            idMesa:6
-        }
-        ListElement{
-            idComanda: 6
-            idMesa:6
-        }
-        ListElement{
-            idComanda: 1
-            idMesa:1
-        }
-        ListElement{
-            idComanda: 1
-            idMesa:1
-        }
-    }
-
-    ListView {
-        id: listaComandasTerminadas
-        boundsBehavior: Flickable.VerticalFlick
-        //anchors.fill: parent
-        spacing: 4
-        clip: true
-        focus: true
-        model: modelComandasTerminadas
-        removeDisplaced: Transition {
-            NumberAnimation { properties: "x,y"; duration: 300 }
-        }
-        delegate: Component {
-            Item{
-                width: parent.width
-                height: 50
-                property string select: "#ffffff"
-                property int elevacion: 2
-                //property bool selectedItem: false
-                Pane{
-                    anchors.fill: parent
-                    Material.background: select
-                    Material.elevation: elevacion
-                }
-                Text{
-                    Layout.minimumWidth: 250
-                    Layout.maximumWidth: 250
-                    topPadding: 20
-                    leftPadding: 50
-                    text: "N° Comanda:"+idComanda
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-                Text{
-                    Layout.minimumWidth: 200
-                    Layout.maximumWidth: 200
-                    topPadding: 20
-                    leftPadding: 150
-                    text: "Mesa:"+idMesa
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-
-                MouseArea{
-                    anchors.fill: parent
-                    onPressed: {
-                        console.log("Se presiono la comanda: "+ idComanda)
-                        console.log("su mesa es la:"+idMesa)
-                        select = "#cfd8dc"
-                        selectedComanda  = idComanda
-                        selectedMesa = idMesa
-
-                    }
-                    onReleased: {
-                        select = "#ffffff"
-                        stackView.push(comandaCompleta)
-                    }
-                    onClicked: {
-                        //Abrir la pestaña de la comanda
-                    }
-                }
-            }
-        }
-    }
-
-
-    Component{
-        id: comandaCompleta
-        ComandaSeleccionada_Page{
-            id: comanda
-            idComanda: selectedComanda
-            mesaAsignada: selectedMesa
-            fechaComanda: selectedFecha
+        Comandas_Page
+        {
+            id: comandas
         }
     }
 }

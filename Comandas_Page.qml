@@ -4,47 +4,18 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.3
 
-Item{
-    id: comanda
-    ListModel{
-        id:modelComandas
-        ListElement{
-            idComanda: 1
-            idMesa:1
-        }
-        ListElement{
-            idComanda: 2
-            idMesa:2
-        }
-        ListElement{
-            idComanda: 3
-            idMesa:3
-        }
-        ListElement{
-            idComanda: 4
-            idMesa:4
-        }
-        ListElement{
-            idComanda: 5
-            idMesa:5
-        }
-        ListElement{
-            idComanda: 6
-            idMesa:6
-        }
-    }
+Page{
+    id: comandasTodas
+    title: "Todas"
+
     ListView {
-        id: tablaPlatillos
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
+        id: listaComandas
         boundsBehavior: Flickable.VerticalFlick
-        anchors.topMargin: 0
         anchors.fill: parent
         spacing: 4
         clip: true
         focus: true
-        model: modelComandas
+        model: modeloComandas
         highlight: Button {
             id: btn2
             Material.background: "#cfd8dc"
@@ -70,11 +41,11 @@ Item{
                     Material.elevation: elevacion
                 }
                 Text{
-                    Layout.minimumWidth: 250
-                    Layout.maximumWidth: 250
+                    Layout.minimumWidth: 450
+                    Layout.maximumWidth: 450
                     topPadding: 20
                     leftPadding: 50
-                    text: "N° Comanda:"+idComanda
+                    text: "N° Comanda: "+idComanda
                     font.family: "Verdana"
                     font.pointSize: 10
                 }
@@ -82,8 +53,8 @@ Item{
                     Layout.minimumWidth: 200
                     Layout.maximumWidth: 200
                     topPadding: 20
-                    leftPadding: 150
-                    text: "Mesa:"+idMesa
+                    leftPadding: 250
+                    text: "Mesa: "+idMesa
                     font.family: "Verdana"
                     font.pointSize: 10
                 }
@@ -91,19 +62,33 @@ Item{
                 MouseArea{
                     anchors.fill: parent
                     onPressed: {
-                        console.log("Se presiono el indice: "+ index)
-                        //index
+                        console.log("Se presiono la comanda: "+ idComanda)
+                        console.log("su mesa es la:"+idMesa)
                         select = "#cfd8dc"
+                        selectedComanda  = idComanda
+                        selectedMesa = idMesa
+                        selectedFecha = fecha
+                        comandaCompleta.fechaSeleccionada
                     }
                     onReleased: {
                         select = "#ffffff"
-                        cargaComandaCompleta(index)
+                        stackView.push(comandaCompleta)
                     }
                     onClicked: {
                         //Abrir la pestaña de la comanda
                     }
                 }
             }
+        }
+    }
+
+    Component{
+        id: comandaCompleta
+        ComandaSeleccionada_Page{
+            id: comanda
+            idComanda: selectedComanda
+            mesaAsignada: selectedMesa
+            fechaComanda: selectedFecha
         }
     }
 }

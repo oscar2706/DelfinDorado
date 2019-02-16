@@ -85,6 +85,7 @@ public slots:
 
     int getUltimoId();
     int buscarCategoria(QString, QString);
+    int buscarIdMesero(QString, QString);
 private:
     QVector<ToDoItem> mItems;
 };

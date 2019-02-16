@@ -19,6 +19,60 @@ ApplicationWindow{
     onActiveFocusControlChanged: {
     visible: false
     }
+
+    function usuarios()
+    {
+        if(txtUsuario.text==""||txtContrasegna.text=="")
+        {
+            ventanaError.open()
+        }
+        else
+        {
+            switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
+            {
+            case 0:
+                lblVentanaError.text = "Usuario Incorrecto"
+                ventanaError.open()
+                txtContrasegna.clear()
+            break;
+            case 1:
+                //gerente
+                mainWindowGerente.show()
+                txtUsuario.clear()
+
+                txtContrasegna.clear()
+                ventanaError.close()
+            break;
+            case 2:
+                //cocinero
+            break;
+            case 3:
+                //mesero
+                login.visible = false
+                mainWindowMesero.idMesero = empleadoLista.buscarIdMesero(txtUsuario.text, txtContrasegna.text)
+                modeloComandas.getComandasMesero(mainWindowMesero.idMesero, 0)
+                mainWindowMesero.show()
+                txtUsuario.clear()
+                txtContrasegna.clear()
+                ventanaError.close()
+            break;
+            case 4:
+                //anfitrion
+                mainWindowAnfitrion.show()
+                txtUsuario.clear()
+                txtContrasegna.clear()
+                ventanaError.close()
+            break;
+            case 5:
+                //busboy
+            break;
+            default:
+                lblVentanaError.text = "Error Desconocido"
+                ventanaError.open()
+            }
+        }
+    }
+
     Image {
         id: name
         fillMode: Image.Tile
@@ -93,52 +147,7 @@ ApplicationWindow{
                     id: txtUsuario
                     onAccepted:
                     {
-                        if(txtUsuario.text==""||txtContrasegna.text=="")
-                        {
-                            ventanaError.open()
-                        }
-                        else
-                        {
-                            console.log(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
-                            switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
-                            {
-                            case 0:
-                                lblVentanaError.text = "Usuario Incorrecto"
-                                ventanaError.open()
-                                txtContrasegna.clear()
-                            break;
-                            case 1:
-                                //gerente
-                                mainWindowGerente.show()
-                                txtUsuario.clear()
-                                txtContrasegna.clear()
-                                ventanaError.close()
-                            break;
-                            case 2:
-                                //cocinero
-                            break;
-                            case 3:
-                                //mesero
-                                mainWindowMesero.show()
-                                txtUsuario.clear()
-                                txtContrasegna.clear()
-                                ventanaError.close()
-                            break;
-                            case 4:
-                                //anfitrion
-                                mainWindowAnfitrion.show()
-                                txtUsuario.clear()
-                                txtContrasegna.clear()
-                                ventanaError.close()
-                            break;
-                            case 5:
-                                //busboy
-                            break;
-                            default:
-                                lblVentanaError.text = "Error Desconocido"
-                                ventanaError.open()
-                            }
-                        }
+                        usuarios()
                     }
                 }
             }
@@ -154,52 +163,7 @@ ApplicationWindow{
                     echoMode: TextInput.Password
                     onAccepted:
                     {
-                        if(txtUsuario.text==""||txtContrasegna.text=="")
-                        {
-                            ventanaError.open()
-                        }
-                        else
-                        {
-                            console.log(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
-                            switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
-                            {
-                            case 0:
-                                lblVentanaError.text = "Usuario Incorrecto"
-                                ventanaError.open()
-                                txtContrasegna.clear()
-                            break;
-                            case 1:
-                                //gerente
-                                mainWindowGerente.show()
-                                txtUsuario.clear()
-                                txtContrasegna.clear()
-                                ventanaError.close()
-                            break;
-                            case 2:
-                                //cocinero
-                            break;
-                            case 3:
-                                //mesero
-                                mainWindowMesero.show()
-                                txtUsuario.clear()
-                                txtContrasegna.clear()
-                                ventanaError.close()
-                            break;
-                            case 4:
-                                //anfitrion
-                                mainWindowAnfitrion.show()
-                                txtUsuario.clear()
-                                txtContrasegna.clear()
-                                ventanaError.close()
-                            break;
-                            case 5:
-                                //busboy
-                            break;
-                            default:
-                                lblVentanaError.text = "Error Desconocido"
-                                ventanaError.open()
-                            }
-                        }
+                        usuarios();
                     }
                 }
             }
@@ -246,54 +210,7 @@ ApplicationWindow{
                 }
                 onClicked:
                 {
-                    if(txtUsuario.text==""||txtContrasegna.text=="")
-                    {
-                        ventanaError.open()
-                    }
-                    else
-                    {
-                        console.log(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
-                        switch(empleadoLista.buscarCategoria(txtUsuario.text, txtContrasegna.text))
-                        {
-                        case 0:
-                            lblVentanaError.text = "Usuario Incorrecto"
-                            ventanaError.open()
-                            txtContrasegna.clear()
-                        break;
-                        case 1:
-                            //gerente
-                            mainWindowGerente.show()
-                            txtUsuario.clear()
-
-                            txtContrasegna.clear()
-                            ventanaError.close()
-                        break;
-                        case 2:
-                            //cocinero
-                        break;
-                        case 3:
-                            //mesero
-                            login.visible = false
-                            mainWindowMesero.show()
-                            txtUsuario.clear()
-                            txtContrasegna.clear()
-                            ventanaError.close()
-                        break;
-                        case 4:
-                            //anfitrion
-                            mainWindowAnfitrion.show()
-                            txtUsuario.clear()
-                            txtContrasegna.clear()
-                            ventanaError.close()
-                        break;
-                        case 5:
-                            //busboy
-                        break;
-                        default:
-                            lblVentanaError.text = "Error Desconocido"
-                            ventanaError.open()
-                        }
-                    }
+                    usuarios()
                 }
 
                 Popup
