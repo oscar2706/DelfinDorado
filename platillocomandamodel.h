@@ -16,7 +16,10 @@ class PlatilloComandaModel : public QAbstractListModel
     enum PlatilloComandaRoles {
       idComandaRole,
       idPlatilloRole,
-      cantidadRole
+      nombreRole,
+      cantidadRole,
+      precioUnidadRole,
+      totalRole
     };
 public:
     explicit PlatilloComandaModel(QObject *parent = nullptr);
@@ -29,13 +32,21 @@ public:
 
     void addPlatilloComanda(PlatilloComanda *nuevoPlatilloComanda);
 
-    Q_INVOKABLE void addPlatillo(const int &idComanda, const int &idPlatillo, const int &cantidad);
+    //Q_INVOKABLE void setIdMesero(const int &idEmpleado);
+    Q_INVOKABLE bool comandaAlreadySent();
+    Q_INVOKABLE bool saveNewComandaInDataBase();
+    Q_INVOKABLE void setIdComanda(const int &idComanda);
+    Q_INVOKABLE void addPlatillo(const int &idComanda, const QString &nombrePlatillo, const int &cantidad);
+    Q_INVOKABLE bool removePlatillo(const int idPlatillo);
+    Q_INVOKABLE void setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad);
 
 signals:
 
 private:
+    bool comandaEnviada = false;
+    int idComandaActual;
+    bool cargandoComanda = false;
     bool insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave);
-
     QList<PlatilloComanda *>::iterator itr;
     QList<PlatilloComanda *> misPlatillosComanda;
 };
