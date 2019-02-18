@@ -67,7 +67,6 @@ Item {
             height: 50
             Pane{
                 Material.background: "#ffffff"
-                //Material.elevation: 2
                 width: parent.width
                 height: parent.height
                 anchors.fill: parent
@@ -89,11 +88,6 @@ Item {
                         btn_AgregarPlatillo.Material.background = "#ffb03a"
                         pop_confirmacionAgregar.open()
                     }
-                    /*
-                    onPressed: {
-                        btn_AgregarPlatillo .Material.background = "#ba8637"
-                    }
-                    */
                 }
             }
         }
@@ -112,7 +106,6 @@ Item {
             modeloPlatillosComandas.setIdComanda(idComanda)
             modeloPlatillosComandas
         }
-        //header: listHeaderComponent
         footer: footerComandas
         spacing: 0
         ScrollBar.vertical: ScrollBar {
@@ -214,7 +207,8 @@ Item {
         height: 100
         modal: true
         focus: true
-        anchors.centerIn: parent
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
         closePolicy: Popup.CloseOnPressOutside
         Label{
             horizontalAlignment: Text.AlignHCenter
@@ -236,7 +230,8 @@ Item {
         modal: true
         focus: true
         closePolicy: Popup.CloseOnPressOutside
-        anchors.centerIn: parent
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
         topMargin: 20
         onAboutToShow: {
             selectorCantidad.positionViewAtIndex(cantidadPlatilloSeleccionado, Tumbler.Center)
@@ -288,7 +283,8 @@ Item {
         modal: true
         focus: true
         closePolicy: Popup.CloseOnPressOutside
-        anchors.centerIn: parent
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
         topMargin: 20
         onAboutToShow: inputPlatilloPorAgregar.currentIndex = 0
         ComboBox{
@@ -351,7 +347,8 @@ Item {
         modal: true
         focus: true
         closePolicy: Popup.CloseOnPressOutside
-        anchors.centerIn: parent
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
         topMargin: 20
         onAboutToShow: {
             if(modeloPlatillosComandas.comandaAlreadySent()){
@@ -401,7 +398,8 @@ Item {
         height: 100
         modal: true
         focus: true
-        anchors.centerIn: parent
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
         closePolicy: Popup.CloseOnPressOutside
         Label{
             horizontalAlignment: Text.AlignHCenter
@@ -423,7 +421,8 @@ Item {
     modal: true
     focus: true
     closePolicy: Popup.CloseOnPressOutside
-    anchors.centerIn: parent
+    x: Math.round((parent.width - width) / 2)
+    y: Math.round((parent.height - height) / 2)
     topMargin: 20
     Label{
         color: "#4caf50"

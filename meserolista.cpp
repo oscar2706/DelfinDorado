@@ -44,12 +44,15 @@ void meseroLista::setAsignacion(QString mesa)
             {
                 insert.prepare("INSERT INTO comanda(fecha,idEmpleado,idMesa,idEstadoComanda) "
                                "Values(:fecha,:idEmpleado,:idMesa,:idEstadoComanda)");
+                //qDebug() << "Fecha: " << QDate::currentDate();
                 insert.bindValue(":fecha",QDate::currentDate());
+                //qDebug() << "Mesero: " << mItems.at(i).id;
                 insert.bindValue(":idEmpleado",mItems.at(i).id);
+                //qDebug() << "Mesa: " << mesa;
                 insert.bindValue(":idMesa",mesa);
                 insert.bindValue(":idEstadoComanda",1);
                 if(!insert.exec())
-                    qDebug()<<"ERROR INSERCION COMANDA:"<<update.lastError().text();
+                    qDebug()<<"ERROR INSERCION COMANDA:"<<insert.lastError().text();
             }
             else
               qDebug()<<"ERROR SELECCION MESA:"<<update.lastError().text();

@@ -11,8 +11,8 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
     db.setDatabaseName("dorado");
 
     /*db.setUserName("oscar_soluciones");
-    db.setPassword("dandelot2012");*/
-    db.setDatabaseName("dorado");
+    db.setPassword("dandelot2012");
+    db.setDatabaseName("dorado");*/
     db.setPort(3306);
 
     if(db.open()){

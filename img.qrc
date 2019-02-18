@@ -38,5 +38,6 @@
         <file>img/barra.png</file>
         <file>img/maceta.png</file>
         <file>img/puerta.png</file>
+        <file>img/preparar.png</file>
     </qresource>
 </RCC>

@@ -9,11 +9,15 @@ ApplicationWindow {
     property int selectedMesa: -1
     property string selectedFecha: ""
     property int idMesero: 0
+
     id: window
     visible: true
     width: 480
     height: 800
     title: qsTr("Stack")
+
+    signal ventanaCerrada
+
     Component.onCompleted: {
         setX(screen.width / 2 - width / 2);
         setY(screen.height / 2 - height / 2);
@@ -76,7 +80,7 @@ ApplicationWindow {
                     anchors.verticalCenter: parent.verticalCenter
 
                 }
-                text: qsTr("    Pendientes")
+                text: qsTr("       Pendientes")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -93,7 +97,7 @@ ApplicationWindow {
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
                 }
-                text: qsTr("    Atendidas")
+                text: qsTr("       Atendidas")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -111,7 +115,7 @@ ApplicationWindow {
                     anchors.verticalCenter: parent.verticalCenter
 
                 }
-                text: qsTr("    Cobradas")
+                text: qsTr("       Cobradas")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -123,6 +127,25 @@ ApplicationWindow {
             ItemDelegate {
                 text: qsTr("Platillos")
                 width: parent.width
+            }
+            ItemDelegate
+            {
+                Image
+                {
+                    id: imgSalir
+                    source: "img/salir.png"
+                    width: 30
+                    height: 30
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                text: qsTr("       Salir")
+                width: parent.width
+                onClicked: {
+                    stackView.clear()
+                    drawer.close()
+                    window.ventanaCerrada();
+                    window.close()
+                }
             }
         }
     }

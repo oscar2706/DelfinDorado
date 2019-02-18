@@ -20,6 +20,49 @@ ApplicationWindow{
     visible: false
     }
 
+    MainWindowGerente{
+        id: mainWindowGerente
+        title: qsTr("Gerente")
+        visible: false
+    }
+    MainWindowAnfitrion{
+        id: mainWindowAnfitrion
+        title: qsTr("Anfitrion")
+        visible: false
+    }
+    MainWindowMesero
+    {
+        id: mainWindowMesero
+        title: qsTr("Mesero")
+        visible: false
+
+        onVentanaCerrada:
+        {
+            login.visible = true;
+        }
+    }
+    MainWindowCocinero
+    {
+        id: mainWindowCocinero
+        title: qsTr("Cocinero")
+        visible: false
+    }
+
+    Popup
+    {
+        id: ventanaError
+        width: 200
+        height: 50
+        x: Math.round((parent.width - width) / 2)
+        y: 450
+
+        Label
+        {
+            id: lblVentanaError
+            text: "Campos Vacios Encontrados"
+        }
+    }
+
     function usuarios()
     {
         if(txtUsuario.text==""||txtContrasegna.text=="")
@@ -39,12 +82,17 @@ ApplicationWindow{
                 //gerente
                 mainWindowGerente.show()
                 txtUsuario.clear()
-
                 txtContrasegna.clear()
                 ventanaError.close()
             break;
             case 2:
                 //cocinero
+                modeloPlatillosNuevos.modeloEstado(1);
+                modeloPlatillosPreparados.modeloEstado(2);
+                mainWindowCocinero.show()
+                txtUsuario.clear()
+                txtContrasegna.clear()
+                ventanaError.close()
             break;
             case 3:
                 //mesero
@@ -105,8 +153,6 @@ ApplicationWindow{
         anchors.centerIn: parent
         Material.elevation: 8
         Material.background: "#FFFFFF"
-        //Material.background: "#eceff1"
-        //Material.background: Material.Amber
 
         ColumnLayout{
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -192,39 +238,9 @@ ApplicationWindow{
                 Layout.fillWidth: false
                 wheelEnabled: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                MainWindowGerente{
-                    id: mainWindowGerente
-                    title: qsTr("Gerente")
-                    visible: false
-                }
-                MainWindowAnfitrion{
-                    id: mainWindowAnfitrion
-                    title: qsTr("Anfitrion")
-                    visible: false
-                }
-                MainWindowMesero
-                {
-                    id: mainWindowMesero
-                    title: qsTr("Mesero")
-                    visible: false
-                }
                 onClicked:
                 {
                     usuarios()
-                }
-
-                Popup
-                {
-                    id: ventanaError
-                    width: 200
-                    height: 50
-                    x: -40
-
-                    Label
-                    {
-                        id: lblVentanaError
-                        text: "Campos Vacios Encontrados"
-                    }
                 }
             }
         }

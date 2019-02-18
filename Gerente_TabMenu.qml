@@ -341,7 +341,7 @@ Item
                 Label{
                     width: 10
                     color: "#006677"
-                    text: "Infomración del platillo: "
+                    text: "Información del platillo: "
                     font.weight: Font.Bold
                     font.family: "Verdana"
                     font.pointSize: 12
