@@ -40,6 +40,8 @@ public:
     Q_INVOKABLE void addPlatillo(const int &idComanda, const QString &nombrePlatillo, const int &cantidad);
     Q_INVOKABLE bool removePlatillo(const int idPlatillo);
     Q_INVOKABLE void setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad);
+    Q_INVOKABLE void modeloEstado(const int &idEstadoPreparacion);
+    Q_INVOKABLE void modifyStatus(const int &idPlatillosComanda, const int &idNuevoEstado);
 
 signals:
 

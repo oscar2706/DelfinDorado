@@ -32,56 +32,6 @@ Item {
         Material.elevation: 0
     }
 
-    Popup
-    {
-        id: confirmarPlatilloListo
-        width: 230
-        height: 100
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        Material.background: "#53a35f"
-
-        ColumnLayout
-        {
-            Label
-            {
-                id: lblConfirmarPlatilloListo
-                text: "¿Marcar platillo como preparado?"
-                Layout.fillWidth: true
-                Material.foreground: "#FFFFFF"
-            }
-
-            RowLayout
-            {
-                Button
-                {
-                    id: btnConfirmarPlatilloListo
-                    text: "Aceptar"
-                    Layout.fillWidth: true
-
-                    onClicked:
-                    {
-                        modeloPlatillosNuevos.modifyStatus(idComandaPreparando, idPlatilloPreparando, 3);
-                        modeloPlatillosNuevos.modeloEstado(1);
-                        modeloPlatillosPreparados.modeloEstado(2);
-                        confirmarPlatilloListo.close()
-                    }
-                }
-                Button
-                {
-                    id: btnCancelarPlatilloListo
-                    text: "Cancelar"
-                    Layout.fillWidth: true
-
-                    onClicked:
-                    {
-                        confirmarPlatilloListo.close()
-                    }
-                }
-            }
-        }
-    }
-
     RowLayout
     {
         id: divisorPrincipal
@@ -95,7 +45,7 @@ Item {
         //PARTE IZQUIERDA
         Pane{
             id: panelPlatillos1
-            Material.background: "#53a35f"
+            Material.background: "#bdbdbd"
             Material.elevation: 0
             Layout.preferredHeight: 600
             Layout.minimumHeight: 600
@@ -106,11 +56,12 @@ Item {
             Layout.leftMargin: 50
 
             Pane {
-                id: panelTextoPlatillosNuevos
+                id: panelPlatillosNuevos
                 height: 60
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
+                font.weight: Font.DemiBold
                 Material.elevation: 4
                 Material.background: "#FFFFFF"
 
@@ -166,41 +117,60 @@ Item {
                     clip: true
                     focus: true
                     model: modeloPlatillosNuevos
-                    highlight: Button {
-                        id: btnPlatillosNuevos
-                        Material.background: "#aef9ba"
-                        Material.elevation: 2
-                        Layout.fillWidth: true
-                        hoverEnabled: true
-                    }
-                    highlightFollowsCurrentItem: true
-                    removeDisplaced: Transition {
-                        NumberAnimation { properties: "x,y"; duration: 300 }
-                    }
-                    delegate: Component {
-                        Item{
-                            width: parent.width
-                            height: 50
-                            MouseArea{
-                                anchors.fill: parent
-                                GridLayout{
-                                    anchors.fill: parent
-                                    columns: 2
-                                    Text{
-                                        Layout.minimumWidth: 250
-                                        Layout.maximumWidth: 250
-                                        text: model.nombrePlatillo
-                                        font.family: "Verdana"
-                                        font.pointSize: 10
-                                    }
-                                }
-                                onClicked: {
-                                    tablaPlatillosNuevos.currentIndex = index
-                                    platilloNuevoSeleccionado = index
-                                    idComandaNuevo = model.idComanda
-                                    idPlatilloNuevo = model.idPlatillo
-                                    nombrePlatilloNuevo = model.nombrePlatillo
-                                }
+                    delegate: SwipeDelegate
+                    {
+                        id: vistaTactil
+                        width: parent.width
+                        text: model.nombrePlatillo
+
+                        ListView.onRemove: SequentialAnimation
+                        {
+                            PropertyAction
+                            {
+                                target: vistaTactil
+                                property: "ListView.delayRemove"
+                                value: true
+                            }
+                            NumberAnimation
+                            {
+                                target: vistaTactil
+                                property: "height"
+                                to: 0
+                                easing.type: Easing.InOutQuad
+                            }
+                            PropertyAction
+                            {
+                                target: vistaTactil
+                                property: "ListView.delayRemove"
+                                value: false
+                            }
+                        }
+
+                        swipe.left: Label
+                        {
+                            id: lblDelete
+                            text: qsTr("Preparar")
+                            color: "white"
+                            verticalAlignment: Label.AlignVCenter
+                            padding: 12
+                            height: parent.height
+                            anchors.left: parent.left
+
+                            SwipeDelegate.onClicked:
+                            {
+                                tablaPlatillosNuevos.currentIndex = index
+                                platilloNuevoSeleccionado = index
+                                idComandaNuevo = model.idComanda
+                                idPlatilloNuevo = model.idPlatillo
+                                nombrePlatilloNuevo = model.nombrePlatillo
+                                modeloPlatillosNuevos.modifyStatus(idComandaNuevo, idPlatilloNuevo, 2);
+                                modeloPlatillosNuevos.modeloEstado(1);
+                                modeloPlatillosPreparados.modeloEstado(2);
+                            }
+
+                            background: Rectangle
+                            {
+                                color: lblDelete.SwipeDelegate.pressed ? Qt.darker("#53a35f", 1.1) : "#53a35f"
                             }
                         }
                     }
@@ -230,26 +200,13 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
-
-                MouseArea
-                {
-                    id: btnCocinar
-                    anchors.fill: parent
-
-                    onClicked:
-                    {
-                        modeloPlatillosNuevos.modifyStatus(idComandaNuevo, idPlatilloNuevo, 2);
-                        modeloPlatillosNuevos.modeloEstado(1);
-                        modeloPlatillosPreparados.modeloEstado(2);
-                    }
-                }
             }
         }
 
         //PARTE DERECHA
         Pane{
             id: panelPlatillos2
-            Material.background: "#53a35f"
+            Material.background: "#bdbdbd"
             Material.elevation: 0
             Layout.preferredHeight: 600
             Layout.minimumHeight: 600
@@ -320,50 +277,60 @@ Item {
                     clip: true
                     focus: true
                     model: modeloPlatillosPreparados
-                    highlight: Button {
-                        id: btnPlatillosPreparados
-                        Material.background: "#aef9ba"
-                        Material.elevation: 2
-                        Layout.fillWidth: true
-                        hoverEnabled: true
-                    }
-                    highlightFollowsCurrentItem: true
-                    removeDisplaced: Transition {
-                        NumberAnimation { properties: "x,y"; duration: 300 }
-                    }
-                    delegate: Component {
-                        Item{
-                            width: parent.width
-                            height: 50
-                            MouseArea{
-                                anchors.fill: parent
-                                GridLayout{
-                                    anchors.fill: parent
-                                    columns: 2
-                                    Text{
-                                        Layout.minimumWidth: 250
-                                        Layout.maximumWidth: 250
-                                        text: model.nombrePlatillo
-                                        font.family: "Verdana"
-                                        font.pointSize: 10
-                                    }
-                                }
-                                onClicked: {
-                                    tablaPlatillosPreparados.currentIndex = index
-                                    platilloPreparandoSeleccionado = index
-                                    idComandaPreparando = model.idComanda
-                                    idPlatilloPreparando = model.idPlatillo
-                                    nombrePlatilloPreparando = model.nombrePlatillo
-                                }
-                                onDoubleClicked:
-                                {
-                                    tablaPlatillosPreparados.currentIndex = index
-                                    platilloPreparandoSeleccionado = index
-                                    idComandaPreparando = model.idComanda
-                                    idPlatilloPreparando = model.idPlatillo
-                                    nombrePlatilloPreparando = model.nombrePlatillo
-                                    confirmarPlatilloListo.open()
-                                }
+                    delegate: SwipeDelegate
+                    {
+                        id: vistaTactil
+                        width: parent.width
+                        text: model.nombrePlatillo
+
+                        ListView.onRemove: SequentialAnimation
+                        {
+                            PropertyAction
+                            {
+                                target: vistaTactil
+                                property: "ListView.delayRemove"
+                                value: true
+                            }
+                            NumberAnimation
+                            {
+                                target: vistaTactil
+                                property: "height"
+                                to: 0
+                                easing.type: Easing.InOutQuad
+                            }
+                            PropertyAction
+                            {
+                                target: vistaTactil
+                                property: "ListView.delayRemove"
+                                value: false
+                            }
+                        }
+
+                        swipe.left: Label
+                        {
+                            id: lblDelete
+                            text: qsTr("Platillo Listo")
+                            color: "white"
+                            verticalAlignment: Label.AlignVCenter
+                            padding: 12
+                            height: parent.height
+                            anchors.left: parent.left
+
+                            SwipeDelegate.onClicked:
+                            {
+                                tablaPlatillosPreparados.currentIndex = index
+                                platilloPreparandoSeleccionado = index
+                                idComandaPreparando = model.idComanda
+                                idPlatilloPreparando = model.idPlatillo
+                                nombrePlatilloPreparando = model.nombrePlatillo
+                                modeloPlatillosNuevos.modifyStatus(idComandaPreparando, idPlatilloPreparando, 3);
+                                modeloPlatillosNuevos.modeloEstado(1);
+                                modeloPlatillosPreparados.modeloEstado(2);
+                            }
+
+                            background: Rectangle
+                            {
+                                color: lblDelete.SwipeDelegate.pressed ? Qt.darker("#53a35f", 1.1) : "#53a35f"
                             }
                         }
                     }
