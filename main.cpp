@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
     PlatilloCocinaModelo modeloPlatillosPreparados;
     engine.rootContext()->setContextProperty("modeloPlatillosPreparados", &modeloPlatillosPreparados);
 
+    PlatilloCocinaModelo modeloPlatillosMesero;
+    engine.rootContext()->setContextProperty("modeloPlatillosMesero", &modeloPlatillosMesero);
+
     qmlRegisterType<meseroModelo>("ModeloMesero",1,0,"MeseroModelo");
     qmlRegisterUncreatableType<meseroLista>("ModeloMesero",1,0,"MeseroLista",QStringLiteral("mesero lista"));
 

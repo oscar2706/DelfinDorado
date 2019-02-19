@@ -125,8 +125,17 @@ ApplicationWindow {
                 }
             }
             ItemDelegate {
-                text: qsTr("Platillos")
+                text: "Platillos"
                 width: parent.width
+
+                onClicked:
+                {
+                    console.log(modeloPlatillosMesero.tamagnoModelo())
+                    stackView.clear()
+                    modeloPlatillosMesero.platillosMesero(idMesero);
+                    stackView.push(platillosMesero)
+                    drawer.close()
+                }
             }
             ItemDelegate
             {
@@ -163,6 +172,17 @@ ApplicationWindow {
         Comandas_Page
         {
             id: comandas
+        }
+    }
+
+    Component
+    {
+        id: platillosMesero
+
+        Platillos_Page
+        {
+            id: platillos
+            idMeseroModelo: idMesero
         }
     }
 }

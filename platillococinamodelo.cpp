@@ -203,3 +203,51 @@ void PlatilloCocinaModelo::modifyStatus(const int &idPlatillosComanda, const int
     if(!modificar.exec())
         qDebug() << modificar.lastError().text();
 }
+
+void PlatilloCocinaModelo::platillosMesero(const int &idMesero)
+{
+    while(misPlatillosCocina.size() > 0)
+    {
+        beginRemoveRows(QModelIndex(), 0, 0);
+        misPlatillosCocina.removeAt(0);
+        endRemoveRows();
+    }
+
+    QSqlQuery platillosMesero, nombrePlatillo;
+
+    platillosMesero.prepare("SELECT idPlatillosComanda, idPlatillo, idComanda FROM platilloscomanda WHERE "
+                            "idComanda IN (SELECT idComanda from comanda WHERE idEmpleado = :idMesero) "
+                            "AND idEstadoPreparacion = 3");
+    platillosMesero.bindValue(":idMesero", idMesero);
+    platillosMesero.exec();
+
+    int idPlatillosComanda;
+    int idPlatillo;
+    int idComanda;
+    QString nombre;
+
+    while(platillosMesero.next())
+    {
+        idPlatillosComanda = platillosMesero.value(0).toInt();
+        idPlatillo = platillosMesero.value(1).toInt();
+        idComanda = platillosMesero.value(2).toInt();
+
+        nombrePlatillo.prepare("SELECT nombre FROM platillo WHERE idPlatillo = :idPlatillo");
+        nombrePlatillo.bindValue(":idPlatillo", idPlatillo);
+        nombrePlatillo.exec();
+        nombrePlatillo.first();
+
+        nombre = nombrePlatillo.value(0).toString();
+
+        PlatilloCocina *nuevoPlatillo = new PlatilloCocina(idPlatillosComanda, idComanda, idPlatillo, nombre, 3);
+        addPlatilloCocina(nuevoPlatillo);
+
+        qDebug() << "Platillo Mesro 1";
+    }
+}
+
+QString PlatilloCocinaModelo::tamagnoModelo()
+{
+    qDebug() << misPlatillosCocina.size();
+    return QString::number(misPlatillosCocina.size());
+}

@@ -99,6 +99,7 @@ ApplicationWindow{
                 login.visible = false
                 mainWindowMesero.idMesero = empleadoLista.buscarIdMesero(txtUsuario.text, txtContrasegna.text)
                 modeloComandas.getComandasMesero(mainWindowMesero.idMesero, 0)
+                modeloPlatillosMesero.platillosMesero(mainWindowMesero.idMesero);
                 mainWindowMesero.show()
                 txtUsuario.clear()
                 txtContrasegna.clear()

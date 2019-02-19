@@ -17,6 +17,7 @@
         <file>Mesa.qml</file>
         <file>Cocinero_TabPlatillos.qml</file>
         <file>MainWindowCocinero.qml</file>
+        <file>Platillos_Page.qml</file>
     </qresource>
     <qresource prefix="/mesero"/>
 </RCC>

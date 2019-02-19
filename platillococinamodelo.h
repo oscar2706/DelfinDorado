@@ -34,6 +34,8 @@ public:
 
     Q_INVOKABLE void modeloEstado(const int &idEstadoPreparacion);
     Q_INVOKABLE void modifyStatus(const int &idPlatillosComanda, const int &idNuevoEstado);
+    Q_INVOKABLE void platillosMesero(const int &idMesero);
+    Q_INVOKABLE QString tamagnoModelo();
 signals:
 
 private:
