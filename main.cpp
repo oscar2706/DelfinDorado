@@ -11,6 +11,7 @@
 #include "platillocomandamodel.h"
 #include "meseromodelo.h"
 #include "meserolista.h"
+#include "platillococinamodelo.h"
 
 int main(int argc, char *argv[])
 {
@@ -35,10 +36,10 @@ int main(int argc, char *argv[])
     PlatilloComandaModel modeloPlatillosComanda;
     engine.rootContext()->setContextProperty("modeloPlatillosComandas", &modeloPlatillosComanda);
 
-    PlatilloComandaModel modeloPlatillosNuevos;
+    PlatilloCocinaModelo modeloPlatillosNuevos;
     engine.rootContext()->setContextProperty("modeloPlatillosNuevos", &modeloPlatillosNuevos);
 
-    PlatilloComandaModel modeloPlatillosPreparados;
+    PlatilloCocinaModelo modeloPlatillosPreparados;
     engine.rootContext()->setContextProperty("modeloPlatillosPreparados", &modeloPlatillosPreparados);
 
     qmlRegisterType<meseroModelo>("ModeloMesero",1,0,"MeseroModelo");

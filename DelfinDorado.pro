@@ -25,7 +25,9 @@ SOURCES += \
     platillocomanda.cpp \
     platillocomandamodel.cpp \
     meserolista.cpp \
-    meseromodelo.cpp
+    meseromodelo.cpp \
+    platillococina.cpp \
+    platillococinamodelo.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -51,6 +53,8 @@ HEADERS += \
     platillocomanda.h \
     platillocomandamodel.h \
     meserolista.h \
-    meseromodelo.h
+    meseromodelo.h \
+    platillococina.h \
+    platillococinamodelo.h
 
 DISTFILES +=

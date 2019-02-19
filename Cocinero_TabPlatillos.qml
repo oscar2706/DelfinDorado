@@ -12,11 +12,13 @@ Item {
     width: 1366
     height: 720
 
+    property int idPlatillosComandaNuevo
     property int idComandaNuevo
     property int idPlatilloNuevo
     property string nombrePlatilloNuevo
     property int platilloNuevoSeleccionado
 
+    property int idPlatillosComandaPreparando
     property int idComandaPreparando
     property int idPlatilloPreparando
     property string nombrePlatilloPreparando
@@ -119,7 +121,7 @@ Item {
                     model: modeloPlatillosNuevos
                     delegate: SwipeDelegate
                     {
-                        id: vistaTactil
+                        id: vistaTactil1
                         width: parent.width
                         text: model.nombrePlatillo
 
@@ -127,20 +129,20 @@ Item {
                         {
                             PropertyAction
                             {
-                                target: vistaTactil
+                                target: vistaTactil1
                                 property: "ListView.delayRemove"
                                 value: true
                             }
                             NumberAnimation
                             {
-                                target: vistaTactil
+                                target: vistaTactil1
                                 property: "height"
                                 to: 0
                                 easing.type: Easing.InOutQuad
                             }
                             PropertyAction
                             {
-                                target: vistaTactil
+                                target: vistaTactil1
                                 property: "ListView.delayRemove"
                                 value: false
                             }
@@ -148,7 +150,7 @@ Item {
 
                         swipe.left: Label
                         {
-                            id: lblDelete
+                            id: lblDelete1
                             text: qsTr("Preparar")
                             color: "white"
                             verticalAlignment: Label.AlignVCenter
@@ -160,17 +162,18 @@ Item {
                             {
                                 tablaPlatillosNuevos.currentIndex = index
                                 platilloNuevoSeleccionado = index
+                                idPlatillosComandaNuevo = model.idPlatillosComanda
                                 idComandaNuevo = model.idComanda
                                 idPlatilloNuevo = model.idPlatillo
                                 nombrePlatilloNuevo = model.nombrePlatillo
-                                modeloPlatillosNuevos.modifyStatus(idComandaNuevo, idPlatilloNuevo, 2);
+                                modeloPlatillosNuevos.modifyStatus(idPlatillosComandaNuevo, 2);
                                 modeloPlatillosNuevos.modeloEstado(1);
                                 modeloPlatillosPreparados.modeloEstado(2);
                             }
 
                             background: Rectangle
                             {
-                                color: lblDelete.SwipeDelegate.pressed ? Qt.darker("#53a35f", 1.1) : "#53a35f"
+                                color: lblDelete1.SwipeDelegate.pressed ? Qt.darker("#53a35f", 1.1) : "#53a35f"
                             }
                         }
                     }
@@ -279,7 +282,7 @@ Item {
                     model: modeloPlatillosPreparados
                     delegate: SwipeDelegate
                     {
-                        id: vistaTactil
+                        id: vistaTactil2
                         width: parent.width
                         text: model.nombrePlatillo
 
@@ -287,20 +290,20 @@ Item {
                         {
                             PropertyAction
                             {
-                                target: vistaTactil
+                                target: vistaTactil2
                                 property: "ListView.delayRemove"
                                 value: true
                             }
                             NumberAnimation
                             {
-                                target: vistaTactil
+                                target: vistaTactil2
                                 property: "height"
                                 to: 0
                                 easing.type: Easing.InOutQuad
                             }
                             PropertyAction
                             {
-                                target: vistaTactil
+                                target: vistaTactil2
                                 property: "ListView.delayRemove"
                                 value: false
                             }
@@ -308,7 +311,7 @@ Item {
 
                         swipe.left: Label
                         {
-                            id: lblDelete
+                            id: lblDelete2
                             text: qsTr("Platillo Listo")
                             color: "white"
                             verticalAlignment: Label.AlignVCenter
@@ -320,17 +323,18 @@ Item {
                             {
                                 tablaPlatillosPreparados.currentIndex = index
                                 platilloPreparandoSeleccionado = index
+                                idPlatillosComandaPreparando = model.idPlatillosComanda
                                 idComandaPreparando = model.idComanda
                                 idPlatilloPreparando = model.idPlatillo
                                 nombrePlatilloPreparando = model.nombrePlatillo
-                                modeloPlatillosNuevos.modifyStatus(idComandaPreparando, idPlatilloPreparando, 3);
+                                modeloPlatillosNuevos.modifyStatus(idPlatillosComandaPreparando, 3);
                                 modeloPlatillosNuevos.modeloEstado(1);
                                 modeloPlatillosPreparados.modeloEstado(2);
                             }
 
                             background: Rectangle
                             {
-                                color: lblDelete.SwipeDelegate.pressed ? Qt.darker("#53a35f", 1.1) : "#53a35f"
+                                color: lblDelete2.SwipeDelegate.pressed ? Qt.darker("#53a35f", 1.1) : "#53a35f"
                             }
                         }
                     }
