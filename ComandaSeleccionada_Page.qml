@@ -376,6 +376,7 @@ Item {
                         if(modeloPlatillosComandas.saveNewComandaInDataBase()){
                             pop_confirmacionCocina.close()
                             pop_comandaEnviada.open()
+                            modeloPlatillosComandas.setComandaTaken()
                         }
                     }
                 }

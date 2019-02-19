@@ -35,12 +35,11 @@ public:
     //Q_INVOKABLE void setIdMesero(const int &idEmpleado);
     Q_INVOKABLE bool comandaAlreadySent();
     Q_INVOKABLE bool saveNewComandaInDataBase();
+    Q_INVOKABLE void setComandaTaken();
     Q_INVOKABLE void setIdComanda(const int &idComanda);
     Q_INVOKABLE void addPlatillo(const int &idComanda, const QString &nombrePlatillo, const int &cantidad);
     Q_INVOKABLE bool removePlatillo(const int idPlatillo);
     Q_INVOKABLE void setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad);
-    Q_INVOKABLE void modeloEstado(const int &idEstadoPreparacion);
-    Q_INVOKABLE void modifyStatus(const int &idComanda, const int &idPlatillo, const int &idNuevoEstado);
 
 signals:
 
