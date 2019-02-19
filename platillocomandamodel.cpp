@@ -491,6 +491,15 @@ void PlatilloComandaModel::modifyStatus(const int &idPlatillosComanda, const int
         qDebug() << modificar.lastError().text();
 }
 
+float PlatilloComandaModel::getTotalComanda()
+{
+    total = 0;
+    for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
+        total += (*itr)->totalPlatillo();
+    }
+    return total;
+}
+
 bool PlatilloComandaModel::insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave)
 {
     bool dataSaved = false;

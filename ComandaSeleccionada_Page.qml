@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 Item {
+    id:page_ComandaSeleccionada
     property int idComanda
     property int idEmpleado
     property int selectedPlatillo
@@ -13,6 +14,7 @@ Item {
     property string fechaComanda
     property int cantidadPlatilloSeleccionado
     property int idSelectedPlatillo
+    property var totalCuenta: modeloPlatillosComandas.getTotalComanda()
 
     Pane{
         id: detallesComanda
@@ -32,29 +34,45 @@ Item {
                 spacing: 40
                 padding: 10
                 Label{
+                    font.weight: Font.DemiBold
                     text: "Comanda: "+idComanda
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
                 Label{
+                    font.weight: Font.DemiBold
                     text: "Mesa: "+mesaAsignada
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
                 Label{
                     text: "Fecha: "+fechaComanda
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
             }
             Row{
-                spacing: 50
+                spacing: 40
                 padding: 10
                 Label{
                     text: "Cantidad"
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
                 Label{
                     text: "Nombre platillo"
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
                 Label{
                     text: "Precio x Unidad"
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
                 Label{
                     text: "Total"
+                    font.pointSize: 14
+                    font.family: "Verdana"
                 }
             }
         }
@@ -64,12 +82,23 @@ Item {
         id:footerComandas
         Item{
             width: platillosOrdenados.width
-            height: 50
+            height: 110
             Pane{
                 Material.background: "#ffffff"
                 width: parent.width
                 height: parent.height
                 anchors.fill: parent
+                Label{
+                    id:totalPagar
+                    text: "Total = $"+totalCuenta
+                    font.pointSize: 14
+                    font.family: "Verdana"
+                    font.weight: Font.DemiBold
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 70
+                }
                 RoundButton{
                     id:btn_AgregarPlatillo
                     width: parent.width
@@ -84,6 +113,8 @@ Item {
                     Material.foreground: "#ffffff"
                     radius: 5
                     text: "Agregar Platillo"
+                    font.weight: Font.DemiBold
+                    font.pointSize: 14
                     onReleased: {
                         btn_AgregarPlatillo.Material.background = "#ffb03a"
                         pop_confirmacionAgregar.open()
@@ -110,99 +141,140 @@ Item {
         spacing: 0
         ScrollBar.vertical: ScrollBar {
         }
-        delegate: Component {
+        delegate: SwipeDelegate {
             id: delegateItem
-            Item{
-                width: parent.width
-                height: 50
-                property string select: "#ffffff"
-                property int elevacion: 2
-                Pane{
-                    id: elementoPlatillo
+            width: parent.width
+            height: 50
+
+
+            Text{
+                id: cantidadPlatillo
+                Layout.minimumWidth: 250
+                Layout.maximumWidth: 250
+                topPadding: 20
+                leftPadding: 50
+                text: cantidad
+                font.family: "Verdana"
+                font.pointSize: 12
+            }
+            Text{
+                id: nombreDelPlatillo
+                Layout.minimumWidth: 200
+                Layout.maximumWidth: 200
+                topPadding: 20
+                leftPadding: 120
+                text: nombrePlatillo
+                font.family: "Verdana"
+                font.pointSize: 12
+            }
+            Text{
+                id: precioPorUnidad
+                Layout.minimumWidth: 200
+                Layout.maximumWidth: 200
+                topPadding: 20
+                leftPadding: 310
+                text: "$"+precioUnidad
+                font.family: "Verdana"
+                font.pointSize: 12
+            }
+            Text{
+                id: precioTotal
+                Layout.minimumWidth: 200
+                Layout.maximumWidth: 200
+                topPadding: 20
+                leftPadding: 420
+                text: "$"+totalPlatillo
+                font.bold: true
+                font.family: "Verdana"
+                font.pointSize: 12
+                opacity: delegateItem.pressed ? 0 : 1
+                Behavior on opacity { NumberAnimation { } }
+            }
+            MouseArea{
+                id:modifyQuantityMouseArea
+                anchors.fill: parent
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 360
+                onClicked: {
+                    cantidadPlatilloSeleccionado = cantidad-1;
+                    idSelectedPlatillo = idPlatillo
+                    popChangeQuantity.open()
+                }
+            }
+            swipe.onCompleted: {
+                precioTotal.opacity = 0;
+            }
+            swipe.onClosed: {
+                precioTotal.opacity = 1;
+            }
+            swipe.right: Rectangle {
+                anchors.right: parent.right
+                width: 80
+                height: parent.height
+                clip: true
+                color: SwipeDelegate.pressed ? "white" : Material.color(Material.Red)
+
+                Label {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    text: "Borrar"
+                    padding: 12
                     anchors.fill: parent
-                    Material.background: select
-                    Material.elevation: elevacion
+                    horizontalAlignment: Qt.AlignRight
+                    verticalAlignment: Qt.AlignVCenter
+                    color: "white"
                 }
-                Button{
-                    id: btn_QuitaPlatillo
-                    Material.background: "#ffffff"
-                    Material.foreground: "#f44242"
-                    Layout.minimumWidth: 70
-                    Layout.maximumWidth: 70
-                    Layout.minimumHeight: 50
-                    Layout.maximumHeight: 50
-                    text: qsTr("del")
-                    onClicked: {
-                        cantidadPlatilloSeleccionado = cantidad-1;
-                        idSelectedPlatillo = idPlatillo
-                        if(!modeloPlatillosComandas.removePlatillo(idSelectedPlatillo)){
-                            deletedFail.open()
-                        }
+                SwipeDelegate.onClicked: {
+                    idSelectedPlatillo = idPlatillo
+                    if(modeloPlatillosComandas.comandaAlreadySent()){
+                        delegateItem.swipe.close()
+                        pop_deletedFail.open()
                     }
-                }
-                Text{
-                    id: cantidadPlatillo
-                    Layout.minimumWidth: 250
-                    Layout.maximumWidth: 250
-                    topPadding: 20
-                    leftPadding: 80
-                    text: cantidad
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-                Text{
-                    id: nombreDelPlatillo
-                    Layout.minimumWidth: 200
-                    Layout.maximumWidth: 200
-                    topPadding: 20
-                    leftPadding: 120
-                    text: nombrePlatillo
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-                Text{
-                    id: precioPorUnidad
-                    Layout.minimumWidth: 200
-                    Layout.maximumWidth: 200
-                    topPadding: 20
-                    leftPadding: 310
-                    text: "$"+precioUnidad
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-                Text{
-                    id: precioTotal
-                    Layout.minimumWidth: 200
-                    Layout.maximumWidth: 200
-                    topPadding: 20
-                    leftPadding: 420
-                    text: "$"+totalPlatillo
-                    font.bold: true
-                    font.family: "Verdana"
-                    font.pointSize: 10
-                }
-                MouseArea{
-                    anchors.fill: parent
-                    anchors.left: parent.left
-                    anchors.leftMargin: 70
-                    onPressed:  select = "#cfd8dc"
-                    onClicked: {
-                        cantidadPlatilloSeleccionado = cantidad-1;
-                        idSelectedPlatillo = idPlatillo
-                        popChangeQuantity.open()
+                    else{
+                        modeloPlatillosComandas.removePlatillo(idSelectedPlatillo)
+                        totalCuenta = modeloPlatillosComandas.getTotalComanda()
                     }
-                    onReleased: select = "#ffffff"
                 }
             }
         }
-    }
-    ListView.onAdd: SequentialAnimation {
-        PropertyAction { target: delegateItem; property: "height"; value: 0 }
-        NumberAnimation { target: delegateItem; property: "height"; to: 80; duration: 350; easing.type: Easing.InOutQuad }
+        ScrollIndicator.vertical: ScrollIndicator { }
+        //Animaciones
+        add: Transition {
+            ParallelAnimation{
+                NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 400 }
+                NumberAnimation { properties: "x"; from: 240; duration: 350; easing.type: Easing.InOutExpo}
+            }
+        }
+        remove: Transition {
+            ParallelAnimation {
+                NumberAnimation{ target: btn_QuitaPlatillo; property: "opacity"; from:1.0; to: 0; duration: 100}
+                NumberAnimation { property: "height"; to: 0; duration: 300; easing.type: Easing.OutCirc}
+            }
+        }
+
+        displaced: Transition {
+            id: dispTrans
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: (dispTrans.ViewTransition.index -
+                                dispTrans.ViewTransition.targetIndexes[0]) * 100
+                    }
+                    NumberAnimation { properties: "x,y"; duration: 150; easing.type: Easing.InSine}
+                }
+        }
+        populate: Transition {
+            id: populateTransition
+            ParallelAnimation{
+                NumberAnimation {property: "x"; from: 480; duration: 200}
+                NumberAnimation {property: "opacity"; from: 0; to: 1.0; duration: 200 }
+        }
+        }
     }
 
     Popup{
-        id: deletedFail
+        id: pop_deletedFail
         width: 300
         height: 100
         modal: true
@@ -214,7 +286,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.weight: Font.DemiBold
-            font.pointSize: 15
+            font.pointSize: 14
             font.family: "Verdana"
             width: 300
             height: 70
@@ -245,7 +317,7 @@ Item {
             width: parent.width
             height: 150
             font.weight: Font.Medium
-            font.pointSize: 16
+            font.pointSize: 14
             font.family: "Verdana"
         }
         Row{
@@ -258,9 +330,13 @@ Item {
                 Material.foreground: "#ffb03a"
                 width: (pop_confirmacionAgregar.width/2)-20
                 text: "Modificar"
+                font.weight: Font.DemiBold
+                font.pointSize: 12
+                font.family: "Verdana"
                 onClicked: {
                     modeloPlatillosComandas.setQuantity(idComanda,idSelectedPlatillo, selectorCantidad.currentIndex+1)
                     popChangeQuantity.close()
+                    totalCuenta = modeloPlatillosComandas.getTotalComanda()
                 }
             }
             Button{
@@ -268,6 +344,9 @@ Item {
                 Material.background: "#ffffff"
                 Material.foreground: "#ffb03a"
                 width: (pop_confirmacionAgregar.width/2)-20
+                font.weight: Font.DemiBold
+                font.pointSize: 12
+                font.family: "Verdana"
                 text: "Cancelar"
                 onClicked: {
                     popChangeQuantity.close()
@@ -306,9 +385,13 @@ Item {
                 Material.foreground: "#ffb03a"
                 width: (pop_confirmacionAgregar.width/2)-20
                 text: "Agregar"
+                font.weight: Font.DemiBold
+                font.family: "Verdana"
+                font.pointSize: 12
                 onClicked: {
                     pop_confirmacionAgregar.close()
                     modeloPlatillosComandas.addPlatillo(idComanda, inputPlatilloPorAgregar.currentText, 1);
+                    totalCuenta = modeloPlatillosComandas.getTotalComanda()
                 }
             }
             Button{
@@ -317,6 +400,9 @@ Item {
                 Material.foreground: "#ffb03a"
                 width: (pop_confirmacionAgregar.width/2)-20
                 text: "Cancelar"
+                font.family: "Verdana"
+                font.weight: Font.DemiBold
+                font.pointSize: 12
                 onClicked: {
                     pop_confirmacionAgregar.close()
                 }
@@ -335,6 +421,8 @@ Item {
         height: 60
         radius: 5
         text: "Enviar a cocina"
+        font.weight: Font.DemiBold
+        font.pointSize: 16
         onClicked: {
             pop_confirmacionCocina.open()
         }
@@ -371,6 +459,9 @@ Item {
                     text: "Enviar"
                     Material.background: "#ba8637"
                     Material.foreground: "#ffffff"
+                    font.family: "Verdana"
+                    font.weight: Font.Medium
+                    font.pointSize: 12
                     width: (pop_confirmacionCocina.width/2)-15
                     onClicked: {
                         if(modeloPlatillosComandas.saveNewComandaInDataBase()){

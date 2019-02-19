@@ -3,7 +3,6 @@
 #include <QQuickStyle>
 #include <QQmlContext>
 
-
 #include "empleadolista.h"
 #include "empleadomodelo.h"
 #include "platillomodel.h"
@@ -49,7 +48,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<meseroLista>("ModeloMesero",1,0,"MeseroLista",QStringLiteral("mesero lista"));
 
     meseroLista meseroListaObj;
-    engine.rootContext()->setContextProperty(QStringLiteral("meseroLista2"),&meseroListaObj);
+    //engine.rootContext()->setContextProperty(QStringLiteral("meseroLista2"),&meseroListaObj);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

@@ -12,7 +12,7 @@ Page{
         id: listaComandas
         boundsBehavior: Flickable.VerticalFlick
         anchors.fill: parent
-        spacing: 4
+        spacing: 0
         clip: true
         focus: true
         model: modeloComandas
@@ -47,16 +47,16 @@ Page{
                     leftPadding: 50
                     text: "N° Comanda: "+idComanda
                     font.family: "Verdana"
-                    font.pointSize: 10
+                    font.pointSize: 12
                 }
                 Text{
                     Layout.minimumWidth: 200
                     Layout.maximumWidth: 200
                     topPadding: 20
-                    leftPadding: 250
+                    leftPadding: 200
                     text: "Mesa: "+idMesa
                     font.family: "Verdana"
-                    font.pointSize: 10
+                    font.pointSize: 12
                 }
 
                 MouseArea{
@@ -68,11 +68,11 @@ Page{
                         selectedComanda  = idComanda
                         selectedMesa = idMesa
                         selectedFecha = fecha
-                        comandaCompleta.fechaSeleccionada
+                        //comandaCompleta.fechaSeleccionada
                     }
                     onReleased: {
                         select = "#ffffff"
-                        stackView.push(comandaCompleta)
+                        stackView.push(comandaSeleccionada)
                     }
                     onClicked: {
                         //Abrir la pestaña de la comanda
@@ -83,7 +83,7 @@ Page{
     }
 
     Component{
-        id: comandaCompleta
+        id: comandaSeleccionada
         ComandaSeleccionada_Page{
             id: comanda
             idComanda: selectedComanda

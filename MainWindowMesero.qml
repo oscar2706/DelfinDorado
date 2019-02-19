@@ -59,10 +59,12 @@ ApplicationWindow {
                     source: "img/editar.png"
                     width: 30
                     height: 30
+                    anchors.left: parent.left
+                    anchors.leftMargin: 25
                     anchors.verticalCenter: parent.verticalCenter
 
                 }
-                text: qsTr("    Todas")
+                text: qsTr("            Todas")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -77,10 +79,12 @@ ApplicationWindow {
                     source: "img/pendiente.png"
                     width: 30
                     height: 30
+                    anchors.left: parent.left
+                    anchors.leftMargin: 25
                     anchors.verticalCenter: parent.verticalCenter
 
                 }
-                text: qsTr("       Pendientes")
+                text: qsTr("            Pendientes")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -95,9 +99,11 @@ ApplicationWindow {
                     source: "img/atendido.png"
                     width: 30
                     height: 30
+                    anchors.left: parent.left
+                    anchors.leftMargin: 25
                     anchors.verticalCenter: parent.verticalCenter
                 }
-                text: qsTr("       Atendidas")
+                text: qsTr("            Atendidas")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -112,10 +118,12 @@ ApplicationWindow {
                     source: "img/cobrada.png"
                     width: 30
                     height: 30
+                    anchors.left: parent.left
+                    anchors.leftMargin: 25
                     anchors.verticalCenter: parent.verticalCenter
 
                 }
-                text: qsTr("       Cobradas")
+                text: qsTr("            Cobradas")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -145,9 +153,11 @@ ApplicationWindow {
                     source: "img/salir.png"
                     width: 30
                     height: 30
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
                 }
-                text: qsTr("       Salir")
+                text: qsTr("        Salir")
                 width: parent.width
                 onClicked: {
                     stackView.clear()
@@ -163,6 +173,31 @@ ApplicationWindow {
         id: stackView
         initialItem: comandasTodas
         anchors.fill: parent
+
+        pushEnter: Transition{
+            ParallelAnimation{
+                NumberAnimation {target: stackView; property: "opacity"; from: 0; to:1.0; duration: 250; easing.type: Easing.Linear}
+                XAnimator {
+                        target: stackView;
+                        from: 480;
+                        to: 0;
+                        duration: 250
+                        easing.type: Easing.InSine
+                }
+            }
+        }
+        popExit: Transition {
+            ParallelAnimation{
+                NumberAnimation {target: stackView; property: "opacity"; from: 0; to:1.0; duration: 250; easing.type: Easing.Linear}
+                XAnimator {
+                        target: stackView;
+                        from: 0;
+                        to: 480;
+                        duration: 250
+                        easing.type: Easing.OutSine
+                }
+            }
+        }
     }
 
     Component

@@ -60,7 +60,7 @@ Page {
             {
                 id: vistaTactil1
                 width: parent.width
-                text: model.nombrePlatillo
+                text: model.nombrePlatillo + "  N° Comanda: "+ model.idComanda
 
                 ListView.onRemove: SequentialAnimation
                 {

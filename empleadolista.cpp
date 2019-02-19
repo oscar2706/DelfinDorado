@@ -4,16 +4,16 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
 
-    /*db.setUserName("root");
-    db.setPassword("Spat2706");*/
-    db.setUserName("Leonardo");
-    db.setPassword("football26398");
+    db.setUserName("root");
+    db.setPassword("Spat2706");
+    /*db.setUserName("Leonardo");
+    db.setPassword("football26398");*/
     db.setDatabaseName("dorado");
 
     /*db.setUserName("oscar_soluciones");
     db.setPassword("dandelot2012");
-    db.setDatabaseName("dorado");*/
-    db.setPort(3306);
+    db.setDatabaseName("dorado");
+    db.setPort(3306);*/
 
     if(db.open()){
         QSqlQuery query;

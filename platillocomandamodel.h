@@ -42,13 +42,14 @@ public:
     Q_INVOKABLE void setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad);
     Q_INVOKABLE void modeloEstado(const int &idEstadoPreparacion);
     Q_INVOKABLE void modifyStatus(const int &idPlatillosComanda, const int &idNuevoEstado);
-
+    Q_INVOKABLE float getTotalComanda();
 signals:
 
 private:
     bool comandaEnviada = false;
     int idComandaActual;
     bool cargandoComanda = false;
+    float total;
     bool insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave);
     QList<PlatilloComanda *>::iterator itr;
     QList<PlatilloComanda *> misPlatillosComanda;

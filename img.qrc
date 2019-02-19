@@ -39,5 +39,7 @@
         <file>img/maceta.png</file>
         <file>img/puerta.png</file>
         <file>img/preparar.png</file>
+        <file>img/savedOk.png</file>
+        <file>img/delete_Platillo.png</file>
     </qresource>
 </RCC>
