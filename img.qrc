@@ -16,9 +16,7 @@
         <file>img/asignar.png</file>
         <file>img/atendido.png</file>
         <file>img/cobrada.png</file>
-        <file>img/cocina.jpg</file>
         <file>img/editar.png</file>
-        <file>img/jardin.jpg</file>
         <file>img/MesaChica_Disponible.png</file>
         <file>img/MesaChica_Ocupada.png</file>
         <file>img/MesaChica_Sucia.png</file>
@@ -31,18 +29,13 @@
         <file>img/visualizar.png</file>
         <file>img/addPlatillo.png</file>
         <file>img/addPlatillo_Pressed.png</file>
-        <file>img/estufa.jpg</file>
-        <file>img/lavabo.jpg</file>
         <file>img/pedido_anfitrion.png</file>
-        <file>img/entrada.jpg</file>
-        <file>img/barra.png</file>
-        <file>img/maceta.png</file>
-        <file>img/puerta.png</file>
         <file>img/preparar.png</file>
         <file>img/savedOk.png</file>
         <file>img/delete_Platillo.png</file>
         <file>img/almacen_Pedido.png</file>
         <file>img/almacen_NuevoProducto.png</file>
         <file>img/almacen_Descontar.png</file>
+        <file>img/mapa.jpg</file>
     </qresource>
 </RCC>
