@@ -39,6 +39,9 @@ Item {
                     antialiasing: true
                     source: "img/almacen_NuevoProducto.png"
                 }
+                Gerente_NuevoProducto{
+                    id:dialog_nuevoProducto
+                }
                 Button{
                     text: "Nuevo producto"
                     font.weight: Font.DemiBold
@@ -51,7 +54,7 @@ Item {
                     Material.background: "#FFFFFF"
                     Material.elevation: 0
                     onClicked:{
-                        //
+                        dialog_nuevoProducto.openDialog()
                     }
                 }
             }
