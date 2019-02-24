@@ -15,11 +15,7 @@ Window {
     height: 720
 
     StackLayout{
-        width: 200
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.top: parent.top
-        Layout.fillHeight: false
+        anchors.fill: parent
         currentIndex: tabBar.currentIndex
         Gerente_TabEmpleados{
             id: tabEmpleados
@@ -37,7 +33,6 @@ Window {
 
     Pane{
         x: 0
-        //Material.theme: Material.Dark
         Material.background: "#006677"
         Material.accent: "#FFFFFF"
         Material.foreground: Material.Grey
@@ -48,9 +43,7 @@ Window {
         anchors.left: parent.left
         anchors.right: parent.right
         Layout.fillWidth: true
-        //Material.background: Material.Teal
         Material.elevation: 4
-        //Material.color: Material.Teal
         TabBar {
             id: tabBar
             width: 800
@@ -77,7 +70,6 @@ Window {
             font.family: "Verdana"
             anchors.margins: 8
             spacing: 10
-            //Material.foreground: Material.color("#FFFFFF")
 
             TabButton {
                 height: 40
@@ -89,7 +81,6 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 leftPadding: 0
                 padding: 0
-                //FileDialogs { }
             }
             TabButton {
                 height: 40
@@ -99,7 +90,6 @@ Window {
                 spacing: 0
                 antialiasing: true
                 anchors.verticalCenter: parent.verticalCenter
-                //ColorDialogs { }
             }
             TabButton{
                 height: 40
@@ -109,7 +99,6 @@ Window {
                 spacing: 0
                 antialiasing: true
                 anchors.verticalCenter: parent.verticalCenter
-                //FontDialogs { anchors.fill: parent }
             }
             TabButton{
                 height: 40
@@ -119,7 +108,6 @@ Window {
                 spacing: 0
                 antialiasing: true
                 anchors.verticalCenter: parent.verticalCenter
-                //MessageDialogs { anchors.fill:parent }
             }
         }
         Image {
@@ -130,8 +118,7 @@ Window {
             anchors.right: parent.right
             anchors.top: parent.top
 
-            MouseArea
-            {
+            MouseArea{
                 anchors.fill: parent
                 onClicked: window.close()
             }

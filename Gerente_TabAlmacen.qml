@@ -2,131 +2,155 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
+import QtQml.Models 2.3
 
 Item {
     id: tabAlmacen
     visible: true
-    width: 1366
-    height: 717
+    Pane {
+        id: leftMenu
+        width: parent.width/12*2-20
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        Material.background: "#FFFFFF"
+        Material.foreground: "#008d96"
+        Material.accent: "#008d96"
+        Material.elevation: 4
+
+        ColumnLayout{
+            anchors.leftMargin: 0
+            anchors.bottomMargin: 70
+            anchors.rightMargin: 0
+            anchors.topMargin: 90
+            spacing: 0
+            anchors.fill: parent
+
+            RowLayout{
+                id: area_Boton_NuevoProducto
+                Image{
+                    width: 50
+                    height: 50
+                    Layout.maximumHeight: 50
+                    Layout.maximumWidth: 50
+                    fillMode: Image.PreserveAspectFit
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    antialiasing: true
+                    source: "img/almacen_NuevoProducto.png"
+                }
+                Button{
+                    text: "Nuevo producto"
+                    font.weight: Font.DemiBold
+                    font.pointSize: 12
+                    font.family: "Verdana"
+                    Layout.fillWidth: true
+                    font.capitalization: Font.MixedCase
+                    focusPolicy: Qt.StrongFocus
+                    display: AbstractButton.TextBesideIcon
+                    Material.background: "#FFFFFF"
+                    Material.elevation: 0
+                    onClicked:{
+                        //
+                    }
+                }
+            }
+
+            RowLayout{
+                id: area_Boton_Pedido
+                Image{
+                    width: 50
+                    height: 50
+                    Layout.maximumHeight: 50
+                    Layout.maximumWidth: 50
+                    fillMode: Image.PreserveAspectFit
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    antialiasing: true
+                    source: "img/almacen_Pedido.png"
+                }
+                Gerente_NuevoPedido{
+                    id: dialog_nuevoPedido
+                }
+                Button{
+                    text: "Pedido"
+                    Material.background: "#FFFFFF"
+                    Material.elevation: 0
+                    font.weight: Font.DemiBold
+                    font.pointSize: 14
+                    font.family: "Verdana"
+                    Layout.fillWidth: true
+                    font.capitalization: Font.MixedCase
+                    focusPolicy: Qt.StrongFocus
+                    display: AbstractButton.TextBesideIcon
+                    onClicked:{
+                        dialog_nuevoPedido.openDialog()
+                    }
+                }
+            }
+        }
+    }
     Pane{
-        anchors.topMargin: 90
-        anchors.fill: parent
-        TableView {
-            x: 80
-            y: 39
-            width: 518
-            height: 526
-            TableViewColumn {
-                role: "id"
-                title: "ID Producto"
-                width: 100
-            }
-            TableViewColumn {
-                role: "producto"
-                title: "Producto"
-                width: 200
-            }
+        id: paneContentLeft
+        width: parent.width/12*5-20
+        anchors.left: leftMenu.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 20
+        anchors.bottomMargin: 20
+        anchors.topMargin: 80
+        Material.background: "#D7D7D7"
+        Material.elevation: 4
 
-            TableViewColumn {
-                role: "cantidad"
-                title: "Cantidad"
-                width: 200
-            }
-        }
-
-        ColumnLayout {
-            id: columnLayout
-            x: 35
-            y: 40
-            width: 1299
-            height: 643
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 34
-            clip: false
-        }
-
-        ColumnLayout {
-            id: columnLayout1
-            x: 795
-            y: 228
-            width: 470
-            height: 280
-        }
-
-        Text {
-            id: text2
-            x: 845
-            y: 298
-            width: 143
-            height: 36
-            text: qsTr("Producto:")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 19
-        }
-
-        Text {
-            id: text3
-            x: 845
-            y: 351
-            width: 143
-            height: 34
-            text: qsTr("Cantidad:")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 19
-
-            ComboBox {
-                id: comboBox2
-                x: 121
-                y: 3
-                width: 76
-                height: 34
+        Pane{
+            Material.background: "#FFFFFF"
+            Material.elevation: 2
+            width: parent.width
+            height: 50
+            id: productosHeader
+            Label{
+                width: parent.width
+                text: "En almacen"
+                color: "#008d96"
+                anchors.centerIn: parent
+                anchors.verticalCenter: parent.verticalCenter
+                font.bold: true
+                font.weight: Font.Bold
+                font.pointSize: 17
+                font.family: "Verdana"
+                horizontalAlignment: Text.AlignHCenter
             }
         }
+    }
+    Pane{
+        id: paneContentRight
+        width: parent.width/12*5-20
+        anchors.left: paneContentLeft.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 20
+        anchors.bottomMargin: 20
+        anchors.topMargin: 80
+        Material.background: "#D7D7D7"
+        Material.elevation: 4
 
-        ComboBox {
-            id: comboBox
-            x: 966
-            y: 298
-            width: 226
-            height: 36
-        }
-
-        Text {
-            id: text4
-            x: 1046
-            y: 356
-            width: 157
-            height: 34
-            text: qsTr("Unidad de Medida")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 19
-        }
-
-        Button {
-            id: button
-            x: 829
-            y: 424
-            Material.foreground: "#FFFFFF"
-            Material.background: "#008d96"
-            width: 124
-            height: 37
-            text: qsTr("Retirar Producto")
-        }
-
-        Button {
-            id: button1
-            x: 1103
-            y: 424
-            Material.foreground: "#FFFFFF"
-            Material.background: "#008d96"
-            width: 123
-            height: 37
-            text: qsTr("Reiniciar")
+        Pane{
+            Material.background: "#FFFFFF"
+            Material.elevation: 2
+            width: parent.width
+            height: 50
+            id: historialPedidosHeader
+            Label{
+                width: parent.width
+                text: "Historial de pedidos"
+                color: "#008d96"
+                anchors.centerIn: parent
+                anchors.verticalCenter: parent.verticalCenter
+                font.bold: true
+                font.weight: Font.Bold
+                font.pointSize: 17
+                font.family: "Verdana"
+                horizontalAlignment: Text.AlignHCenter
+            }
         }
     }
 }

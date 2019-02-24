@@ -111,7 +111,6 @@ Dialog {
                 enabled: true
                 spacing: 20
 
-                //cargado de imagenes
                 FileDialog
                 {
                     id: selectorImagen
@@ -141,8 +140,6 @@ Dialog {
                     cache: false
                     x: 25
                     source: foto
-                    //anchors.left: parent.left
-                    //source: idUsuario == "0" ? "" : empleadoLista.visualizarImg(idUsuario)
                 }
 
                 Button
@@ -165,19 +162,12 @@ Dialog {
                 Layout.preferredHeight: 300
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                //Layout.fillHeight: true
                 Layout.fillWidth: true
-                //anchors.top: parent.top
-                //anchors.bottom: parent.bottom
-                //anchors.topMargin: 40
-                //anchors.bottomMargin: 10
-                //spacing: 10
 
                 Text {
                     id: text1
                     width: 263
                     height: 40
-                    //color: "#E31D60"
                     color: "#0aa0c1"
                     text: qsTr("Edicion platillo")
                     font.pixelSize: 22
@@ -240,15 +230,12 @@ Dialog {
                 {
                     id: filaBotones
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    //Layout.alignment: Qt.AlignRight | Qt.AlignBottom
-                    //Layout.fillWidth: false
                     spacing: 20
 
                     Button
                     {
                         id:btnRegistrar
                         text: "Modificar"
-                        //Material.accent: "#008d96"
                         Material.foreground: "#FFFFFF"
                         Material.background: "#008d96"
                         onClicked:
@@ -256,8 +243,6 @@ Dialog {
                             var path2 = selectorImagen.fileUrl.toString();
                             path2 = path2.replace(/^(file:\/{3})/,"");
                             path2 = path2.toString;
-                            //path = path2;
-                            //fotoPlatillo = path
                             editarPlatillo.inputAccepted()
                             dialog_RegistraPlatillo.close()
                         }
@@ -266,7 +251,6 @@ Dialog {
                     {
                         id: btnCancelar
                         text: "Cancelar"
-                        //Material.accent: "#008d96"
                         Material.foreground: "#FFFFFF"
                         Material.background: "#008d96"
                         onClicked: {

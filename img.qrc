@@ -41,5 +41,8 @@
         <file>img/preparar.png</file>
         <file>img/savedOk.png</file>
         <file>img/delete_Platillo.png</file>
+        <file>img/almacen_Pedido.png</file>
+        <file>img/almacen_NuevoProducto.png</file>
+        <file>img/almacen_Descontar.png</file>
     </qresource>
 </RCC>

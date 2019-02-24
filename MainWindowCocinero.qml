@@ -24,7 +24,7 @@ Window {
         Cocinero_TabPlatillos{
             id: tabPlatillos
         }
-        Item {
+        Cocinero_TabAlmacen{
             id: tabAlmacen
         }
     }
