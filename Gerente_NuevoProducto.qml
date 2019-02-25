@@ -8,8 +8,13 @@ Item {
     function openDialog(){
         dialog_NuevoProducto.open();
     }
+    function restFormulario(){
+        inputNombre.clear();
+        inputDescripcion.clear();
+        inputPrecio.clear();
+    }
     Dialog{
-        id:dialog_NuevoProducto
+        id: dialog_NuevoProducto
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
         width: 500
@@ -38,9 +43,9 @@ Item {
                     text: "Nombre del producto"
                 }
                 TextField{
+                    id: inputNombre
                     Layout.alignment: Qt.AlignVCenter
                     width: 200
-                    text: precioActual
                 }
             }
             RowLayout{
@@ -51,9 +56,9 @@ Item {
                     text: "Descripcion"
                 }
                 TextField{
+                    id: inputDescripcion
                     Layout.alignment: Qt.AlignVCenter
                     width: 200
-                    text: precioActual
                 }
             }
             RowLayout{
@@ -64,10 +69,9 @@ Item {
                     text: "Costo"
                 }
                 TextField{
-                    Layout.alignment: Qt.AlignVCenter
                     id: inputPrecio
+                    Layout.alignment: Qt.AlignVCenter
                     width: 200
-                    text: precioActual
                 }
             }
             RowLayout{
@@ -82,7 +86,7 @@ Item {
                     width: 300
                     Layout.minimumWidth: 250
                     Layout.maximumWidth: 250
-                    model: ["Productos en almacen", "hola que hace"]
+                    model: almacen.getInfoContenido(1);
                 }
             }
             RowLayout{
@@ -96,7 +100,7 @@ Item {
                     id: inputUnidadMedida
                     Layout.minimumWidth: 200
                     Layout.maximumWidth: 200
-                    model: ["Productos en almacen", "hola que hace"]
+                    model: almacen.getInfoContenido(2);
                 }
             }
 
@@ -110,8 +114,11 @@ Item {
                 Material.foreground: "#FFFFFF"
                 Material.background: "#008d96"
                 onClicked:{
-                    //Guardar cambios
-                    dialog_NuevoProducto.close()
+                    if(inputNombre.text !="" && inputDescripcion.text !="" && inputPrecio.text !="")
+                        dialogoConfirmacionProducto.open();
+                    else
+                        popupErrorProducto.open();
+
                 }
             }
             Button{
@@ -125,8 +132,42 @@ Item {
                 Material.background: "#008d96"
                 onClicked: {
                     dialog_NuevoProducto.close()
+                    restFormulario();
                 }
             }
+        }
+    }
+    Dialog {
+        id: dialogoConfirmacionProducto
+        height: 150
+        width: 350
+        modal: true
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+        parent: Overlay.overlay
+
+        title: "El registro generado se guardara \nen la base de datos,¿Desea continuar?"
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onAccepted: {
+              almacen.setProductoAlmacen(inputNombre.text,inputDescripcion.text,inputPrecio.text,
+              inputCategoria.currentText,inputUnidadMedida.currentText);
+              restFormulario();
+              dialog_NuevoProducto.close();
+        }
+    }
+
+    Popup
+    {
+        id: popupErrorProducto
+        x: 646
+        y: 325
+        width: 200
+        height: 50
+        Text {
+            anchors.centerIn: parent
+            font.pixelSize: 18
+            text: qsTr("¡Campos vacios!")
         }
     }
 }

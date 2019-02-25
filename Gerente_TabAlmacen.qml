@@ -5,6 +5,8 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtQml.Models 2.3
+import QtQuick.Controls 1.4 as Aux
+
 
 Item {
     id: tabAlmacen
@@ -103,24 +105,81 @@ Item {
         anchors.topMargin: 80
         Material.background: "#D7D7D7"
         Material.elevation: 4
-
-        Pane{
-            Material.background: "#FFFFFF"
-            Material.elevation: 2
+        Column
+        {
             width: parent.width
-            height: 50
-            id: productosHeader
-            Label{
+            Pane{
+                Material.background: "#FFFFFF"
+                Material.elevation: 2
                 width: parent.width
-                text: "En almacen"
-                color: "#008d96"
-                anchors.centerIn: parent
-                anchors.verticalCenter: parent.verticalCenter
-                font.bold: true
-                font.weight: Font.Bold
-                font.pointSize: 17
-                font.family: "Verdana"
-                horizontalAlignment: Text.AlignHCenter
+                height: 50
+                id: productosHeader
+                Label{
+                    width: parent.width
+                    text: "En almacen"
+                    color: "#008d96"
+                    anchors.centerIn: parent
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.bold: true
+                    font.weight: Font.Bold
+                    font.pointSize: 17
+                    font.family: "Verdana"
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
+            Aux.SplitView{
+                width: parent.width
+                height: 525
+                Aux.TableView
+                {
+                    model: almacen
+
+                    Aux.TableViewColumn
+                    {
+                        id: folio
+                        role: "id"
+                        title: "Id"
+                        width: 30
+                    }
+                    Aux.TableViewColumn
+                    {
+                        id: nombre
+                        role: "nombre"
+                        title: "Nombre"
+                        width: 125
+                    }
+                    Aux.TableViewColumn
+                    {
+                        id: descripcion
+                        role: "descripcion"
+                        title: "Descripcion"
+                        width: 125
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "cantidad"
+                        title: "Cantidad"
+                        width: 60
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "costo"
+                        title: "Costo"
+                        width: 50
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "categoria"
+                        title: "Categoria"
+                        width: 70
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "unidad"
+                        title: "Medida"
+                        width: 60
+                    }
+                }
             }
         }
     }

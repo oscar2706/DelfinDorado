@@ -262,7 +262,6 @@ Item {
                        Layout.alignment: Qt.AlignVCenter
                        id: inputPrecio
                        width: 200
-                       text: precioActual
                    }
                }
 

@@ -8,7 +8,7 @@ import QtQuick.Dialogs 1.2
 import Empleado 1.0
 
 Window {
-    id: window
+    id: windowGerente
     visible: true
     title: "System Dialogs Gallery"
     width: 1366
@@ -120,7 +120,7 @@ Window {
 
             MouseArea{
                 anchors.fill: parent
-                onClicked: window.close()
+                onClicked: windowGerente.close()
             }
         }
     }

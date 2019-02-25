@@ -11,6 +11,8 @@
 #include "meseromodelo.h"
 #include "meserolista.h"
 #include "platillococinamodelo.h"
+#include <almacenmodelo.h>
+
 
 int main(int argc, char *argv[])
 {
@@ -49,6 +51,10 @@ int main(int argc, char *argv[])
 
     meseroLista meseroListaObj;
     engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
+
+    almacenModelo *almacen = new almacenModelo;
+    engine.rootContext()->setContextProperty("almacen",almacen);
+    qmlRegisterType<almacenModelo>("ModeloAlmacen", 1, 0, "ModeloAlmacen");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

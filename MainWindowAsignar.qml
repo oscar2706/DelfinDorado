@@ -38,9 +38,7 @@ Window{
             id:listaMeseros
             width: parent.width
             height: 430
-            model: MeseroModelo{
-                list: meseroLista
-            }
+            model: MeseroModelo{}
             delegate:
                 RowLayout{
 

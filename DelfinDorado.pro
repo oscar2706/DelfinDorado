@@ -27,7 +27,9 @@ SOURCES += \
     meserolista.cpp \
     meseromodelo.cpp \
     platillococina.cpp \
-    platillococinamodelo.cpp
+    platillococinamodelo.cpp \
+    almacenmodelo.cpp \
+    almacenProducto.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -55,6 +57,8 @@ HEADERS += \
     meserolista.h \
     meseromodelo.h \
     platillococina.h \
-    platillococinamodelo.h
+    platillococinamodelo.h \
+    almacenmodelo.h \
+    almacenProducto.h
 
 DISTFILES +=
