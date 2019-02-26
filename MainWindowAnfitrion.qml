@@ -1,9 +1,9 @@
+import QtQuick 2.0
 import QtQuick 2.9
-import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.0
-import ModeloMesero 1.0
 
 
 ApplicationWindow {
@@ -13,8 +13,6 @@ ApplicationWindow {
     width: 1366
     height: 720
     background: BorderImage {source: "img/mapa.jpg" }
-    property int i:0
-
 
     MainWindowAsignar{
         id: mainWindiwAsignar
@@ -114,41 +112,46 @@ ApplicationWindow {
 
             Rectangle{
                 id: visualizar
-                height: 40
+                height: 60
                 width: panelIzq.width
                 border.color: "black"
                 border.width: 1
                 radius: 8
                 Image {
                     id: imgVisualizar
+                    Layout.maximumHeight: 50
+                    Layout.maximumWidth: 50
                     height: 50
                     width: 50
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "img/visualizar.png"
+                    source: "img/Anfitrion_pedido.png"
                 }
                 Text {
                     id: textVisualizar
-                    text: qsTr("      Pedidos")
+                    text: qsTr("        Para llevar")
                     anchors.centerIn: parent
                     font.pointSize: 12
                     font.family: "Verdana"
                     Material.background: "#FFFFFF"
                 }
+                Anfitrion_Pedido{
+                    id:dialog_Pedido
+                }
                 MouseArea{
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked:{
-                        visualizar.border.width = 2.5
+                        dialog_Pedido.open()
+                        /*visualizar.border.width = 2.5
                         salir.border.width = 1
                         ventanaPrincipalAnfitrion.i++
                         if(ventanaPrincipalAnfitrion.i%2!=0)
                             itemVisualizar.state ="visible"
                         else
-                            itemVisualizar.state ="inVisible"
-
+                            itemVisualizar.state ="inVisible"*/
                     }
-                    onEntered: visualizar.color = "#cbae82"
-                    onExited:  visualizar.color = "white"
+                    /*onEntered: visualizar.color = "#cbae82"
+                    onExited:  visualizar.color = "white"*/
                 }
             }
             Item {
@@ -502,4 +505,3 @@ ApplicationWindow {
             }
     }
 }
-
