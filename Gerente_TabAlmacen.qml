@@ -7,9 +7,12 @@ import QtQuick.Layouts 1.3
 import QtQml.Models 2.3
 import QtQuick.Controls 1.4 as Aux
 
+
 Item {
     id: tabAlmacen
     visible: true
+    property int idGerente
+
     Pane {
         id: leftMenu
         width: parent.width/12*2-20
@@ -87,6 +90,10 @@ Item {
                     focusPolicy: Qt.StrongFocus
                     display: AbstractButton.TextBesideIcon
                     onClicked:{
+                        modeloPedidoProductos.clearModel()
+                        dialog_nuevoPedido.modeloUnidades = almacen.getInfoContenido(3);
+                        dialog_nuevoPedido.totalPedido = modeloPedidoProductos.getTotalPedido();
+                        dialog_nuevoPedido.idGerente = idGerente
                         dialog_nuevoPedido.openDialog()
                     }
                 }
@@ -127,65 +134,29 @@ Item {
                 }
             }
             Aux.SplitView{
-                id:tableAlmacen
                 width: parent.width
                 height: 525
                 Aux.TableView
                 {
                     model: almacen
-                    style: TableViewStyle {
-                        headerDelegate: Rectangle {
-                            height: textItem.implicitHeight * 1.2
-                            width: textItem.implicitWidth
-                            color: "#008D9F"
-                            Text {
-                                id: textItem
-                                font.pixelSize: 16
-                                anchors.fill: parent
-                                verticalAlignment: Text.AlignVCenter
-                                horizontalAlignment: styleData.textAlignment
-                                anchors.leftMargin: 12
-                                text: styleData.value
-                                elide: Text.ElideRight
-                                color: textColor
-                                renderType: Text.NativeRendering
-                            }
-                            Rectangle {
-                                anchors.right: parent.right
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.bottomMargin: 1
-                                anchors.topMargin: 1
-                                width: 1
-                                color: "#ccc"
-                            }
-                        }
-                    }
-                    alternatingRowColors: false
-                    backgroundVisible: false
-                    itemDelegate: Item {
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: styleData.textColor = "#000000"
-                            elide: styleData.elideMode
-                            text: styleData.value
-                            font.pixelSize: 14
-                        }
-                    }
+
                     Aux.TableViewColumn
                     {
+                        id: folio
                         role: "id"
                         title: "Id"
                         width: 30
                     }
                     Aux.TableViewColumn
                     {
+                        id: nombre
                         role: "nombre"
                         title: "Nombre"
                         width: 125
                     }
                     Aux.TableViewColumn
                     {
+                        id: descripcion
                         role: "descripcion"
                         title: "Descripcion"
                         width: 125
@@ -247,6 +218,118 @@ Item {
                 font.pointSize: 17
                 font.family: "Verdana"
                 horizontalAlignment: Text.AlignHCenter
+            }
+        }
+
+        Pane
+        {
+            Material.background: "#FFFFFF"
+            Material.elevation: 2
+            width: parent.width
+            anchors.fill: parent
+            anchors.topMargin: 60
+            anchors.bottomMargin: 25
+            id: panelPedidos
+
+            Pane{
+                id: listHeader
+                Material.background: "#ffffff"
+                Material.elevation: 1
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                RowLayout {
+                    spacing: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    Label{
+                        color: "#006677"
+                        text: "ID"
+                        font.weight: Font.Bold
+                        font.family: "Verdana"
+                        font.pointSize: 12
+                        font.bold: true
+                    }
+                    Label{
+                        color: "#006677"
+                        text: "Fecha"
+                        font.weight: Font.Bold
+                        font.family: "Verdana"
+                        font.pointSize: 12
+                        font.bold: true
+                    }
+                    Label{
+                        color: "#006677"
+                        text: "Total"
+                        font.weight: Font.Bold
+                        font.family: "Verdana"
+                        font.pointSize: 12
+                        font.bold: true
+                    }
+                }
+            }
+            ListView {
+                id: tablaPedidos
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                boundsBehavior: Flickable.VerticalFlick
+                anchors.topMargin: 50
+                anchors.fill: parent
+                spacing: 0
+                clip: true
+                focus: true
+                model: modeloPedidos
+                delegate: Component {
+                    Item{
+                        width: parent.width
+                        height: 50
+                        MouseArea{
+                            anchors.fill: parent
+                            GridLayout{
+                                anchors.fill: parent
+                                columns: 3
+                                Text{
+                                    Layout.minimumWidth: 100
+                                    Layout.maximumWidth: 100
+                                    leftPadding: 0
+                                    text: model.idPedido
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                                Text{
+                                    Layout.minimumWidth: 200
+                                    Layout.maximumWidth: 200
+                                    leftPadding: 0
+                                    text: model.fecha
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                                Text{
+                                    Layout.minimumWidth: 200
+                                    Layout.maximumWidth: 200
+                                    leftPadding: 0
+                                    text: model.total
+                                    font.family: "Verdana"
+                                    font.pointSize: 10
+                                }
+                            }
+                        }
+                    }
+                }
+                highlight: Button {
+                    id: btn
+                    Material.background: "#cfd8dc"
+                    Material.elevation: 2
+                    Layout.fillWidth: true
+                    hoverEnabled: true
+                }
+                highlightFollowsCurrentItem: true
+                removeDisplaced: Transition {
+                    NumberAnimation { properties: "x,y"; duration: 300 }
+                }
             }
         }
     }

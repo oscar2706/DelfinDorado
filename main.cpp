@@ -8,6 +8,8 @@
 #include "platillomodel.h"
 #include "comandamodelo.h"
 #include "platillocomandamodel.h"
+#include "pedidomodelo.h"
+#include "pedidoproductosmodelo.h"
 #include "meseromodelo.h"
 #include "meserolista.h"
 #include "platillococinamodelo.h"
@@ -37,6 +39,12 @@ int main(int argc, char *argv[])
     PlatilloComandaModel modeloPlatillosComanda;
     engine.rootContext()->setContextProperty("modeloPlatillosComandas", &modeloPlatillosComanda);
 
+    PedidoModelo modeloPedidos;
+    engine.rootContext()->setContextProperty("modeloPedidos", &modeloPedidos);
+
+    PedidoProductosModelo modeloPedidoProductos;
+    engine.rootContext()->setContextProperty("modeloPedidoProductos", &modeloPedidoProductos);
+
     PlatilloCocinaModelo modeloPlatillosNuevos;
     engine.rootContext()->setContextProperty("modeloPlatillosNuevos", &modeloPlatillosNuevos);
 
@@ -50,7 +58,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<meseroLista>("ModeloMesero",1,0,"MeseroLista",QStringLiteral("mesero lista"));
 
     meseroLista meseroListaObj;
-    //engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
+    engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
 
     almacenModelo *almacen = new almacenModelo;
     engine.rootContext()->setContextProperty("almacen",almacen);

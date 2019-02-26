@@ -30,7 +30,11 @@ SOURCES += \
     platillococinamodelo.cpp \
     almacenmodelo.cpp \
     almacenProducto.cpp \
-    ticketprinter.cpp
+    ticketprinter.cpp \
+    pedido.cpp \
+    pedidomodelo.cpp \
+    pedidoproductos.cpp \
+    pedidoproductosmodelo.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -61,6 +65,10 @@ HEADERS += \
     platillococinamodelo.h \
     almacenmodelo.h \
     almacenProducto.h \
-    ticketprinter.h
+    ticketprinter.h \
+    pedido.h \
+    pedidomodelo.h \
+    pedidoproductos.h \
+    pedidoproductosmodelo.h
 
 DISTFILES +=

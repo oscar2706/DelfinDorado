@@ -13,6 +13,7 @@ Window {
     title: "System Dialogs Gallery"
     width: 1366
     height: 720
+    property int idGerente
 
     StackLayout{
         anchors.fill: parent
@@ -99,6 +100,9 @@ Window {
                 spacing: 0
                 antialiasing: true
                 anchors.verticalCenter: parent.verticalCenter
+                onClicked: {
+                    tabAlmacen.idGerente = idGerente
+                }
             }
             TabButton{
                 height: 40

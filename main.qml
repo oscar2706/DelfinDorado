@@ -80,6 +80,7 @@ ApplicationWindow{
             break;
             case 1:
                 //gerente
+                mainWindowGerente.idGerente = empleadoLista.buscarIdMesero(txtUsuario.text, txtContrasegna.text)
                 mainWindowGerente.show()
                 txtUsuario.clear()
                 txtContrasegna.clear()

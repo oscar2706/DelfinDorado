@@ -5,6 +5,16 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.3
 
 Item {
+    property int idGerente
+    property int idPedido
+    property var totalPedido: modeloPedidoProductos.getTotalPedido()
+    property var unidadCategoria: modeloPedidoProductos.getUnidadMedida(inputCategoria.currentText);
+    property int selectedProducto
+    property int idSelectedProducto
+    property int cantidadProducto
+    property int costoProducto: 0
+    property var modeloUnidades: almacen.getInfoContenido(3)
+
     function openDialog(){
         dialog_NuevoPedido.open();
     }
@@ -44,7 +54,7 @@ Item {
             topMargin: 40
             bottomMargin: 60
             clip: true
-            model: modeloPlatillosComandas
+            model: modeloPedidoProductos
             footer: footerPedido
             delegate: SwipeDelegate {
                 id: delegateItem
@@ -56,8 +66,8 @@ Item {
                     Layout.minimumWidth: 250
                     Layout.maximumWidth: 250
                     topPadding: 20
-                    leftPadding: 80
-                    text: nombrePlatillo
+                    leftPadding: 60
+                    text: nombre
                     font.family: "Verdana"
                     font.pointSize: 12
                 }
@@ -66,18 +76,28 @@ Item {
                     Layout.minimumWidth: 200
                     Layout.maximumWidth: 200
                     topPadding: 20
-                    leftPadding: 260
-                    text: cantidad
+                    leftPadding: 150
+                    text: cantidad + " " + unidadMedida
                     font.family: "Verdana" //+ unidadMedida
                     font.pointSize: 12
                 }
                 Text{
-                    id: totalProducto
+                    id: costoProducto
+                    Layout.minimumWidth: 200
+                    Layout.maximumWidth: 200
+                    topPadding: 20
+                    leftPadding: 260
+                    text: costo
+                    font.family: "Verdana" //+ unidadMedida
+                    font.pointSize: 12
+                }
+                Text{
+                    id: totalProductos
                     Layout.minimumWidth: 200
                     Layout.maximumWidth: 200
                     topPadding: 20
                     leftPadding: 340
-                    text: "$"+totalPlatillo
+                    text: "$ "+totalProducto
                     font.bold: true
                     font.family: "Verdana"
                     font.pointSize: 12
@@ -92,16 +112,13 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 360
                     onClicked: {
-                        cantidadPlatilloSeleccionado = cantidad-1;
-                        idSelectedPlatillo = idPlatillo
-                        popChangeQuantity.open()
                     }
                 }
                 swipe.onCompleted: {
-                    precioTotal.opacity = 0;
+                    totalProductos.opacity = 0;
                 }
                 swipe.onClosed: {
-                    precioTotal.opacity = 1;
+                    totalProductos.opacity = 1;
                 }
                 swipe.right: Rectangle {
                     anchors.right: parent.right
@@ -120,9 +137,8 @@ Item {
                         color: "white"
                     }
                     SwipeDelegate.onClicked: {
-                        /* remover el producto del pedido y actualizar el total
-                        modeloPlatillosComandas.removePlatillo(idSelectedPlatillo)
-                        totalCuenta = modeloPlatillosComandas.getTotalComanda()*/
+                        modeloPedidoProductos.removeProducto(idSelectedProducto)
+                        totalPedido = modeloPedidoProductos.getTotalPedido()
                     }
                 }
             }
@@ -163,8 +179,8 @@ Item {
                     height: parent.height
                     anchors.fill: parent
                     Label{
-                        id:totalPedido
-                        text: "Total = $"
+                        id: totalPedidos
+                        text: "Total = " + totalPedido
                         font.pointSize: 14
                         font.family: "Verdana"
                         font.weight: Font.DemiBold
@@ -175,7 +191,7 @@ Item {
                     }
                     RoundButton{
                         id:btn_AgregarProducto
-                        width: 200
+                        width: 250
                         height: 50
                         anchors.centerIn: parent
                         anchors.topMargin: 10
@@ -231,37 +247,50 @@ Item {
                        width: 300
                        Layout.minimumWidth: 300
                        Layout.maximumWidth: 300
-                       model: ["Productos en almacen", "hola que hace"]
+                       model: modeloUnidades
+                       onCurrentTextChanged:
+                       {
+                           unidadCategoria = modeloPedidoProductos.getUnidadMedida(inputCategoria.currentText);
+                           lblPrecio.text = modeloPedidoProductos.getTotalProducto(inputCategoria.currentText, costoProducto);
+                       }
                    }
                }
                RowLayout{
                    spacing: 10
                    Layout.leftMargin: 50
                    Label{
+                       id: lblCantidad
                        width: 80
                        text: "Cantidad"
                    }
                    TextField{
+                       id: txtCosto
                        Layout.maximumWidth: 90
                        Layout.minimumWidth: 90
                        text: ""
+                       onEditingFinished:
+                       {
+                            costoProducto = parseInt(txtCosto.text);
+                            lblPrecio.text = modeloPedidoProductos.getTotalProducto(inputCategoria.currentText, costoProducto);
+                       }
                    }
                    Label{
+                       id: lblUnidadMedida
                        width: 100
-                       text: "Unidad medida" //Se cargara dependiendo el producto seleccionado
+                       text: unidadCategoria
                    }
                }
                RowLayout{
                    spacing: 10
                    Layout.leftMargin: 50
                    Label{
+                       id: lblTotal
                        width: 100
-                       text: "Total" //Se cargara dependiendo el producto seleccionado
+                       text: "Total"
                    }
-                   TextField{
-                       Layout.alignment: Qt.AlignVCenter
-                       id: inputPrecio
-                       width: 200
+                   Label{
+                       id: lblPrecio
+                       width: 100
                    }
                }
 
@@ -275,6 +304,8 @@ Item {
                        Material.foreground: "#FFFFFF"
                        Material.background: "#008d96"
                        onClicked:{
+                            modeloPedidoProductos.addPedidoProductos(0, inputCategoria.currentText, parseInt(txtCosto.text));
+                           totalPedido = modeloPedidoProductos.getTotalPedido();
                            popup_AgregarProducto.close()
                        }
                    }
@@ -305,7 +336,8 @@ Item {
                 Material.foreground: "#FFFFFF"
                 Material.background: "#008d96"
                 onClicked:{
-                    //Guardar cambios
+                    modeloPedidos.addPedido(totalPedido, idGerente);
+                    modeloPedidoProductos.saveNewPedidoInDataBase(modeloPedidos.getUltimoPedido());
                     dialog_NuevoPedido.close()
                 }
             }
