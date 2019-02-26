@@ -20,7 +20,7 @@ private:
     QString categoria;
     QString medida;
 public:
-
+    almacenProducto();
     almacenProducto(int,QString,QString,int,float,QString,QString);
     int getIdProducto();
     QString getNombre();
@@ -29,7 +29,9 @@ public:
     float getCosto();
     QString getCategoria();
     QString getMedida();
+    void setCantidad(int);
 
 };
 
 #endif // ALMACENPRODUCTO_H
+

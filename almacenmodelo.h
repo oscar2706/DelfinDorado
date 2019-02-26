@@ -33,6 +33,9 @@ public:
     Qt::ItemFlags flags(const QModelIndex& index) const override;
     Q_INVOKABLE QStringList getInfoContenido(int);
     Q_INVOKABLE bool setProductoAlmacen(QString,QString,QString,QString,QString);
+    Q_INVOKABLE QString getInfoProd(QString,int);
+    Q_INVOKABLE bool verificarCantidad(QString,QString);
+    Q_INVOKABLE void actualizarCantidad(QString,QString,QString);
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const override;
 
 

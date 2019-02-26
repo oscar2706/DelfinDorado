@@ -1,5 +1,10 @@
 #include "almacenProducto.h"
 
+almacenProducto::almacenProducto()
+{
+
+}
+
 almacenProducto::almacenProducto(int id_,QString nombre_,QString descripcion_, int cantidad_,
                                  float costo_,QString categoria_,QString medida_)
 {
@@ -41,4 +46,9 @@ QString almacenProducto::getCategoria()
 QString almacenProducto::getMedida()
 {
     return medida;
+}
+
+void almacenProducto::setCantidad(int nuevaCantidad)
+{
+    cantidad = nuevaCantidad;
 }

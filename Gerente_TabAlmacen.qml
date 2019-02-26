@@ -136,21 +136,18 @@ Item {
 
                     Aux.TableViewColumn
                     {
-                        id: folio
                         role: "id"
                         title: "Id"
                         width: 30
                     }
                     Aux.TableViewColumn
                     {
-                        id: nombre
                         role: "nombre"
                         title: "Nombre"
                         width: 125
                     }
                     Aux.TableViewColumn
                     {
-                        id: descripcion
                         role: "descripcion"
                         title: "Descripcion"
                         width: 125

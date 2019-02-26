@@ -65,17 +65,25 @@ QStringList almacenModelo::getInfoContenido(int opc)
 {
     QStringList namesModel;
     QSqlQuery *select = new QSqlQuery();
-    if(opc==1)
-    {
-        if(select->exec("SELECT nombre FROM categoria"))
-            while (select->next())
-                namesModel.append(select->value(0).toString());
-    }
-    else
-    {
-        if(select->exec("SELECT nombre FROM unidadMedida"))
-            while (select->next())
-                namesModel.append(select->value(0).toString());
+    switch (opc) {
+        case 1:
+        {
+            if(select->exec("SELECT nombre FROM categoria"))
+                while (select->next())
+                    namesModel.append(select->value(0).toString());
+        }break;
+        case 2:
+        {
+            if(select->exec("SELECT nombre FROM unidadMedida"))
+                while (select->next())
+                    namesModel.append(select->value(0).toString());
+        }break;
+        case 3:
+        {
+            if(select->exec("SELECT nombre FROM producto"))
+                while (select->next())
+                    namesModel.append(select->value(0).toString());
+        }break;
     }
     delete select;
     namesModel.sort();
@@ -116,6 +124,50 @@ bool almacenModelo::setProductoAlmacen(QString nombre,QString descripcion,QStrin
     {
         return false;
     }
+}
+
+QString almacenModelo::getInfoProd(QString busq,int opc)
+{
+    for (itr = m_producto.begin(); itr != m_producto.end(); itr++)
+    {
+        if((*itr)->getNombre() == busq)
+        {
+            if(opc==1)
+                return QString::number((*itr)->getCantidad());
+            else
+                return (*itr)->getMedida();
+        }
+    }
+    return "0";
+}
+
+bool almacenModelo::verificarCantidad(QString existente, QString retiro)
+{
+    if(retiro.toInt()<=existente.toInt())
+        return true;
+    else
+        return false;
+}
+
+void almacenModelo::actualizarCantidad(QString existente, QString retiro, QString busqProd)
+{
+    int nuevaCantidad = existente.toInt() - retiro.toInt();
+    QSqlQuery *update = new QSqlQuery();
+    if(update->exec("UPDATE producto SET cantidad = '"+QString::number(nuevaCantidad)+"' "
+                    "WHERE nombre = '"+busqProd+"'"))
+    {
+        for (itr = m_producto.begin(); itr != m_producto.end(); itr++)
+        {
+            if((*itr)->getNombre() == busqProd)
+            {
+                (*itr)->setCantidad(nuevaCantidad);
+                layoutChanged ();
+            }
+        }
+    }
+    else
+        qDebug()<<update->lastError().text();
+
 }
 
 QHash<int, QByteArray> almacenModelo::roleNames() const

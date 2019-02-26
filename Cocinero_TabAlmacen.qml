@@ -5,8 +5,17 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtQml.Models 2.3
+import QtQuick.Controls 1.4 as Aux
+
 
 Item {
+
+    function restFormulario(){
+        inputRetirar.clear();
+        labelExistente.text = almacen.getInfoProd(inputProducto.currentText,1)
+        labelExistenteMedida.text = almacen.getInfoProd(inputProducto.currentText,2)
+        labelRetiroMedida.text = almacen.getInfoProd(inputProducto.currentText,2)
+    }
     id: tabAlmacen
     visible: true
     Rectangle{
@@ -92,11 +101,11 @@ Item {
                     spacing: 10
                     Layout.leftMargin: 50
                     ComboBox{
-                        id: inputCategoria
+                        id: inputProducto
                         width: 300
                         Layout.minimumWidth: 300
                         Layout.maximumWidth: 300
-                        model: ["Productos en almacen", "hola que hace"]
+                        model: almacen.getInfoContenido(3);
                     }
                 }
                 RowLayout{
@@ -104,16 +113,18 @@ Item {
                     Layout.leftMargin: 50
                     Label{
                         width: 80
-                        text: "Cantidad actual:"
+                        text: "Cantidad existente: "
                     }
                     Label{
+                        id: labelExistente
                         Layout.maximumWidth: 20
                         Layout.minimumWidth: 20
-                        text: "40"
+                        text: almacen.getInfoProd(inputProducto.currentText,1)
                     }
                     Label{
+                        id: labelExistenteMedida
                         width: 100
-                        text: "Unidad medida" //Se cargara dependiendo el producto seleccionado
+                        text: almacen.getInfoProd(inputProducto.currentText,2)
                     }
                 }
                 RowLayout{
@@ -124,13 +135,14 @@ Item {
                         text: "Cantidad a retirar:"
                     }
                     TextField{
+                        id: inputRetirar
                         Layout.maximumWidth: 50
                         Layout.minimumWidth: 50
-                        text: ""
                     }
                     Label{
+                        id: labelRetiroMedida
                         width: 100
-                        text: "Unidad medida" //Se cargara dependiendo el producto seleccionado
+                        text: almacen.getInfoProd(inputProducto.currentText,2)
                     }
                 }
 
@@ -144,7 +156,11 @@ Item {
                         Material.foreground: "#FFFFFF"
                         Material.background: "#50A45C"
                         onClicked:{
-                            popup_DescontarProducto.close()
+                            if(inputRetirar.text!="" && almacen.verificarCantidad(
+                               labelExistente.text,inputRetirar.text))
+                               dialogoConfirmacionRetiro.open()
+                            else
+                                popupErrorRetiro.open();
                         }
                     }
                     Button{
@@ -152,6 +168,7 @@ Item {
                         Material.foreground: "#FFFFFF"
                         Material.background: "#50A45C"
                         onClicked: {
+                            restFormulario();
                             popup_DescontarProducto.close()
                         }
                     }
@@ -159,6 +176,40 @@ Item {
 
             }
 
+        }
+        Dialog {
+            id: dialogoConfirmacionRetiro
+            height: 150
+            width: 350
+            modal: true
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
+            parent: Overlay.overlay
+
+            title: "El retiro generado se guardara \nen la base de datos,¿Desea continuar?"
+            standardButtons: Dialog.Ok | Dialog.Cancel
+
+            onAccepted: {
+               almacen.actualizarCantidad(labelExistente.text,
+                                         inputRetirar.text,
+                                         inputProducto.currentText)
+               restFormulario();
+               popup_DescontarProducto.close()
+            }
+        }
+
+        Popup
+        {
+            id: popupErrorRetiro
+            x: 646
+            y: 325
+            width: 200
+            height: 50
+            Text {
+                anchors.centerIn: parent
+                font.pixelSize: 18
+                text: qsTr("¡Verifica la cantidad!")
+            }
         }
 
 
@@ -173,7 +224,59 @@ Item {
             anchors.topMargin: 80
             Material.background: "#D7D7D7"
             Material.elevation: 4
-            //TableView
+
+            Aux.SplitView{
+
+                anchors.fill: parent
+
+                Aux.TableView
+                {
+                    model: almacen
+
+                    Aux.TableViewColumn
+                    {
+                        role: "id"
+                        title: "Id"
+                        width: 30
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "nombre"
+                        title: "Nombre"
+                        width: 250
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "descripcion"
+                        title: "Descripcion"
+                        width: 500
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "cantidad"
+                        title: "Cantidad"
+                        width: 75
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "costo"
+                        title: "Costo"
+                        width: 75
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "categoria"
+                        title: "Categoria"
+                        width: 75
+                    }
+                    Aux.TableViewColumn
+                    {
+                        role: "unidad"
+                        title: "Medida"
+                        width: 75
+                    }
+                }
+            }
         }
     }
 }
