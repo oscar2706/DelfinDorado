@@ -35,6 +35,7 @@ public:
 
     Q_INVOKABLE void addComanda(const QString &fecha, const int &idEmpleado, const int &idMesa, const int &idEstadoComanda);
     Q_INVOKABLE void getComandasMesero(int idMesero, int EstadoComanda);
+    //Q_INVOKABLE bool inKitchen(int idComanda);
     //Q_INVOKABLE QList<Comanda*> getComandasMesero(int idMesero);
     //Q_INVOKABLE QList<Comanda*> getComandasMesero(int idMesero);
 

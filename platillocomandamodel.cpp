@@ -491,6 +491,13 @@ void PlatilloComandaModel::modifyStatus(const int &idPlatillosComanda, const int
         qDebug() << modificar.lastError().text();
 }
 
+void PlatilloComandaModel::clearModeal()
+{
+    for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
+        removePlatillo((*itr)->idPlatillo());
+    }
+}
+
 float PlatilloComandaModel::getTotalComanda()
 {
     total = 0;
@@ -498,6 +505,95 @@ float PlatilloComandaModel::getTotalComanda()
         total += (*itr)->totalPlatillo();
     }
     return total;
+}
+
+bool PlatilloComandaModel::setComandaPagada(int _idFormaPago)
+{
+    QSqlQuery qryPlatillosOrdenados;
+    qryPlatillosOrdenados.prepare("SELECT count(idPlatillo) FROM platillosComanda WHERE idComanda = :idComanda");
+    qryPlatillosOrdenados.bindValue(":idComanda", idComandaActual);
+    qryPlatillosOrdenados.exec();
+    qryPlatillosOrdenados.next();
+
+    int numPlatillosOrdenados = qryPlatillosOrdenados.value(0).toInt();
+    float totalComanda = getTotalComanda();
+    QSqlQuery qryInsertarCuenta;
+    qryInsertarCuenta.prepare("INSERT INTO cuenta(numeroPlatillos, totalCuenta, idComanda, idFormaPago) "
+                              "VALUES(:numPlatillosOrdenados, :totalCuenta, :idComanda, :idFormaPago)");
+    qryInsertarCuenta.bindValue(":numPlatillosOrdenados", numPlatillosOrdenados);
+    qryInsertarCuenta.bindValue(":totalCuenta",totalComanda);
+    qryInsertarCuenta.bindValue(":idComanda",idComandaActual);
+    qryInsertarCuenta.bindValue(":idFormaPago",_idFormaPago);
+    qryInsertarCuenta.exec();
+    qryInsertarCuenta.next();
+
+    if(qryInsertarCuenta.numRowsAffected() != 0){
+        qDebug() << "Comanda: " << idComandaActual << " PAGADA :D!";QSqlQuery qryComandaPagada;
+        qryComandaPagada.prepare("UPDATE comanda SET idEstadoComanda = 3 "
+                                 "WHERE idComanda = :idComanda");
+        qryComandaPagada.bindValue(":idComanda", idComandaActual);
+        qryComandaPagada.exec();
+        qryComandaPagada.next();
+        if(qryComandaPagada.numRowsAffected() != 0)
+            return true;
+    }
+    else{
+        qDebug() << "Comanda: " << idComandaActual << " SIN PAGAR D:!";
+        return false;
+    }
+}
+
+bool PlatilloComandaModel::alreadyPaid()
+{
+    QSqlQuery qryComandaPagada;
+    qryComandaPagada.prepare("SELECT idEstadoComanda FROM comanda "
+                             "WHERE idComanda = :idComanda");
+    qryComandaPagada.bindValue(":idComanda", idComandaActual);
+    qryComandaPagada.exec();
+    qryComandaPagada.next();
+    qDebug() << "Estado comanda = " << qryComandaPagada.value(0).toInt();
+    if(qryComandaPagada.value(0).toInt() == 3)
+        return true;
+    else
+        return false;
+}
+
+bool PlatilloComandaModel::comandaInKitchen()
+{
+    QSqlQuery qryComandaEnCocina;
+    qryComandaEnCocina.prepare("SELECT idEstadoComanda FROM comanda "
+                               "WHERE idComanda = :idComanda");
+    qryComandaEnCocina.bindValue(":idComanda", idComandaActual);
+    qryComandaEnCocina.exec();
+    qryComandaEnCocina.next();
+    if(qryComandaEnCocina.value(0).toInt() == 2)
+        return true;
+    else
+        return false;
+}
+
+void PlatilloComandaModel::setPedidoLlevar()
+{
+    int nuevoIdComanda = 0;
+    QSqlQuery qryGetIdComanda;
+    if(qryGetIdComanda.exec("SELECT idComanda FROM comanda"))
+        while (qryGetIdComanda.next()) {
+            nuevoIdComanda= qryGetIdComanda.value(0).toInt();
+        }
+    ++nuevoIdComanda;
+    idComandaActual = nuevoIdComanda;
+    clearModeal();
+    //qDebug() << "---> idComanda = " << idComandaActual;
+}
+
+int PlatilloComandaModel::getIdComanda()
+{
+    return idComandaActual;
+}
+
+bool PlatilloComandaModel::pagarPedido()
+{
+
 }
 
 bool PlatilloComandaModel::insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave)

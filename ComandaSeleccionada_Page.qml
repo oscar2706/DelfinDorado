@@ -16,6 +16,20 @@ Item {
     property int idSelectedPlatillo
     property var totalCuenta: modeloPlatillosComandas.getTotalComanda()
 
+    property string textoBoton: {
+        modeloPlatillosComandas.setIdComanda(idComanda)
+        if(modeloPlatillosComandas.comandaInKitchen())
+            textoBoton = "Cobrar cuenta"
+        if(modeloPlatillosComandas.alreadyPaid()){
+            textoBoton = "Cobrada"
+            btn_EnviarOrden.enabled = false
+            platillosOrdenados.enabled = false
+            btn_AgregarPlatillo.enabled = false
+        }
+        if(!modeloPlatillosComandas.comandaInKitchen() && !modeloPlatillosComandas.alreadyPaid())
+            textoBoton = "Enviar a cocina"
+    }
+
     Pane{
         id: detallesComanda
         z:1
@@ -134,7 +148,7 @@ Item {
         bottomMargin: 60
         clip: true
         model: {
-            modeloPlatillosComandas.setIdComanda(idComanda)
+            //modeloPlatillosComandas.setIdComanda(idComanda)
             modeloPlatillosComandas
         }
         footer: footerComandas
@@ -145,8 +159,6 @@ Item {
             id: delegateItem
             width: parent.width
             height: 50
-
-
             Text{
                 id: cantidadPlatillo
                 Layout.minimumWidth: 250
@@ -420,7 +432,7 @@ Item {
         anchors.bottomMargin: 0
         height: 60
         radius: 5
-        text: "Enviar a cocina"
+        text: textoBoton
         font.weight: Font.DemiBold
         font.pointSize: 16
         onClicked: {
@@ -439,34 +451,33 @@ Item {
         y: Math.round((parent.height - height) / 2)
         topMargin: 20
         onAboutToShow: {
-            if(modeloPlatillosComandas.comandaAlreadySent()){
+            if(textoBoton == "Cobrar cuenta"){
                 pop_confirmacionCocina.close()
-                pop_anteriormenteEnviada.open()
+                pop_cobrarCuenta.open()
             }
         }
         onOpened: {
-            if(modeloPlatillosComandas.comandaAlreadySent()){
+            if(textoBoton == "Cobrar cuenta"){
                 pop_confirmacionCocina.close()
             }
         }
         Column{
             Label{
+                anchors.horizontalCenter: platillosOrdenados.horizontalCenter
                 text: "¿Desea enviar platillos a la cocina?"
             }
             Row{
                 spacing: 10
                 Button{
-                    text: "Enviar"
+                    text: "Aceptar"
                     Material.background: "#ba8637"
                     Material.foreground: "#ffffff"
-                    font.family: "Verdana"
-                    font.weight: Font.Medium
-                    font.pointSize: 12
                     width: (pop_confirmacionCocina.width/2)-15
                     onClicked: {
                         if(modeloPlatillosComandas.saveNewComandaInDataBase()){
                             pop_confirmacionCocina.close()
                             pop_comandaEnviada.open()
+                            textoBoton = "Cobrar cuenta"
                             modeloPlatillosComandas.setComandaTaken()
                         }
                     }
@@ -485,7 +496,7 @@ Item {
     }
 
     Popup{
-        id: pop_anteriormenteEnviada
+        id: pop_cobrarCuenta
         width: 300
         height: 100
         modal: true
@@ -493,7 +504,9 @@ Item {
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
         closePolicy: Popup.CloseOnPressOutside
+        onOpened: pop_confirmaCobro.open()
         Label{
+            id: label_seCobro
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.weight: Font.DemiBold
@@ -502,7 +515,55 @@ Item {
             width: 300
             height: 70
             wrapMode: Text.WordWrap
-            text: "La comanda ya se habia mandado! C:"
+            //text: "Se va a cobrar la cuenta"
+        }
+    }
+
+    Popup {
+        id: pop_confirmaCobro
+        width: 300
+        height: 100
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnPressOutside
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        topMargin: 20
+        Column{
+            Label{
+                anchors.horizontalCenter: platillosOrdenados.horizontalCenter
+                text: "¿Esta seguro?"
+            }
+            Row{
+                spacing: 10
+                Button{
+                    text: "Aceptar"
+                    Material.background: "#ba8637"
+                    Material.foreground: "#ffffff"
+                    width: (pop_confirmaCobro.width/2)-15
+                    onClicked: {
+                        pop_confirmaCobro.close()
+                        if(modeloPlatillosComandas.setComandaPagada(1)){
+                            label_seCobro.text = "Se cobro la cuenta"
+                            platillosOrdenados.enabled = false
+                            btn_EnviarOrden.text = "Cobrada"
+                            btn_EnviarOrden.enabled = false
+                        }
+                        else
+                            label_seCobro.text = "No se cobro la cuenta"
+                    }
+                }
+                Button{
+                    text: "Cancelar"
+                    Material.background: "#ba8637"
+                    Material.foreground: "#ffffff"
+                    width: (pop_confirmaCobro.width/2)-15
+                    onClicked: {
+                        pop_confirmaCobro.close()
+                        pop_cobrarCuenta.close()
+                    }
+                }
+            }
         }
     }
 

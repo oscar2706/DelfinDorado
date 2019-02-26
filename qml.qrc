@@ -21,6 +21,7 @@
         <file>Gerente_NuevoPedido.qml</file>
         <file>Cocinero_TabAlmacen.qml</file>
         <file>Gerente_NuevoProducto.qml</file>
+        <file>Anfitrion_Pedido.qml</file>
     </qresource>
     <qresource prefix="/mesero"/>
 </RCC>

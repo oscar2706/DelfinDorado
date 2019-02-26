@@ -214,6 +214,15 @@ void ComandaModelo::getComandasMesero(int idMesero, int EstadoComanda)
     }
 }
 
+/*bool ComandaModelo::inKitchen(int idComanda)
+{
+    for (itr = misComandas.begin(); itr != misComandas.end(); itr++) {
+        if((*itr)->idComanda() == idComanda && (*itr)->idEstadoComanda() == 2)
+            return true;
+    }
+    return false;
+}*/
+
 bool ComandaModelo::insertComandaInDataBase(Comanda *comandaNueva)
 {
     bool comandaSaved = false;

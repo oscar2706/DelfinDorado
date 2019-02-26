@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<meseroLista>("ModeloMesero",1,0,"MeseroLista",QStringLiteral("mesero lista"));
 
     meseroLista meseroListaObj;
-    engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
+    //engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
 
     almacenModelo *almacen = new almacenModelo;
     engine.rootContext()->setContextProperty("almacen",almacen);

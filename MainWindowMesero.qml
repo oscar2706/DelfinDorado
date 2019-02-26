@@ -25,7 +25,18 @@ ApplicationWindow {
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
         Material.background: "#ffb03a"
-
+        Label{
+            id: tabTitle
+            width: parent.width
+            height: parent.height
+            color: "#ffffff"
+            text: "Todas"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.weight: Font.Bold
+            font.pointSize: 16
+            font.family: "Verdana"
+        }
         ToolButton {
             id: toolButton
             text: stackView.depth > 1 ? "\u25C0" : "\u2630"
@@ -70,6 +81,7 @@ ApplicationWindow {
                     stackView.clear()
                     modeloComandas.getComandasMesero(idMesero, 0);
                     stackView.push(comandasTodas)
+                    tabTitle.text = "Todas"
                     drawer.close()
                 }
             }
@@ -91,6 +103,7 @@ ApplicationWindow {
                     modeloComandas.getComandasMesero(idMesero, 1);
                     stackView.push(comandasTodas)
                     drawer.close()
+                    tabTitle.text = "Pendientes"
                 }
             }
             ItemDelegate {
@@ -110,6 +123,7 @@ ApplicationWindow {
                     modeloComandas.getComandasMesero(idMesero, 2);
                     stackView.push(comandasTodas)
                     drawer.close()
+                    tabTitle.text = "Atendidas"
                 }
             }
             ItemDelegate {
@@ -130,6 +144,7 @@ ApplicationWindow {
                     modeloComandas.getComandasMesero(idMesero, 3);
                     stackView.push(comandasTodas)
                     drawer.close()
+                    tabTitle.text = "Cobradas"
                 }
             }
             ItemDelegate {
@@ -143,6 +158,7 @@ ApplicationWindow {
                     modeloPlatillosMesero.platillosMesero(idMesero);
                     stackView.push(platillosMesero)
                     drawer.close()
+                    tabTitle.text = "Platillos"
                 }
             }
             ItemDelegate
@@ -173,7 +189,6 @@ ApplicationWindow {
         id: stackView
         initialItem: comandasTodas
         anchors.fill: parent
-
         pushEnter: Transition{
             ParallelAnimation{
                 NumberAnimation {target: stackView; property: "opacity"; from: 0; to:1.0; duration: 250; easing.type: Easing.Linear}
@@ -203,7 +218,6 @@ ApplicationWindow {
     Component
     {
         id: comandasTodas
-
         Comandas_Page
         {
             id: comandas

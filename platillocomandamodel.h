@@ -2,7 +2,6 @@
 #define PLATILLOCOMANDAMODEL_H
 
 #include <platillocomanda.h>
-
 #include <QObject>
 #include <QAbstractListModel>
 #include <QDebug>
@@ -32,7 +31,6 @@ public:
 
     void addPlatilloComanda(PlatilloComanda *nuevoPlatilloComanda);
 
-    //Q_INVOKABLE void setIdMesero(const int &idEmpleado);
     Q_INVOKABLE bool comandaAlreadySent();
     Q_INVOKABLE bool saveNewComandaInDataBase();
     Q_INVOKABLE void setComandaTaken();
@@ -42,7 +40,16 @@ public:
     Q_INVOKABLE void setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad);
     Q_INVOKABLE void modeloEstado(const int &idEstadoPreparacion);
     Q_INVOKABLE void modifyStatus(const int &idPlatillosComanda, const int &idNuevoEstado);
+    Q_INVOKABLE void clearModeal();
     Q_INVOKABLE float getTotalComanda();
+    Q_INVOKABLE bool setComandaPagada(int _idFormaPago);
+    Q_INVOKABLE bool alreadyPaid();
+    Q_INVOKABLE bool comandaInKitchen();
+
+    Q_INVOKABLE void setPedidoLlevar();
+    Q_INVOKABLE int getIdComanda();
+    Q_INVOKABLE bool pagarPedido();
+
 signals:
 
 private:
