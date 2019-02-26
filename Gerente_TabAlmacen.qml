@@ -7,7 +7,6 @@ import QtQuick.Layouts 1.3
 import QtQml.Models 2.3
 import QtQuick.Controls 1.4 as Aux
 
-
 Item {
     id: tabAlmacen
     visible: true
@@ -128,12 +127,49 @@ Item {
                 }
             }
             Aux.SplitView{
+                id:tableAlmacen
                 width: parent.width
                 height: 525
                 Aux.TableView
                 {
                     model: almacen
-
+                    style: TableViewStyle {
+                        headerDelegate: Rectangle {
+                            height: textItem.implicitHeight * 1.2
+                            width: textItem.implicitWidth
+                            color: "#008D9F"
+                            Text {
+                                id: textItem
+                                anchors.fill: parent
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: styleData.textAlignment
+                                anchors.leftMargin: 12
+                                text: styleData.value
+                                elide: Text.ElideRight
+                                color: textColor
+                                renderType: Text.NativeRendering
+                            }
+                            Rectangle {
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 1
+                                anchors.topMargin: 1
+                                width: 1
+                                color: "#ccc"
+                            }
+                        }
+                    }
+                    alternatingRowColors: false
+                    backgroundVisible: false
+                    itemDelegate: Item {
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: styleData.textColor = "#000000"
+                            elide: styleData.elideMode
+                            text: styleData.value
+                        }
+                    }
                     Aux.TableViewColumn
                     {
                         role: "id"
