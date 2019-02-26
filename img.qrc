@@ -38,5 +38,6 @@
         <file>img/almacen_Descontar.png</file>
         <file>img/mapa.jpg</file>
         <file>img/Anfitrion_pedido.png</file>
+        <file>img/tiket.jpg</file>
     </qresource>
 </RCC>

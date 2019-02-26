@@ -29,7 +29,8 @@ SOURCES += \
     platillococina.cpp \
     platillococinamodelo.cpp \
     almacenmodelo.cpp \
-    almacenProducto.cpp
+    almacenProducto.cpp \
+    ticketprinter.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -59,6 +60,7 @@ HEADERS += \
     platillococina.h \
     platillococinamodelo.h \
     almacenmodelo.h \
-    almacenProducto.h
+    almacenProducto.h \
+    ticketprinter.h
 
 DISTFILES +=

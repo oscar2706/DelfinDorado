@@ -591,9 +591,26 @@ int PlatilloComandaModel::getIdComanda()
     return idComandaActual;
 }
 
-bool PlatilloComandaModel::pagarPedido()
+/*bool PlatilloComandaModel::pagarPedido()
 {
 
+}*/
+
+QStringList PlatilloComandaModel::getPlatillosCuenta()
+{
+    QStringList listPlatillosCuenta;
+    QString platillo;
+    for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
+        QString cantidad = QString::number((*itr)->cantidad());
+        QString precioUnidad;
+        precioUnidad.setNum((*itr)->precioUnidad());
+        QString totalPlatillo;
+        totalPlatillo.setNum((*itr)->totalPlatillo());
+        platillo = cantidad+","+(*itr)->nombrePlatillo()+",$"+precioUnidad+",$"+totalPlatillo;
+        qDebug() << "Cadena enviada " + platillo;
+        listPlatillosCuenta.append(platillo);
+    }
+    return listPlatillosCuenta;
 }
 
 bool PlatilloComandaModel::insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave)

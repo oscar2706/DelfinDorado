@@ -12,7 +12,7 @@
 #include "meserolista.h"
 #include "platillococinamodelo.h"
 #include <almacenmodelo.h>
-
+#include "ticketprinter.h"
 
 int main(int argc, char *argv[])
 {
@@ -50,11 +50,13 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<meseroLista>("ModeloMesero",1,0,"MeseroLista",QStringLiteral("mesero lista"));
 
     meseroLista meseroListaObj;
-    engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
+    //engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
 
     almacenModelo *almacen = new almacenModelo;
     engine.rootContext()->setContextProperty("almacen",almacen);
     qmlRegisterType<almacenModelo>("ModeloAlmacen", 1, 0, "ModeloAlmacen");
+
+    qmlRegisterType<TicketPrinter>("Ticket",1,0,"TicketPrinter");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

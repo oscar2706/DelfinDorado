@@ -48,7 +48,10 @@ public:
 
     Q_INVOKABLE void setPedidoLlevar();
     Q_INVOKABLE int getIdComanda();
-    Q_INVOKABLE bool pagarPedido();
+    //Q_INVOKABLE bool pagarPedido();
+
+    //ParaTicket
+    Q_INVOKABLE QStringList getPlatillosCuenta();
 
 signals:
 

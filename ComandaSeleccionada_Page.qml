@@ -1,9 +1,10 @@
 import QtQuick 2.9
-//import QtQuick.Window 2.3
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
+import QtQuick.Window 2.3
+import Ticket 1.0
 Item {
     id:page_ComandaSeleccionada
     property int idComanda
@@ -548,6 +549,10 @@ Item {
                             platillosOrdenados.enabled = false
                             btn_EnviarOrden.text = "Cobrada"
                             btn_EnviarOrden.enabled = false
+                            ticketWindow.show()
+                            ticketPago.fecha = fechaComanda
+                            ticketPago.platillosList = modeloPlatillosComandas.getPlatillosCuenta()
+                            ticketPago.total = modeloPlatillosComandas.getTotalComanda()
                         }
                         else
                             label_seCobro.text = "No se cobro la cuenta"
@@ -597,4 +602,32 @@ Item {
         y:detallesComanda.height/5
     }
     }
+
+    Window {
+        id: ticketWindow
+        width: 400
+        height: 650
+        maximumHeight: 650
+        maximumWidth: 400
+        minimumHeight: 650
+        minimumWidth: 400
+        Component.onCompleted: {
+            setX(screen.width / 2 - width / 2);
+            setY(screen.height / 2 - height / 2);
+        }
+        TicketPrinter{
+            id: ticketPago
+        }
+        RoundButton{
+            anchors.top: ticketPago.bottom
+            anchors.right: ticketPago.right
+            anchors.rightMargin: 10
+            Material.background: "#ffb03a"
+            Material.foreground: "#ffffff"
+            radius: 5
+            text: "Aceptar"
+            onClicked: ticketWindow.visible = false
+        }
+    }
+
 }
