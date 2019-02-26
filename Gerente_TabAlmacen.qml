@@ -140,6 +140,7 @@ Item {
                             color: "#008D9F"
                             Text {
                                 id: textItem
+                                font.pixelSize: 16
                                 anchors.fill: parent
                                 verticalAlignment: Text.AlignVCenter
                                 horizontalAlignment: styleData.textAlignment
@@ -168,6 +169,7 @@ Item {
                             color: styleData.textColor = "#000000"
                             elide: styleData.elideMode
                             text: styleData.value
+                            font.pixelSize: 14
                         }
                     }
                     Aux.TableViewColumn

@@ -239,11 +239,12 @@ Item {
                             color: "#33673A"
                             Text {
                                 id: textItem
+                                font.pixelSize: 16
                                 anchors.fill: parent
                                 verticalAlignment: Text.AlignVCenter
                                 horizontalAlignment: styleData.textAlignment
                                 anchors.leftMargin: 12
-                                text: styleData.values
+                                text: styleData.value
                                 elide: Text.ElideRight
                                 color: textColor
                                 renderType: Text.NativeRendering
@@ -267,6 +268,7 @@ Item {
                             color: styleData.textColor = "#000000"
                             elide: styleData.elideMode
                             text: styleData.value
+                            font.pixelSize: 14
                         }
                     }
                     Aux.TableViewColumn
