@@ -34,28 +34,21 @@ bool meseroLista::setItemAt(int index, const meseroItem &item)
      return true;
 }
 
-void meseroLista::setAsignacion(QString mesa)
+void meseroLista::setComanda(QString mesa)
 {
     for(int i= 0; i<mItems.size();i++)
         if(mItems.at(i).seleccion)
         {
-            QSqlQuery insert,update;
-            if(update.exec("UPDATE mesa SET idEstadoMesa=2 WHERE idMesa ='"+mesa+"'"))
-            {
-                insert.prepare("INSERT INTO comanda(fecha,idEmpleado,idMesa,idEstadoComanda) "
+            QSqlQuery insert;
+
+            insert.prepare("INSERT INTO comanda(fecha,idEmpleado,idMesa,idEstadoComanda) "
                                "Values(:fecha,:idEmpleado,:idMesa,:idEstadoComanda)");
-                //qDebug() << "Fecha: " << QDate::currentDate();
-                insert.bindValue(":fecha",QDate::currentDate());
-                //qDebug() << "Mesero: " << mItems.at(i).id;
-                insert.bindValue(":idEmpleado",mItems.at(i).id);
-                //qDebug() << "Mesa: " << mesa;
-                insert.bindValue(":idMesa",mesa);
-                insert.bindValue(":idEstadoComanda",1);
-                if(!insert.exec())
-                    qDebug()<<"ERROR INSERCION COMANDA:"<<insert.lastError().text();
-            }
-            else
-              qDebug()<<"ERROR SELECCION MESA:"<<update.lastError().text();
+            insert.bindValue(":fecha",QDate::currentDate());
+            insert.bindValue(":idEmpleado",mItems.at(i).id);
+            insert.bindValue(":idMesa",mesa);
+            insert.bindValue(":idEstadoComanda",1);
+            if(!insert.exec())
+                 qDebug()<<"ERROR INSERCION COMANDA:"<<insert.lastError().text();
         }
 }
 
@@ -77,6 +70,8 @@ int meseroLista::verificaEstadoMesa(int idMesa)
 
     if(select.next())
         return select.value(0).toInt();
+
+    return 0;
 }
 
 QString meseroLista::getMeseroAsignado(int idMesa)
@@ -88,7 +83,28 @@ QString meseroLista::getMeseroAsignado(int idMesa)
                 "WHERE idMesa = '"+QString::number(idMesa)+"'");
 
     if(select.next())
-        return "Mesero #: "+select.value(0).toString()+"\nNombre: "+select.value(1).toString();
+        return "Mesa # "+QString::number(idMesa)+"\nAtendiendo: "+select.value(1).toString();
+
+    return "";
+}
+
+QString meseroLista::getTipoUsuario(QString tipo)
+{
+    QSqlQuery select;
+
+    select.exec("SELECT cargo FROM puesto WHERE idPuesto = '"+tipo+"'");
+
+    if(select.next())
+        return select.value(0).toString();
+
+    return "";
+}
+
+void meseroLista::setEstadoDisponible(QString idMesa)
+{
+    QSqlQuery update;
+    if(!update.exec("UPDATE mesa SET idEstadoMesa=1 WHERE idMesa ='"+idMesa+"'"))
+        qDebug()<<"ERROR CAMBIO DE ESTADO MESA: "+update.lastError().text();
 }
 
 void meseroLista::restablecerRadioButton()
@@ -112,16 +128,22 @@ void meseroLista::appendItem()
     emit postItemAppend();
 }
 
-void meseroLista::updateItem()
+void meseroLista::updateItem(int opc)
 {
-    for(int i= 0; i<mItems.size();i++){
-        if(mItems.at(i).seleccion){
-            meseroItem item;
-            item.id = mItems.value(i).id;
-            item.nombre = mItems.value(i).nombre;
-            item.seleccion = false;
-            mItems.replace(i,item);
-            emit postItemUpdate();
+    if(opc==1)
+    {
+        for(int i= 0; i<mItems.size();i++){
+            if(mItems.at(i).seleccion){
+                meseroItem item;
+                item.id = mItems.value(i).id;
+                item.nombre = mItems.value(i).nombre;
+                item.seleccion = false;
+                mItems.replace(i,item);
+                emit postItemUpdate();
+            }
         }
+    }
+    else {
+        emit postItemUpdate();
     }
 }

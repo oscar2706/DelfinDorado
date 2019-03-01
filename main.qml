@@ -47,6 +47,11 @@ ApplicationWindow{
         title: qsTr("Cocinero")
         visible: false
     }
+    MainWindowBusBoy{
+        id: mainWindowBus
+        title: qsTr("BusBoy")
+        visible: false
+    }
 
     Popup
     {
@@ -115,6 +120,11 @@ ApplicationWindow{
             break;
             case 5:
                 //busboy
+                //busboy
+                mainWindowBus.show()
+                txtUsuario.clear()
+                txtContrasegna.clear()
+                ventanaError.close()
             break;
             default:
                 lblVentanaError.text = "Error Desconocido"

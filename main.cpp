@@ -15,6 +15,7 @@
 #include "platillococinamodelo.h"
 #include <almacenmodelo.h>
 #include "ticketprinter.h"
+#include "mesamodelo.h"
 
 int main(int argc, char *argv[])
 {
@@ -61,8 +62,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
 
     almacenModelo *almacen = new almacenModelo;
-    engine.rootContext()->setContextProperty("almacen",almacen);
-    qmlRegisterType<almacenModelo>("ModeloAlmacen", 1, 0, "ModeloAlmacen");
+     engine.rootContext()->setContextProperty("almacen",almacen);
+
+    mesaModelo * mesaObjt= new mesaModelo;
+    engine.rootContext()->setContextProperty("mesaObjModel",mesaObjt);
 
     qmlRegisterType<TicketPrinter>("Ticket",1,0,"TicketPrinter");
 

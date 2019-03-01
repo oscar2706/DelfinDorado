@@ -34,7 +34,9 @@ SOURCES += \
     pedido.cpp \
     pedidomodelo.cpp \
     pedidoproductos.cpp \
-    pedidoproductosmodelo.cpp
+    pedidoproductosmodelo.cpp \
+    mesa.cpp \
+    mesamodelo.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -69,6 +71,8 @@ HEADERS += \
     pedido.h \
     pedidomodelo.h \
     pedidoproductos.h \
-    pedidoproductosmodelo.h
+    pedidoproductosmodelo.h \
+    mesa.h \
+    mesamodelo.h
 
 DISTFILES +=

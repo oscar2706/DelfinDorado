@@ -4,6 +4,7 @@
 meseroModelo::meseroModelo(QObject *parent)
     : QAbstractListModel(parent),mList(nullptr)
 {
+
 }
 
 int meseroModelo::rowCount(const QModelIndex &parent) const

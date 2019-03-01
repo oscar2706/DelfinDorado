@@ -25,7 +25,6 @@
         <file>img/MesaGrandeDisponible.png</file>
         <file>img/pendiente.png</file>
         <file>img/salir.png</file>
-        <file>img/sanitario.png</file>
         <file>img/visualizar.png</file>
         <file>img/addPlatillo.png</file>
         <file>img/addPlatillo_Pressed.png</file>
@@ -36,8 +35,9 @@
         <file>img/almacen_Pedido.png</file>
         <file>img/almacen_NuevoProducto.png</file>
         <file>img/almacen_Descontar.png</file>
-        <file>img/mapa.jpg</file>
         <file>img/Anfitrion_pedido.png</file>
         <file>img/tiket.jpg</file>
+        <file>img/mapaAnfitrion.jpg</file>
+        <file>img/mapaBusboy.jpg</file>
     </qresource>
 </RCC>

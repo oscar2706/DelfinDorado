@@ -2,6 +2,7 @@
 #define MESEROMODELO_H
 
 #include <QAbstractListModel>
+
 class meseroLista;
 
 class meseroModelo : public QAbstractListModel
@@ -34,3 +35,4 @@ private:
 };
 
 #endif // MESEROMODELO_H
+

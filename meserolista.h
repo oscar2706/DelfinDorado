@@ -25,11 +25,13 @@ public:
     explicit meseroLista(QObject *parent = nullptr);
     QVector<meseroItem> items() const;
     bool setItemAt(int index,const meseroItem &item);
-    Q_INVOKABLE void setAsignacion(QString);
+    Q_INVOKABLE void setComanda(QString);
     Q_INVOKABLE bool verificaCampoVacio();
     Q_INVOKABLE int verificaEstadoMesa(int);
     Q_INVOKABLE QString getMeseroAsignado(int);
     Q_INVOKABLE void restablecerRadioButton();
+    Q_INVOKABLE QString getTipoUsuario(QString);
+    Q_INVOKABLE void setEstadoDisponible(QString);
 
 signals:
     void preItemAppend();
@@ -39,7 +41,7 @@ signals:
 
 public slots:
     void appendItem();
-    void updateItem();
+    void updateItem(int);
 
 };
 
