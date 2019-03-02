@@ -3,6 +3,10 @@
 #include <QQuickStyle>
 #include <QQmlContext>
 
+//para las graficas
+#include <QtWidgets/QApplication>
+//aqui acaba
+
 #include "empleadolista.h"
 #include "empleadomodelo.h"
 #include "platillomodel.h"
@@ -15,13 +19,17 @@
 #include "platillococinamodelo.h"
 #include <almacenmodelo.h>
 #include "ticketprinter.h"
+#include "graficas.h"
 #include "mesamodelo.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
+    //QGuiApplication app(argc, argv);
+    //Intento para las graficas
+    QApplication app(argc, argv);
+    //Termina intento
 
     QQmlApplicationEngine engine;
     QQuickStyle::setStyle("Material");
@@ -62,12 +70,16 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("meseroLista"),&meseroListaObj);
 
     almacenModelo *almacen = new almacenModelo;
-     engine.rootContext()->setContextProperty("almacen",almacen);
+    engine.rootContext()->setContextProperty("almacen",almacen);
 
     mesaModelo * mesaObjt= new mesaModelo;
-    engine.rootContext()->setContextProperty("mesaObjModel",mesaObjt);
+    engine.rootContext()->setContextProperty("mesaObjModel", mesaObjt);
 
     qmlRegisterType<TicketPrinter>("Ticket",1,0,"TicketPrinter");
+
+    qmlRegisterUncreatableType<Graficas>("ControlGraficas", 1, 0, "Graficas", "Solo 1 control de graficas");
+    Graficas controlGraficas;
+    engine.rootContext()->setContextProperty("controlGraficas", &controlGraficas);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

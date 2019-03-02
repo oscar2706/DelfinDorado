@@ -22,6 +22,12 @@
         <file>Gerente_NuevoProducto.qml</file>
         <file>Anfitrion_Pedido.qml</file>
         <file>MainWindowBusBoy.qml</file>
+        <file>Gerente_TabAdministracion.qml</file>
+        <file>Reporte1.qml</file>
+        <file>Reporte2.qml</file>
+        <file>Reporte3.qml</file>
+        <file>Reporte4.qml</file>
+        <file>Reporte5.qml</file>
     </qresource>
     <qresource prefix="/mesero"/>
 </RCC>

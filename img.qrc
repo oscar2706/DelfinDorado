@@ -39,5 +39,7 @@
         <file>img/tiket.jpg</file>
         <file>img/mapaAnfitrion.jpg</file>
         <file>img/mapaBusboy.jpg</file>
+        <file>img/error.png</file>
+        <file>img/warning.png</file>
     </qresource>
 </RCC>

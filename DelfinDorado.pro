@@ -1,6 +1,7 @@
 QT += quick
 QT += quickcontrols2
 QT += core gui sql
+QT += charts
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -36,7 +37,8 @@ SOURCES += \
     pedidoproductos.cpp \
     pedidoproductosmodelo.cpp \
     mesa.cpp \
-    mesamodelo.cpp
+    mesamodelo.cpp \
+    graficas.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -73,6 +75,7 @@ HEADERS += \
     pedidoproductos.h \
     pedidoproductosmodelo.h \
     mesa.h \
-    mesamodelo.h
+    mesamodelo.h \
+    graficas.h
 
 DISTFILES +=

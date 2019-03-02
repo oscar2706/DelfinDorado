@@ -21,8 +21,8 @@ Window {
         Gerente_TabEmpleados{
             id: tabEmpleados
         }
-        Item {
-            id: tabFinanzas
+        Gerente_TabAdministracion {
+            id: tabAdministracion
         }
         Gerente_TabAlmacen{
             id: tabAlmacen
