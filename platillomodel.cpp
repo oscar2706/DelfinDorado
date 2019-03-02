@@ -42,7 +42,7 @@ PlatilloModel::PlatilloModel(QObject *parent) : QAbstractListModel(parent)
 
         addPlatillo(new Platillo(id,nombre,foto,precio,descripcion,categoria,estado,this));
 
-        qDebug() << "-> Platillo leido";
+        /*qDebug() << "-> Platillo leido";
         qDebug() << qryPlatillos.value(0).toString();
         qDebug() << qryPlatillos.value(1).toString();
         qDebug() << qryPlatillos.value(2).toString();
@@ -50,8 +50,7 @@ PlatilloModel::PlatilloModel(QObject *parent) : QAbstractListModel(parent)
         qDebug() << qryPlatillos.value(4).toString();
         qDebug() << qryCargaCategoria.value(0).toString();
         qDebug() << qryCargaEstado.value(0).toString();
-        qDebug() << "-----------------\n";
-
+        qDebug() << "-----------------\n";*/
     }
 }
 
@@ -295,7 +294,7 @@ void PlatilloModel::modifyPlatillo(const int idBuscado, const QString &givenName
 }
 
 void PlatilloModel::removePlatillo(int index)
-{   
+{
     bool deletedOk = false;
     int indice = 0;
     for (itr = misPlatilos.begin(); itr != misPlatilos.end(); itr++) {

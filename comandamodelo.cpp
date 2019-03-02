@@ -20,11 +20,11 @@ ComandaModelo::ComandaModelo(QObject *parent) : QAbstractListModel (parent)
         idMesa = comandasBD.value(3).toInt();
         idEstadoComanda = comandasBD.value(4).toInt();
 
-        qDebug() << "Comanda " << id;
+        /*qDebug() << "Comanda " << id;
         qDebug() << "Fecha " << fecha;
         qDebug() << "Empleado " << idEmpleado;
         qDebug() << "Mesa " << idMesa;
-        qDebug() << "Estado " << idEstadoComanda;
+        qDebug() << "Estado " << idEstadoComanda;*/
 
         addComanda(new Comanda(id, fecha, idEmpleado, idMesa, idEstadoComanda));
     }
@@ -168,6 +168,32 @@ void ComandaModelo::addComanda(const QString &fecha, const int &idEmpleado, cons
     }
 }
 
+void ComandaModelo::addComandaPedido(const int &idComanda)
+{
+    int idAnfitrion = 0;
+
+    QSqlQuery qryGetIdAnfitrion;
+    if(qryGetIdAnfitrion.exec("SELECT idEmpleado FROM empleado where idPuesto = 2"))
+    while(qryGetIdAnfitrion.next())
+        idAnfitrion = qryGetIdAnfitrion.value(0).toInt();
+
+    qDebug()<< "--->> Pedido idAnfitrion = " << idAnfitrion;
+
+    Comanda *nuevaComanda = new Comanda(idComanda, QDate::currentDate().toString(), idAnfitrion, 0, 1);
+
+    bool insertedOk = insertComandaPedidoInDataBase(nuevaComanda);
+
+    if(insertedOk)
+    {
+        addComanda(nuevaComanda);
+        qDebug() << "Insercion correcta";
+    }
+    else
+    {
+        qDebug() << "Error al insertar comanda";
+    }
+}
+
 void ComandaModelo::getComandasMesero(int idMesero, int EstadoComanda)
 {
     //qDebug() << "SE CARGAN SOLO LAS COMANDAS ESPECIFICAS";
@@ -235,6 +261,25 @@ bool ComandaModelo::insertComandaInDataBase(Comanda *comandaNueva)
     insertar.bindValue(":fecha", comandaNueva->fecha());
     insertar.bindValue(":idEmpleado", comandaNueva->idEmpleado());
     insertar.bindValue(":idMesa", comandaNueva->idMesa());
+    insertar.bindValue(":idEstadoComanda", comandaNueva->idEstadoComanda());
+
+    if(insertar.exec())
+        comandaSaved = true;
+
+    return comandaSaved;
+}
+
+bool ComandaModelo::insertComandaPedidoInDataBase(Comanda *comandaNueva)
+{
+    bool comandaSaved = false;
+
+    QSqlQuery insertar;
+
+    insertar.prepare("INSERT INTO comanda(fecha, idEmpleado, idEstadoComanda) "
+                     "VALUES(:fecha, :idEmpleado, :idEstadoComanda)");
+
+    insertar.bindValue(":fecha", QDate::currentDate());
+    insertar.bindValue(":idEmpleado", comandaNueva->idEmpleado());
     insertar.bindValue(":idEstadoComanda", comandaNueva->idEstadoComanda());
 
     if(insertar.exec())

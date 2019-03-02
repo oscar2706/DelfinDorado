@@ -3,7 +3,8 @@ import QtQuick 2.9
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Layouts 1.3
-
+import QtQuick.Window 2.3
+import Ticket 1.0
 
 Dialog {
     id:dialog_Pedido
@@ -14,6 +15,16 @@ Dialog {
     parent: Overlay.overlay
     focus: true
     modal: true
+    onAboutToShow: {
+        modeloPlatillosComandas.clearModeal()
+        idComandaPedido = modeloPlatillosComandas.getNuevoIdComanda()
+    }
+    //property int idComandaNueva: modeloPlatillosComandas.getIdComanda() ajustar para generar comanda nueva, que regrese un numero nuevo
+    property date currentDate: new Date()
+    property string dateString
+    property string idComandaPedido
+    property int idSelectedPlatillo
+    property string totalCuenta: modeloPlatillosComandas.getTotalComanda()
     Pane{
         id: fondoHeader
         z:1
@@ -33,18 +44,18 @@ Dialog {
                 padding: 10
                 Label{
                     font.weight: Font.DemiBold
-                    text: "Comanda: "
+                    text: "Comanda: "+ idComandaPedido
                     font.pointSize: 14
                     font.family: "Verdana"
                 }
                 Label{
-                    text: "Fecha: "
+                    text: "Fecha: " + Qt.formatDateTime(new Date(), "dd/MM/yyyy")
                     font.pointSize: 14
                     font.family: "Verdana"
                 }
             }
             Row{
-                spacing: 40
+                spacing: 30
                 Label{
                     text: "Cantidad"
                     font.pointSize: 14
@@ -81,7 +92,7 @@ Dialog {
                 anchors.fill: parent
                 Label{
                     id:totalPagar
-                    text: "Total = $" //+totalPagar
+                    text: "Total = $" + totalCuenta
                     font.pointSize: 14
                     font.family: "Verdana"
                     font.weight: Font.DemiBold
@@ -125,7 +136,8 @@ Dialog {
         bottomMargin: 60
         clip: true
         model: {
-            modeloPlatillosComandas.setPedidoLlevar()
+            modeloPlatillosComandas.setIdComandaPedido(modeloPlatillosComandas.getNuevoIdComanda())
+            //idComandaPedido = modeloPlatillosComandas.getIdComanda()
             modeloPlatillosComandas
         }
         footer: footerComandas
@@ -136,7 +148,6 @@ Dialog {
             id: delegateItem
             width: parent.width
             height: 50
-
 
             Text{
                 id: cantidadPlatillo
@@ -173,7 +184,7 @@ Dialog {
                 Layout.minimumWidth: 200
                 Layout.maximumWidth: 200
                 topPadding: 20
-                leftPadding: 420
+                leftPadding: 400
                 text: "$"+totalPlatillo
                 font.bold: true
                 font.family: "Verdana"
@@ -206,14 +217,8 @@ Dialog {
                 }
                 SwipeDelegate.onClicked: {
                     idSelectedPlatillo = idPlatillo
-                    if(modeloPlatillosComandas.comandaAlreadySent()){
-                        delegateItem.swipe.close()
-                        pop_deletedFail.open()
-                    }
-                    else{
-                        modeloPlatillosComandas.removePlatillo(idSelectedPlatillo)
-                        totalCuenta = modeloPlatillosComandas.getTotalComanda()
-                    }
+                    modeloPlatillosComandas.removePlatillo(idSelectedPlatillo)
+                    totalCuenta = modeloPlatillosComandas.getTotalComanda()
                 }
             }
         }
@@ -227,7 +232,6 @@ Dialog {
         }
         remove: Transition {
             ParallelAnimation {
-                NumberAnimation{ target: btn_QuitaPlatillo; property: "opacity"; from:1.0; to: 0; duration: 100}
                 NumberAnimation { property: "height"; to: 0; duration: 300; easing.type: Easing.OutCirc}
             }
         }
@@ -312,9 +316,9 @@ Dialog {
                     pop_confirmacionAgregar.close()
                     var cantidadDePlatillo;
                     cantidadDePlatillo = Number.fromLocaleString(inputCantidad.text);
-                    modeloPlatillosComandas.addPlatillo(modeloPlatillosComandas.getIdComanda(), inputPlatilloPorAgregar.currentText, cantidadDePlatillo);
+                    modeloPlatillosComandas.addPlatillo(idComandaPedido, inputPlatilloPorAgregar.currentText, cantidadDePlatillo);
                     totalCuenta = modeloPlatillosComandas.getTotalComanda()
-
+                    totalPagar.text = "Total = $" + totalCuenta
                 }
             }
             Button{
@@ -335,8 +339,8 @@ Dialog {
 
     Popup {
         id: pop_enviarYCobrar
-        width: 300
-        height: 200
+        width: 250
+        height: 100
         modal: true
         focus: true
         closePolicy: Popup.CloseOnPressOutside
@@ -345,18 +349,29 @@ Dialog {
         topMargin: 20
         Column{
             Label{
-                text: "Total a cobrar = $"
+                text: "¿Esta seguro?"
             }
             Row{
                 spacing: 10
                 Button{
-                    text: "Cobrar"
+                    text: "Aceptar"
                     Material.background: "#CBAE82"
                     Material.foreground: "#ffffff"
                     font.family: "Verdana"
-                    width: (pop_confirmacionCocina.width/2)-15
+                    width: (pop_enviarYCobrar.width/2)-15
                     onClicked: {
+                        modeloComandas.addComandaPedido(3);
+                        modeloPlatillosComandas.saveNewPedidoInDataBase()
+                        ticketPago.fecha = Qt.formatDateTime(new Date(), "dd/MM/yyyy")
+                        ticketPago.platillosList = modeloPlatillosComandas.getPlatillosCuenta()
+                        ticketPago.total = modeloPlatillosComandas.getTotalComanda()
+                        ticketWindow.show()
+
+                        modeloPlatillosComandas.setComandaPagada()
+                        modeloPlatillosComandas.clearModeal()
+                        totalCuenta = 0
                         pop_enviarYCobrar.close()
+                        dialog_Pedido.close()
                     }
                 }
                 Button{
@@ -364,7 +379,7 @@ Dialog {
                     Material.background: "#CBAE82"
                     Material.foreground: "#ffffff"
                     font.family: "Verdana"
-                    width: (pop_confirmacionCocina.width/2)-15
+                    width: (pop_enviarYCobrar.width/2)-15
                     onClicked: {
                         pop_enviarYCobrar.close()
                     }
@@ -409,8 +424,38 @@ Dialog {
         font.weight: Font.DemiBold
         font.pointSize: 14
         onClicked: {
+            totalCuenta = 0
             modeloPlatillosComandas.clearModeal();
             dialog_Pedido.close()
+        }
+    }
+
+    Window {
+        id: ticketWindow
+        width: 400
+        height: 650
+        maximumHeight: 650
+        maximumWidth: 400
+        minimumHeight: 650
+        minimumWidth: 400
+        Component.onCompleted: {
+            setX(screen.width / 2 - width / 2);
+            setY(screen.height / 2 - height / 2);
+        }
+        TicketPrinter{
+            id: ticketPago
+        }
+        RoundButton{
+            anchors.top: ticketPago.bottom
+            anchors.right: ticketPago.right
+            anchors.rightMargin: 10
+            Material.background: "#ffb03a"
+            Material.foreground: "#ffffff"
+            radius: 5
+            text: "Aceptar"
+            onClicked: {
+                ticketWindow.close()
+            }
         }
     }
 }

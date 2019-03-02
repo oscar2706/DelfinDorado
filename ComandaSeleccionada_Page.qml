@@ -10,7 +10,7 @@ Item {
     property int idComanda
     property int idEmpleado
     property int selectedPlatillo
-    property string mesaAsignada
+    property int mesaAsignada
     property string estadoComanda
     property string fechaComanda
     property int cantidadPlatilloSeleccionado
@@ -553,6 +553,7 @@ Item {
                             ticketPago.fecha = fechaComanda
                             ticketPago.platillosList = modeloPlatillosComandas.getPlatillosCuenta()
                             ticketPago.total = modeloPlatillosComandas.getTotalComanda()
+                            mesaObjModel.setEstadoMesa(mesaAsignada,3)
                         }
                         else
                             label_seCobro.text = "No se cobro la cuenta"

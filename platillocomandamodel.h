@@ -33,7 +33,7 @@ public:
 
     Q_INVOKABLE bool comandaAlreadySent();
     Q_INVOKABLE bool saveNewComandaInDataBase();
-    Q_INVOKABLE void setComandaTaken();
+    Q_INVOKABLE void setComandaAtendida();
     Q_INVOKABLE void setIdComanda(const int &idComanda);
     Q_INVOKABLE void addPlatillo(const int &idComanda, const QString &nombrePlatillo, const int &cantidad);
     Q_INVOKABLE bool removePlatillo(const int idPlatillo);
@@ -42,11 +42,14 @@ public:
     Q_INVOKABLE void modifyStatus(const int &idPlatillosComanda, const int &idNuevoEstado);
     Q_INVOKABLE void clearModeal();
     Q_INVOKABLE float getTotalComanda();
-    Q_INVOKABLE bool setComandaPagada(int _idFormaPago);
+    Q_INVOKABLE bool setComandaPagada();
     Q_INVOKABLE bool alreadyPaid();
     Q_INVOKABLE bool comandaInKitchen();
 
-    Q_INVOKABLE void setPedidoLlevar();
+    Q_INVOKABLE void setIdComandaPedido(const int idComanda);
+    Q_INVOKABLE bool saveNewPedidoInDataBase();
+    Q_INVOKABLE bool setComandaPagada(int idComanda);
+    Q_INVOKABLE int getNuevoIdComanda();
     Q_INVOKABLE int getIdComanda();
     //Q_INVOKABLE bool pagarPedido();
 

@@ -13,9 +13,9 @@ PlatilloComandaModel::PlatilloComandaModel(QObject *parent) : QAbstractListModel
     QString nombre;
     int cantidad;
 
+    /*qDebug() << "";
     qDebug() << "";
-    qDebug() << "";
-    qDebug() << "Platillos Comanda Leidos: ";
+    qDebug() << "Platillos Comanda Leidos: ";*/
 
     QList<PlatilloComanda *> platillosDeComanda;
 
@@ -54,20 +54,18 @@ PlatilloComandaModel::PlatilloComandaModel(QObject *parent) : QAbstractListModel
         PlatilloComanda *nuevoPlatillo = new PlatilloComanda(idComanda, idPlatillo, nombre, cantidad, precioUnidad, precioUnidad);
         addPlatilloComanda(nuevoPlatillo);
 
-        if(misPlatillosComanda.contains(nuevoPlatillo))
-            qDebug() << "PLATILLO REPETIDO";
-        else
+        if(!misPlatillosComanda.contains(nuevoPlatillo))
             addPlatilloComanda(nuevoPlatillo);
 
 
-        qDebug() << "Id Comanda: " << idComanda;
+        /*qDebug() << "Id Comanda: " << idComanda;
         qDebug() << "Id Platillo: " << idPlatillo;
         qDebug() << "Nombre: " << nombre;
-        qDebug() << "Cantidad: " << cantidad;
+        qDebug() << "Cantidad: " << cantidad;*/
 
     }
-    qDebug() << "";
-    qDebug() << "";
+    /*qDebug() << "";
+    qDebug() << "";*/
 }
 
 int PlatilloComandaModel::rowCount(const QModelIndex &parent) const
@@ -196,29 +194,7 @@ bool PlatilloComandaModel::comandaAlreadySent()
         return false;
 }
 
-bool PlatilloComandaModel::saveNewComandaInDataBase()
-{
-    if(comandaEnviada)
-        return false;
-    else {
-        bool datosInsertados = false;
-        qDebug() << "\n-->Guardando platillos en BD ...";
-        for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
-            for (int i = 0; i < (*itr)->cantidad(); i++) {
-                if(insertPlatilloComandaInDataBase((*itr)) == false)
-                    return false;
-                else{
-                    datosInsertados = true;
-                    comandaEnviada = true;
-                }
-            }
-        }
-        qDebug() << "";
-        return datosInsertados;
-    }
-}
-
-void PlatilloComandaModel::setComandaTaken()
+void PlatilloComandaModel::setComandaAtendida()
 {
     QSqlQuery qryComanda;
     qryComanda.prepare("UPDATE comanda SET idEstadoComanda = 2 "
@@ -301,6 +277,8 @@ void PlatilloComandaModel::addPlatillo(const int &idComanda, const QString &nomb
 {
     //QString nombreEnBaseDatos = nombrePlatillo;
     //nombreEnBaseDatos.front()
+    qDebug() << "\n\n---> idComanda = " << idComanda;
+
     nombrePlatillo.front() = nombrePlatillo.front().toUpper();
 
     QSqlQuery qryIdPlatillo;
@@ -311,8 +289,6 @@ void PlatilloComandaModel::addPlatillo(const int &idComanda, const QString &nomb
     int idPlatillo = 0;
     idPlatillo = qryIdPlatillo.value(0).toInt();
 
-    //qDebug() << "Id platillo = " << idPlatillo << ", Nombre = " << nombrePlatillo;
-
     bool platilloEnComanda = false;
     for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
         if((*itr)->idPlatillo() == idPlatillo){
@@ -322,7 +298,6 @@ void PlatilloComandaModel::addPlatillo(const int &idComanda, const QString &nomb
     }
 
     if(platilloEnComanda){
-        qDebug() << "->Aumento cantidad el platillo id:"<< idPlatillo << " nombre:" << nombrePlatillo << " --- nueva cantidad = " << cantidad;
         QModelIndex topLeft = createIndex(0,0);
         QModelIndex bottomRight = createIndex(6,misPlatillosComanda.size()); // 6 = numero de atributos de Platillo
         emit dataChanged(topLeft,bottomRight);
@@ -336,16 +311,15 @@ void PlatilloComandaModel::addPlatillo(const int &idComanda, const QString &nomb
         qryPrecioPlatillo.next();
         float precioUnidad = 0;
         precioUnidad = qryPrecioPlatillo.value(0).toFloat();
-        addPlatilloComanda(new PlatilloComanda(idComanda, idPlatillo, nombrePlatillo, cantidad, precioUnidad, precioUnidad));
+        addPlatilloComanda(new PlatilloComanda(idComanda, idPlatillo, nombrePlatillo, cantidad, precioUnidad, cantidad*precioUnidad));
     }
 }
 
 bool PlatilloComandaModel::removePlatillo(const int idPlatillo)
 {
-    if(comandaEnviada && !cargandoComanda)
+    /*if(comandaEnviada && !cargandoComanda)
         return false;
-    else {
-        qDebug() << "\n-->Se quiere removeer platillo!";
+    else {*/
         bool platilloEncontrado = false;
         int indice = 0;
         for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
@@ -363,12 +337,11 @@ bool PlatilloComandaModel::removePlatillo(const int idPlatillo)
             endRemoveRows();
             return true;
         }
-        /*
+
         else
             qDebug() << "ERROR al remover platillo con id = " << idPlatillo;
         qDebug() << "";
-        */
-    }
+    //}
 }
 
 void PlatilloComandaModel::setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad)
@@ -462,11 +435,8 @@ void PlatilloComandaModel::modeloEstado(const int &idEstadoPreparacion)
         PlatilloComanda *nuevoPlatillo = new PlatilloComanda(idComanda, idPlatillo, nombre, cantidad, precioUnidad, precioUnidad);
         addPlatilloComanda(nuevoPlatillo);
 
-        if(misPlatillosComanda.contains(nuevoPlatillo))
-            qDebug() << "PLATILLO REPETIDO";
-        else
+        if(!misPlatillosComanda.contains(nuevoPlatillo))
             addPlatilloComanda(nuevoPlatillo);
-
 
         qDebug() << "Id Comanda: " << idComanda;
         qDebug() << "Id Platillo: " << idPlatillo;
@@ -493,9 +463,21 @@ void PlatilloComandaModel::modifyStatus(const int &idPlatillosComanda, const int
 
 void PlatilloComandaModel::clearModeal()
 {
+    /*
+    int indice = 0;
+    for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
+        beginRemoveRows(QModelIndex(),indice,indice);
+        misPlatillosComanda.removeAt(indice);
+        endRemoveRows();
+        indice++;
+    }
+    */
+    qDebug() << "---> SE LIMPIA EL MODELO PLATILLOSCOMANDA<---";
+
     for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
         removePlatillo((*itr)->idPlatillo());
     }
+
 }
 
 float PlatilloComandaModel::getTotalComanda()
@@ -507,11 +489,11 @@ float PlatilloComandaModel::getTotalComanda()
     return total;
 }
 
-bool PlatilloComandaModel::setComandaPagada(int _idFormaPago)
+bool PlatilloComandaModel::setComandaPagada()
 {
     QSqlQuery qryPlatillosOrdenados;
     qryPlatillosOrdenados.prepare("SELECT count(idPlatillo) FROM platillosComanda WHERE idComanda = :idComanda");
-    qryPlatillosOrdenados.bindValue(":idComanda", idComandaActual);
+    qryPlatillosOrdenados.bindValue(":idComanda", misPlatillosComanda.first()->idComanda());
     qryPlatillosOrdenados.exec();
     qryPlatillosOrdenados.next();
 
@@ -519,19 +501,19 @@ bool PlatilloComandaModel::setComandaPagada(int _idFormaPago)
     float totalComanda = getTotalComanda();
     QSqlQuery qryInsertarCuenta;
     qryInsertarCuenta.prepare("INSERT INTO cuenta(numeroPlatillos, totalCuenta, idComanda, idFormaPago) "
-                              "VALUES(:numPlatillosOrdenados, :totalCuenta, :idComanda, :idFormaPago)");
+                              "VALUES(:numPlatillosOrdenados, :totalCuenta, :idComanda, 1)");
     qryInsertarCuenta.bindValue(":numPlatillosOrdenados", numPlatillosOrdenados);
     qryInsertarCuenta.bindValue(":totalCuenta",totalComanda);
-    qryInsertarCuenta.bindValue(":idComanda",idComandaActual);
-    qryInsertarCuenta.bindValue(":idFormaPago",_idFormaPago);
+    qryInsertarCuenta.bindValue(":idComanda",misPlatillosComanda.first()->idComanda());
     qryInsertarCuenta.exec();
     qryInsertarCuenta.next();
 
     if(qryInsertarCuenta.numRowsAffected() != 0){
-        qDebug() << "Comanda: " << idComandaActual << " PAGADA :D!";QSqlQuery qryComandaPagada;
+        qDebug() << "Comanda: " << misPlatillosComanda.first()->idComanda()<< " PAGADA :D!";
+        QSqlQuery qryComandaPagada;
         qryComandaPagada.prepare("UPDATE comanda SET idEstadoComanda = 3 "
                                  "WHERE idComanda = :idComanda");
-        qryComandaPagada.bindValue(":idComanda", idComandaActual);
+        qryComandaPagada.bindValue(":idComanda", misPlatillosComanda.first()->idComanda());
         qryComandaPagada.exec();
         qryComandaPagada.next();
         if(qryComandaPagada.numRowsAffected() != 0)
@@ -572,18 +554,79 @@ bool PlatilloComandaModel::comandaInKitchen()
         return false;
 }
 
-void PlatilloComandaModel::setPedidoLlevar()
+void PlatilloComandaModel::setIdComandaPedido(const int idComanda)
+{
+    idComandaActual = idComanda;
+    comandaEnviada = false;
+}
+
+bool PlatilloComandaModel::saveNewPedidoInDataBase()
+{
+    bool datosInsertados = false;
+    qDebug() << "\n-->Guardando platillos en BD ...";
+    for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
+        for (int i = 0; i < (*itr)->cantidad(); i++) {
+            if(insertPlatilloComandaInDataBase((*itr)) == false)
+                return false;
+            else{
+                datosInsertados = true;
+                comandaEnviada = true;
+            }
+        }
+    }
+    qDebug() << "";
+    return datosInsertados;
+}
+
+bool PlatilloComandaModel::setComandaPagada(int idComanda)
+{
+    QSqlQuery qryPlatillosOrdenados;
+    qryPlatillosOrdenados.prepare("SELECT count(idPlatillo) FROM platillosComanda WHERE idComanda = :idComanda");
+    qryPlatillosOrdenados.bindValue(":idComanda", misPlatillosComanda.first()->idComanda());
+    qryPlatillosOrdenados.exec();
+    qryPlatillosOrdenados.next();
+
+    int numPlatillosOrdenados = qryPlatillosOrdenados.value(0).toInt();
+    float totalComanda = getTotalComanda();
+    QSqlQuery qryInsertarCuenta;
+    qryInsertarCuenta.prepare("INSERT INTO cuenta(numeroPlatillos, totalCuenta, idComanda, idFormaPago) "
+                              "VALUES(:numPlatillosOrdenados, :totalCuenta, :idComanda, 1)");
+    qryInsertarCuenta.bindValue(":numPlatillosOrdenados", numPlatillosOrdenados);
+    qryInsertarCuenta.bindValue(":totalCuenta",totalComanda);
+    qryInsertarCuenta.bindValue(":idComanda",idComandaActual);
+    qryInsertarCuenta.exec();
+    qryInsertarCuenta.next();
+
+    if(qryInsertarCuenta.numRowsAffected() != 0){
+        qDebug() << "Comanda: " << idComandaActual << " PAGADA :D!";QSqlQuery qryComandaPagada;
+        qryComandaPagada.prepare("UPDATE comanda SET idEstadoComanda = 3 "
+                                 "WHERE idComanda = :idComanda");
+        qryComandaPagada.bindValue(":idComanda", idComandaActual);
+        qryComandaPagada.exec();
+        qryComandaPagada.next();
+        if(qryComandaPagada.numRowsAffected() != 0)
+            return true;
+    }
+    else{
+        qDebug() << "Comanda: " << idComandaActual << " SIN PAGAR D:!";
+        return false;
+    }
+}
+
+int PlatilloComandaModel::getNuevoIdComanda()
 {
     int nuevoIdComanda = 0;
     QSqlQuery qryGetIdComanda;
-    if(qryGetIdComanda.exec("SELECT idComanda FROM comanda"))
-        while (qryGetIdComanda.next()) {
+    if(qryGetIdComanda.exec("SELECT idComanda FROM comanda ORDER BY idComanda DESC"))
+        if (qryGetIdComanda.next()) {
             nuevoIdComanda= qryGetIdComanda.value(0).toInt();
+            qDebug() << "---> QUERY idComanda = " << ++nuevoIdComanda;
         }
-    ++nuevoIdComanda;
-    idComandaActual = nuevoIdComanda;
+    //++nuevoIdComanda;
+    //idComandaActual = nuevoIdComanda;
     clearModeal();
-    //qDebug() << "---> idComanda = " << idComandaActual;
+
+    return nuevoIdComanda;
 }
 
 int PlatilloComandaModel::getIdComanda()
@@ -613,6 +656,28 @@ QStringList PlatilloComandaModel::getPlatillosCuenta()
     return listPlatillosCuenta;
 }
 
+bool PlatilloComandaModel::saveNewComandaInDataBase()
+{
+    if(comandaEnviada)
+        return false;
+    else {
+        bool datosInsertados = false;
+        qDebug() << "\n-->Guardando platillos en BD ...";
+        for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
+            for (int i = 0; i < (*itr)->cantidad(); i++) {
+                if(insertPlatilloComandaInDataBase((*itr)) == false)
+                    return false;
+                else{
+                    datosInsertados = true;
+                    comandaEnviada = true;
+                }
+            }
+        }
+        qDebug() << "";
+        return datosInsertados;
+    }
+}
+
 bool PlatilloComandaModel::insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave)
 {
     bool dataSaved = false;
@@ -627,7 +692,7 @@ bool PlatilloComandaModel::insertPlatilloComandaInDataBase(PlatilloComanda *plat
 
     if(insertar.numRowsAffected() > 0){
         dataSaved = true;
-        qDebug() << "Platillo: "<< platilloComandaToSave->idPlatillo() << " - " << platilloComandaToSave->nombrePlatillo() << " INSERTADO EN DB";
+        qDebug() << "id Comada" << platilloComandaToSave->idComanda() << "Platillo: "<< platilloComandaToSave->idPlatillo() << " - " << platilloComandaToSave->nombrePlatillo() << " INSERTADO EN DB";
     }
     else
         qDebug() << "Error al guardar platillo: "<< platilloComandaToSave->idPlatillo() << " - " << platilloComandaToSave->nombrePlatillo();

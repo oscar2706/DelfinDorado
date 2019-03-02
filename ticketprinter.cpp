@@ -28,6 +28,7 @@ void TicketPrinter::paint(QPainter *painter)
     totalString.setNum(total());
     painter->setFont(QFont("Verdana",14,QFont::Bold));
     painter->drawText(270,y_Pos, "Total = $"+totalString);
+
 }
 
 QString TicketPrinter::fecha() const
@@ -51,6 +52,7 @@ void TicketPrinter::setFecha(QString fecha)
         return;
 
     m_fecha = fecha;
+    this->update();
     emit fechaChanged(m_fecha);
 }
 
@@ -60,15 +62,16 @@ void TicketPrinter::setPlatillosList(QStringList platillosList)
         return;
 
     m_platillosList = platillosList;
+    this->update();
     emit platillosListChanged(m_platillosList);
 }
 
 void TicketPrinter::setTotal(float total)
 {
-    qWarning("Floating point comparison needs context sanity check");
     if (qFuzzyCompare(m_total, total))
         return;
 
     m_total = total;
+    this->update();
     emit totalChanged(m_total);
 }

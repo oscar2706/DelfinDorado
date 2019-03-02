@@ -9,6 +9,7 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDate>
 
 class ComandaModelo : public QAbstractListModel
 {
@@ -34,6 +35,7 @@ public:
     void addComanda(Comanda *nuevaComanda);
 
     Q_INVOKABLE void addComanda(const QString &fecha, const int &idEmpleado, const int &idMesa, const int &idEstadoComanda);
+    Q_INVOKABLE void addComandaPedido(const int &idEstadoComanda);
     Q_INVOKABLE void getComandasMesero(int idMesero, int EstadoComanda);
     //Q_INVOKABLE bool inKitchen(int idComanda);
     //Q_INVOKABLE QList<Comanda*> getComandasMesero(int idMesero);
@@ -41,6 +43,7 @@ public:
 
 private:
     bool insertComandaInDataBase(Comanda *comandaNueva);
+    bool insertComandaPedidoInDataBase(Comanda *comandaNueva);
 
     //int idEmpleado;
 

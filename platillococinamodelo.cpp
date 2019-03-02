@@ -30,9 +30,10 @@ PlatilloCocinaModelo::PlatilloCocinaModelo(QObject *parent) : QAbstractListModel
 
         nombre = qryNombrePlatillo.value(0).toString();
 
-        qDebug() << "PLATILLOS COCINA";
+        /*qDebug() << "PLATILLOS COCINA";
         qDebug() << idPlatillosComanda << " " << idComanda << " " << idPlatillo << " " << nombre << " " << idEstadoPreparacion;
-        qDebug() << "----------------------";
+        qDebug() << "----------------------";*/
+
         PlatilloCocina *nuevoPlatillo = new PlatilloCocina(idPlatillosComanda, idComanda, idPlatillo, nombre, idEstadoPreparacion);
         addPlatilloCocina(nuevoPlatillo);
     }
@@ -185,6 +186,19 @@ void PlatilloCocinaModelo::modeloEstado(const int &idEstadoPreparacion)
         qryNombrePlatillo.next();
 
         nombre = qryNombrePlatillo.value(0).toString();
+
+        QSqlQuery qryPlatilloLlevar;
+        qryPlatilloLlevar.prepare("SELECT idMesa FROM comanda WHERE idComanda = :idComanda");
+        qryPlatilloLlevar.bindValue(":idComanda", idComanda);
+        qryPlatilloLlevar.exec();
+        qryPlatilloLlevar.next();
+        if(qryPlatilloLlevar.value(0).isNull()){
+            nombre += " (Para llevar)";
+            qDebug() << "PARA LLEVAR";
+            qDebug() << idPlatillosComanda << " " << idComanda << " " << idPlatillo << " " << nombre << " " << idEstadoPreparacion;
+            qDebug() << "----------------------";
+        }
+
 
         PlatilloCocina *nuevoPlatillo = new PlatilloCocina(idPlatillosComanda, idComanda, idPlatillo, nombre, idEstadoPreparacion);
         addPlatilloCocina(nuevoPlatillo);
