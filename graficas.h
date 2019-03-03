@@ -27,10 +27,12 @@ public:
     Q_INVOKABLE QString categoriaPlatilloMasVendidoCategoria(int numeroCategoria);
     Q_INVOKABLE QString nombrePlatilloMasVendidoCategoria(int numeroCategoria);
     Q_INVOKABLE int cantidadPlatilloMasVendidoCategoria(int numeroCategoria);
+    Q_INVOKABLE int comprobacionPlatilloMasVendidoCategoria();
 
     Q_INVOKABLE QString categoriaPlatilloMenosVendidoCategoria(int numeroCategoria);
     Q_INVOKABLE QString nombrePlatilloMenosVendidoCategoria(int numeroCategoria);
     Q_INVOKABLE int cantidadPlatilloMenosVendidoCategoria(int numeroCategoria);
+    Q_INVOKABLE int comprobacionPlatilloMenosVendidoCategoria();
 
     Q_INVOKABLE QString nombreProductosMasPedidos(int numeroProducto);
     Q_INVOKABLE int cantidadProductosMasPedidos(int numeroProducto);
@@ -39,9 +41,10 @@ public:
     Q_INVOKABLE int cantidadComandasAtendidas(int numeroComandas);
 
     //valores directos
-    Q_INVOKABLE int cantidadComandasGeneradas();
+    Q_INVOKABLE int comandasGeneradas();
     Q_INVOKABLE float promedioVentas();
 
+    Q_INVOKABLE int fechasCorrectas();
 
     QString fechaInicial() const;
     QString fechaFinal() const;

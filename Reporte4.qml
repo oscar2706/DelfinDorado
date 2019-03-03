@@ -30,13 +30,48 @@ Item {
             {
                 id: valorY
                 min: 0
-                max: 15
+                max: valores1 + 5;
+                titleText: "Veces solicitado"
             }
             axisY: valorY
-            axisX: BarCategoryAxis { categories: ["Resultados"] }
-            BarSet { label: nombre1; values: [valores1] }
-            BarSet { label: nombre2; values: [valores2] }
-            BarSet { label: nombre3; values: [valores3] }
+            axisX: BarCategoryAxis
+            {
+                titleText: "Producto"
+                categories: [""]
+            }
+            BarSet
+            {
+                label: nombre1
+                values: [valores1]
+                onHovered: {
+                    if(status)
+                        label = nombre1 + "\n(" + valores1 + ")"
+                    else
+                        label = nombre1
+                }
+            }
+            BarSet
+            {
+                label: nombre2
+                values: [valores2]
+                onHovered: {
+                    if(status)
+                        label = nombre2 + "\n(" + valores2 + ")"
+                    else
+                        label = nombre2
+                }
+            }
+            BarSet
+            {
+                label: nombre3
+                values: [valores3]
+                onHovered: {
+                    if(status)
+                        label = nombre3 + "\n(" + valores3 + ")"
+                    else
+                        label = nombre3
+                }
+            }
         }
     }
 }

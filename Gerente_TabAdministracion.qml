@@ -12,6 +12,9 @@ Item {
     id: tabAdministracion
     property bool activadorLoader: false
     property int selectedIndex: 0
+    property string imagenMensaje
+    property string textoMensaje
+    property int paginaUtilizada: 0
 
     Popup
     {
@@ -34,6 +37,78 @@ Item {
                 if(fechaFinal.text != "Fecha Final")
                 {
                     activadorLoader = true
+                    paginaUtilizada = 1
+                    if(!controlGraficas.fechasCorrectas())
+                    {
+                        imagenMensaje = "/img/error.png"
+                        textoMensaje = "ERROR.\nLA FECHA INICIAL NO\nPUEDE SER MAYOR\n A LA FINAL"
+                    }
+                    else
+                    {
+                        switch(selectedIndex)
+                        {
+                        case 0:
+                            if(!controlGraficas.cantidadProductosMasPedidos(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 1:
+                            if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 2:
+                            if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 3:
+                            if(!controlGraficas.cantidadProductosMasPedidos(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 4:
+                            if(!controlGraficas.cantidadComandasAtendidas(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        }
+                    }
                 }
                 ventanaFechaInicial.close()
             }
@@ -61,6 +136,78 @@ Item {
                 if(fechaInicial.text != "Fecha Inicial")
                 {
                     activadorLoader = true
+                    paginaUtilizada = 1
+                    if(!controlGraficas.fechasCorrectas())
+                    {
+                        imagenMensaje = "/img/error.png"
+                        textoMensaje = "ERROR.\nLA FECHA INICIAL NO\nPUEDE SER MAYOR\n A LA FINAL"
+                    }
+                    else
+                    {
+                        switch(selectedIndex)
+                        {
+                        case 0:
+                            if(!controlGraficas.cantidadProductosMasPedidos(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 1:
+                            if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 2:
+                            if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 3:
+                            if(!controlGraficas.cantidadProductosMasPedidos(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 4:
+                            if(!controlGraficas.cantidadComandasAtendidas(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        }
+                    }
                 }
                 ventanaFechaFinal.close()
             }
@@ -93,6 +240,8 @@ Item {
                 id: lblReporte
                 text: "Tipo de reporte"
                 Layout.fillWidth: true
+                Layout.maximumWidth: 270
+                Layout.minimumWidth: 270
                 horizontalAlignment: Text.AlignHCenter
                 font.weight: Font.DemiBold
                 font.pointSize: 15
@@ -104,6 +253,8 @@ Item {
             {
                 id: comboReporte
                 Layout.fillWidth: true
+                Layout.maximumWidth: 270
+                Layout.minimumWidth: 270
                 model: ["Platillos mas vendidos",
                         "Mejor platillo por categoria",
                         "Peor platillo por categoria",
@@ -116,13 +267,84 @@ Item {
                 Material.foreground: "#008d96"
                 Material.accent: "#008d96"
                 currentIndex: selectedIndex
-                onCurrentIndexChanged: selectedIndex = comboReporte.currentIndex
+                onCurrentIndexChanged:
+                {
+                    selectedIndex = comboReporte.currentIndex
+                    if( paginaUtilizada)
+                    {
+                        switch(selectedIndex)
+                        {
+                        case 0:
+                            if(!controlGraficas.cantidadProductosMasPedidos(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 1:
+                            if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 2:
+                            if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 3:
+                            if(!controlGraficas.cantidadProductosMasPedidos(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        case 4:
+                            if(!controlGraficas.cantidadComandasAtendidas(1))
+                            {
+                                imagenMensaje = "/img/warning.png"
+                                textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                            }
+                            else
+                            {
+                                imagenMensaje = ""
+                                textoMensaje = ""
+                            }
+                            break;
+                        }
+                    }
+                }
             }
             Label
             {
                 id: lblFechas
                 text: "Selección de fechas"
                 Layout.fillWidth: true
+                Layout.maximumWidth: 270
+                Layout.minimumWidth: 270
                 horizontalAlignment: Text.AlignHCenter
                 font.weight: Font.DemiBold
                 font.pointSize: 15
@@ -138,6 +360,8 @@ Item {
                 text: "Fecha Inicial"
                 antialiasing: true
                 Layout.fillWidth: true
+                Layout.maximumWidth: 270
+                Layout.minimumWidth: 270
                 font.weight: Font.DemiBold
                 font.capitalization: Font.MixedCase
                 font.pointSize: 12
@@ -152,6 +376,8 @@ Item {
                 text: "Fecha Final"
                 antialiasing: true
                 Layout.fillWidth: true
+                Layout.maximumWidth: 270
+                Layout.minimumWidth: 270
                 font.weight: Font.DemiBold
                 font.capitalization: Font.MixedCase
                 font.pointSize: 12
@@ -162,12 +388,14 @@ Item {
             Pane
             {
                 id: panelMensajes
-                Layout.fillWidth: true
+                //Layout.fillWidth: true
                 Layout.minimumHeight: 300
                 Layout.maximumHeight: 300
+                Layout.maximumWidth: 270
+                Layout.minimumWidth: 270
                 //Layout.bottomMargin: 50
                 Material.elevation: 0
-                Material.background: "#000000"
+                Material.background: "#FFFFFF"
 
                 ColumnLayout
                 {
@@ -177,7 +405,7 @@ Item {
 
                     Image {
                         id: iconoMensaje
-                        source: "/img/warning.png"
+                        source: imagenMensaje
                         Layout.minimumHeight: 75
                         Layout.maximumHeight: 75
                         Layout.minimumWidth: 75
@@ -188,12 +416,14 @@ Item {
                     Label
                     {
                         id: lblMensaje
-                        text: "TEXTO DE PRUEBA"
+                        text: textoMensaje
                         font.weight: Font.DemiBold
                         font.pointSize: 14
                         font.family: "Verdana"
-                        Material.foreground: "#FFFFFF"
-                        Layout.alignment: Qt.AlignHCenter
+                        Material.foreground: "#000000"
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.maximumWidth: 270
+                        Layout.minimumWidth: 270
                     }
                 }
             }
@@ -223,7 +453,76 @@ Item {
             spacing: 1366
             cacheBuffer: 0
             currentIndex: selectedIndex
-            onCurrentIndexChanged: selectedIndex = vistaGraficas.currentIndex
+            onCurrentIndexChanged:
+            {
+                selectedIndex = vistaGraficas.currentIndex
+                if(paginaUtilizada)
+                {
+                    switch(selectedIndex)
+                    {
+                    case 0:
+                        if(!controlGraficas.cantidadProductosMasPedidos(1))
+                        {
+                            imagenMensaje = "/img/warning.png"
+                            textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                        }
+                        else
+                        {
+                            imagenMensaje = ""
+                            textoMensaje = ""
+                        }
+                        break;
+                    case 1:
+                        if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
+                        {
+                            imagenMensaje = "/img/warning.png"
+                            textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                        }
+                        else
+                        {
+                            imagenMensaje = ""
+                            textoMensaje = ""
+                        }
+                        break;
+                    case 2:
+                        if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
+                        {
+                            imagenMensaje = "/img/warning.png"
+                            textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                        }
+                        else
+                        {
+                            imagenMensaje = ""
+                            textoMensaje = ""
+                        }
+                        break;
+                    case 3:
+                        if(!controlGraficas.cantidadProductosMasPedidos(1))
+                        {
+                            imagenMensaje = "/img/warning.png"
+                            textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                        }
+                        else
+                        {
+                            imagenMensaje = ""
+                            textoMensaje = ""
+                        }
+                        break;
+                    case 4:
+                        if(!controlGraficas.cantidadComandasAtendidas(1))
+                        {
+                            imagenMensaje = "/img/warning.png"
+                            textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
+                        }
+                        else
+                        {
+                            imagenMensaje = ""
+                            textoMensaje = ""
+                        }
+                        break;
+                    }
+                }
+            }
             model: ListModel
             {
                 ListElement {component: "Reporte1.qml"}

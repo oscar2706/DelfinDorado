@@ -153,6 +153,36 @@ int Graficas::cantidadPlatilloMasVendidoCategoria(int numeroCategoria)
     }
 }
 
+int Graficas::comprobacionPlatilloMasVendidoCategoria()
+{
+    int bandera = 0, contador = 0;
+
+    QSqlQuery consulta;
+
+    for(int i=1; i<11; i++)
+    {
+        consulta.prepare("SELECT count(pc.idPlatillo) AS total "
+                         "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                         "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
+                         "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
+                         "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
+                         "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+        consulta.bindValue(":numeroCategoria", i);
+        consulta.bindValue(":fechaInicial", m_fechaInicial);
+        consulta.bindValue(":fechaFinal", m_fechaFinal);
+
+        consulta.exec();
+        consulta.first();
+
+        contador += consulta.value(0).toInt();
+    }
+
+    if(contador>0)
+        bandera=1;
+
+    return bandera;
+}
+
 //grafica 3
 QString Graficas::categoriaPlatilloMenosVendidoCategoria(int numeroCategoria)
 {
@@ -192,7 +222,7 @@ QString Graficas::nombrePlatilloMenosVendidoCategoria(int numeroCategoria)
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total ASC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -220,7 +250,7 @@ int Graficas::cantidadPlatilloMenosVendidoCategoria(int numeroCategoria)
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total ASC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -237,6 +267,36 @@ int Graficas::cantidadPlatilloMenosVendidoCategoria(int numeroCategoria)
         qDebug() << consulta.lastError().text();
         return 0;
     }
+}
+
+int Graficas::comprobacionPlatilloMenosVendidoCategoria()
+{
+    int bandera = 0, contador = 0;
+
+    QSqlQuery consulta;
+
+    for(int i=1; i<11; i++)
+    {
+        consulta.prepare("SELECT count(pc.idPlatillo) AS total "
+                         "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                         "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
+                         "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
+                         "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
+                         "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+        consulta.bindValue(":numeroCategoria", i);
+        consulta.bindValue(":fechaInicial", m_fechaInicial);
+        consulta.bindValue(":fechaFinal", m_fechaFinal);
+
+        consulta.exec();
+        consulta.first();
+
+        contador += consulta.value(0).toInt();
+    }
+
+    if(contador>0)
+        bandera=1;
+
+    return bandera;
 }
 
 //grafica 4
@@ -348,7 +408,7 @@ int Graficas::cantidadComandasAtendidas(int numeroComandas)
 
 //terminan graficas
 
-int Graficas::cantidadComandasGeneradas()
+int Graficas::comandasGeneradas()
 {
     QSqlQuery consulta;
 
@@ -385,7 +445,7 @@ float Graficas::promedioVentas()
     {
         consulta.next();
         ganancias = consulta.value(0).toFloat();
-        cantidadComandas = cantidadComandasGeneradas();
+        cantidadComandas = comandasGeneradas();
 
         return ganancias/cantidadComandas;
     }
@@ -395,7 +455,21 @@ float Graficas::promedioVentas()
     }
 }
 
-//terminas datos directos
+//terminan datos directos
+
+int Graficas::fechasCorrectas()
+{
+    QDate inicio, fin;
+    inicio = QDate::fromString(m_fechaInicial, "yyyy-MM-dd");
+    fin = QDate::fromString(m_fechaFinal, "yyyy-MM-dd");
+
+    qDebug() << "Inicio: " << inicio << " Fin: " << fin;
+    if(inicio<=fin)
+        return 1;
+    else {
+        return 0;
+    }
+}
 
 QString Graficas::fechaInicial() const
 {
