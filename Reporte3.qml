@@ -126,7 +126,7 @@ Item {
                 value: valores1
                 color: "#FE7E7E"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre1 + "\n(" + valores1 + ")"
                     else
                         label = nombre1
@@ -138,7 +138,7 @@ Item {
                 value: valores2
                 color: "#FDB679"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre2 + "\n(" + valores2 + ")"
                     else
                         label = nombre2
@@ -150,7 +150,7 @@ Item {
                 value: valores3
                 color: "#94FE76"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre3 + "\n(" + valores3 + ")"
                     else
                         label = nombre3
@@ -162,7 +162,7 @@ Item {
                 value: valores4
                 color: "#78FDBF"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre4 + "\n(" + valores4 + ")"
                     else
                         label = nombre4
@@ -174,7 +174,7 @@ Item {
                 value: valores5
                 color: "#79FFFD"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre5 + "\n(" + valores5 + ")"
                     else
                         label = nombre5
@@ -186,7 +186,7 @@ Item {
                 value: valores6
                 color: "#7F9EFF"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre6 + "\n(" + valores6 + ")"
                     else
                         label = nombre6
@@ -197,7 +197,7 @@ Item {
                 value: valores7
                 color: "#B274FF"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre7 + "\n(" + valores7 + ")"
                     else
                         label = nombre7
@@ -209,7 +209,7 @@ Item {
                 value: valores8
                 color: "#F26FFF"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre8 + "\n(" + valores8 + ")"
                     else
                         label = nombre8
@@ -221,7 +221,7 @@ Item {
                 value: valores9
                 color: "#FF73D6"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre9 + "\n(" + valores9 + ")"
                     else
                         label = nombre9
@@ -233,7 +233,7 @@ Item {
                 value: valores10
                 color: "#C25F7A"
                 onHovered: {
-                    if(status)
+                    if(state)
                         label = nombre10 + "\n(" + valores10 + ")"
                     else
                         label = nombre10

@@ -15,6 +15,8 @@ Item {
     property string imagenMensaje
     property string textoMensaje
     property int paginaUtilizada: 0
+    property string textoComandas
+    property string textoPromedio
 
     Popup
     {
@@ -36,15 +38,21 @@ Item {
                 controlGraficas.setFechaInicial(fechaInicial.text)
                 if(fechaFinal.text != "Fecha Final")
                 {
+                    activadorLoader = false
                     activadorLoader = true
                     paginaUtilizada = 1
                     if(!controlGraficas.fechasCorrectas())
                     {
+                        activadorLoader = false
+                        textoComandas = ""
+                        textoPromedio = ""
                         imagenMensaje = "/img/error.png"
                         textoMensaje = "ERROR.\nLA FECHA INICIAL NO\nPUEDE SER MAYOR\n A LA FINAL"
                     }
                     else
                     {
+                        textoComandas = controlGraficas.comandasGeneradas()
+                        textoPromedio = controlGraficas.promedioVentas()
                         switch(selectedIndex)
                         {
                         case 0:
@@ -135,15 +143,21 @@ Item {
                 controlGraficas.setFechaFinal(fechaFinal.text)
                 if(fechaInicial.text != "Fecha Inicial")
                 {
+                    activadorLoader = false
                     activadorLoader = true
                     paginaUtilizada = 1
                     if(!controlGraficas.fechasCorrectas())
                     {
+                        activadorLoader = false
+                        textoComandas = ""
+                        textoPromedio = ""
                         imagenMensaje = "/img/error.png"
                         textoMensaje = "ERROR.\nLA FECHA INICIAL NO\nPUEDE SER MAYOR\n A LA FINAL"
                     }
                     else
                     {
+                        textoComandas = controlGraficas.comandasGeneradas()
+                        textoPromedio = controlGraficas.promedioVentas()
                         switch(selectedIndex)
                         {
                         case 0:
@@ -432,11 +446,44 @@ Item {
 
     Pane
     {
+        id: panelDatosDirectos
+        Material.elevation: 4
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.topMargin: 110
+        anchors.leftMargin: 350
+        anchors.rightMargin: 50
+        height: 50
+
+        RowLayout
+        {
+            id: layoutDatos
+            anchors.fill: parent
+            spacing: 0
+
+            Label
+            {
+                id: lblComandas
+                Layout.leftMargin: Qt.AlignLeft
+                text: "Comandas Registradas: " + textoComandas
+            }
+            Label
+            {
+                id: lblPromedio
+                Layout.rightMargin: Qt.AlignRight
+                text: "Promedio de Ganancias por Comanda: " + textoPromedio
+            }
+        }
+    }
+
+    Pane
+    {
         id: panelGraficas
         Material.elevation: 4
         anchors.fill: parent
         anchors.leftMargin: 350
-        anchors.topMargin: 110
+        anchors.topMargin: 180
         anchors.rightMargin: 50
         anchors.bottomMargin: 50
 
