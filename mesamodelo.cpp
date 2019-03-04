@@ -16,6 +16,7 @@ mesaModelo::mesaModelo(QObject *parent)
                 ancho=130;
 
             imagenMesa=getImagenMesa(select->value(2).toInt(),select->value(1).toInt());
+
             m_mesa.append(new mesa(select->value(0).toInt(),select->value(2).toInt(),90,ancho,
                                    select->value(1).toInt(),imagenMesa));
         }

@@ -30,7 +30,6 @@ public:
     Q_INVOKABLE int verificaEstadoMesa(int);
     Q_INVOKABLE QString getMeseroAsignado(int);
     Q_INVOKABLE void restablecerRadioButton();
-    Q_INVOKABLE QString getTipoUsuario(QString);
     Q_INVOKABLE void setEstadoDisponible(QString);
 
 signals:

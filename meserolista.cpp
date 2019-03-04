@@ -41,8 +41,9 @@ void meseroLista::setComanda(QString mesa)
         {
             QSqlQuery insert;
 
-            insert.prepare("INSERT INTO comanda(fecha,idEmpleado,idMesa,idEstadoComanda) "
-                               "Values(:fecha,:idEmpleado,:idMesa,:idEstadoComanda)");
+            insert.prepare("INSERT INTO comanda(hora,fecha,idEmpleado,idMesa,idEstadoComanda) "
+                               "Values(:hora,:fecha,:idEmpleado,:idMesa,:idEstadoComanda)");
+            insert.bindValue(":hora",QTime::currentTime());
             insert.bindValue(":fecha",QDate::currentDate());
             insert.bindValue(":idEmpleado",mItems.at(i).id);
             insert.bindValue(":idMesa",mesa);
@@ -78,27 +79,17 @@ QString meseroLista::getMeseroAsignado(int idMesa)
 {
     QSqlQuery select;
 
-    select.exec("SELECT empleado.idEmpleado,nombre FROM comanda INNER JOIN empleado ON "
-                "comanda.idEmpleado=empleado.idEmpleado "
-                "WHERE idMesa = '"+QString::number(idMesa)+"'");
+    select.exec("SELECT nombre FROM comanda INNER JOIN empleado ON comanda.idEmpleado=empleado.idEmpleado "
+    "WHERE idMesa = '"+QString::number(idMesa)+"' AND "
+    "idComanda=(SELECT MAX(idComanda) FROM comanda WHERE idMesa = '"+QString::number(idMesa)+"')");
 
     if(select.next())
-        return "Mesa # "+QString::number(idMesa)+"\nAtendiendo: "+select.value(1).toString();
+        return "Mesa # "+QString::number(idMesa)+"\nAtendiendo: "+select.value(0).toString();
 
     return "";
 }
 
-QString meseroLista::getTipoUsuario(QString tipo)
-{
-    QSqlQuery select;
 
-    select.exec("SELECT cargo FROM puesto WHERE idPuesto = '"+tipo+"'");
-
-    if(select.next())
-        return select.value(0).toString();
-
-    return "";
-}
 
 void meseroLista::setEstadoDisponible(QString idMesa)
 {
