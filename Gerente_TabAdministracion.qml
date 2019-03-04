@@ -39,7 +39,7 @@ Item {
                 if(fechaFinal.text != "Fecha Final")
                 {
                     activadorLoader = false
-                    activadorLoader = true
+                    //activadorLoader = true
                     paginaUtilizada = 1
                     if(!controlGraficas.fechasCorrectas())
                     {
@@ -58,11 +58,15 @@ Item {
                         case 0:
                             if(!controlGraficas.cantidadProductosMasPedidos(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -70,11 +74,15 @@ Item {
                         case 1:
                             if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -82,11 +90,15 @@ Item {
                         case 2:
                             if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -94,11 +106,15 @@ Item {
                         case 3:
                             if(!controlGraficas.cantidadProductosMasPedidos(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -106,11 +122,15 @@ Item {
                         case 4:
                             if(!controlGraficas.cantidadComandasAtendidas(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -144,7 +164,7 @@ Item {
                 if(fechaInicial.text != "Fecha Inicial")
                 {
                     activadorLoader = false
-                    activadorLoader = true
+                    //activadorLoader = true
                     paginaUtilizada = 1
                     if(!controlGraficas.fechasCorrectas())
                     {
@@ -163,11 +183,15 @@ Item {
                         case 0:
                             if(!controlGraficas.cantidadProductosMasPedidos(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -175,11 +199,15 @@ Item {
                         case 1:
                             if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -187,11 +215,15 @@ Item {
                         case 2:
                             if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -199,11 +231,15 @@ Item {
                         case 3:
                             if(!controlGraficas.cantidadProductosMasPedidos(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -211,11 +247,15 @@ Item {
                         case 4:
                             if(!controlGraficas.cantidadComandasAtendidas(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -291,11 +331,15 @@ Item {
                         case 0:
                             if(!controlGraficas.cantidadProductosMasPedidos(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -303,11 +347,15 @@ Item {
                         case 1:
                             if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -315,11 +363,15 @@ Item {
                         case 2:
                             if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -327,11 +379,15 @@ Item {
                         case 3:
                             if(!controlGraficas.cantidadProductosMasPedidos(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -339,11 +395,15 @@ Item {
                         case 4:
                             if(!controlGraficas.cantidadComandasAtendidas(1))
                             {
+                                activadorLoader = false
+                                textoComandas = ""
+                                textoPromedio = ""
                                 imagenMensaje = "/img/warning.png"
                                 textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                             }
                             else
                             {
+                                activadorLoader = true
                                 imagenMensaje = ""
                                 textoMensaje = ""
                             }
@@ -472,7 +532,7 @@ Item {
             {
                 id: lblPromedio
                 Layout.rightMargin: Qt.AlignRight
-                text: "Promedio de Ganancias por Comanda: " + textoPromedio
+                text: "Promedio de Ganancias por Comanda: $" + textoPromedio
             }
         }
     }
@@ -494,7 +554,8 @@ Item {
             focus: true
             snapMode: ListView.SnapOneItem
             highlightRangeMode: ListView.StrictlyEnforceRange
-            highlightMoveDuration: 1000
+            highlightMoveDuration: 0
+            highlightMoveVelocity: -1
             orientation: ListView.Horizontal
             boundsBehavior: Flickable.StopAtBounds
             spacing: 1366
@@ -510,11 +571,15 @@ Item {
                     case 0:
                         if(!controlGraficas.cantidadProductosMasPedidos(1))
                         {
+                            activadorLoader = false
+                            textoComandas = ""
+                            textoPromedio = ""
                             imagenMensaje = "/img/warning.png"
                             textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                         }
                         else
                         {
+                            activadorLoader = true
                             imagenMensaje = ""
                             textoMensaje = ""
                         }
@@ -522,11 +587,15 @@ Item {
                     case 1:
                         if(!controlGraficas.comprobacionPlatilloMasVendidoCategoria())
                         {
+                            activadorLoader = false
+                            textoComandas = ""
+                            textoPromedio = ""
                             imagenMensaje = "/img/warning.png"
                             textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                         }
                         else
                         {
+                            activadorLoader = true
                             imagenMensaje = ""
                             textoMensaje = ""
                         }
@@ -534,11 +603,15 @@ Item {
                     case 2:
                         if(!controlGraficas.comprobacionPlatilloMenosVendidoCategoria())
                         {
+                            activadorLoader = false
+                            textoComandas = ""
+                            textoPromedio = ""
                             imagenMensaje = "/img/warning.png"
                             textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                         }
                         else
                         {
+                            activadorLoader = true
                             imagenMensaje = ""
                             textoMensaje = ""
                         }
@@ -546,11 +619,15 @@ Item {
                     case 3:
                         if(!controlGraficas.cantidadProductosMasPedidos(1))
                         {
+                            activadorLoader = false
+                            textoComandas = ""
+                            textoPromedio = ""
                             imagenMensaje = "/img/warning.png"
                             textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                         }
                         else
                         {
+                            activadorLoader = true
                             imagenMensaje = ""
                             textoMensaje = ""
                         }
@@ -558,11 +635,15 @@ Item {
                     case 4:
                         if(!controlGraficas.cantidadComandasAtendidas(1))
                         {
+                            activadorLoader = false
+                            textoComandas = ""
+                            textoPromedio = ""
                             imagenMensaje = "/img/warning.png"
                             textoMensaje = "SIN REGISTROS.\nNO SE ENCONTRARON\nREGISTROS EN EL\nPERIODO SELECCIONADO\nMODIFIQUE LAS FECHAS"
                         }
                         else
                         {
+                            activadorLoader = true
                             imagenMensaje = ""
                             textoMensaje = ""
                         }
