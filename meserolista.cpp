@@ -41,9 +41,8 @@ void meseroLista::setComanda(QString mesa)
         {
             QSqlQuery insert;
 
-            insert.prepare("INSERT INTO comanda(hora,fecha,idEmpleado,idMesa,idEstadoComanda) "
-                               "Values(:hora,:fecha,:idEmpleado,:idMesa,:idEstadoComanda)");
-            insert.bindValue(":hora",QTime::currentTime());
+            insert.prepare("INSERT INTO comanda(fecha,idEmpleado,idMesa,idEstadoComanda) "
+                               "Values(:fecha,:idEmpleado,:idMesa,:idEstadoComanda)");
             insert.bindValue(":fecha",QDate::currentDate());
             insert.bindValue(":idEmpleado",mItems.at(i).id);
             insert.bindValue(":idMesa",mesa);
