@@ -479,7 +479,7 @@ Item {
                             pop_confirmacionCocina.close()
                             pop_comandaEnviada.open()
                             textoBoton = "Cobrar cuenta"
-                            modeloPlatillosComandas.setComandaTaken()
+                            modeloPlatillosComandas.setComandaAtendida()
                         }
                     }
                 }

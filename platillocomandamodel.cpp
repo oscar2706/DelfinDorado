@@ -179,7 +179,7 @@ QHash<int, QByteArray> PlatilloComandaModel::roleNames() const
 
 void PlatilloComandaModel::addPlatilloComanda(PlatilloComanda *nuevoPlatilloComanda)
 {
-    qDebug() << "->Platillo agregado:" << nuevoPlatilloComanda->nombrePlatillo() << ", cantidad  =" << nuevoPlatilloComanda->cantidad();
+    //qDebug() << "->Platillo agregado:" << nuevoPlatilloComanda->nombrePlatillo() << ", cantidad  =" << nuevoPlatilloComanda->cantidad();
     const int index = misPlatillosComanda.size();
     beginInsertRows(QModelIndex(), index, index);
     misPlatillosComanda.append(nuevoPlatilloComanda);
@@ -223,7 +223,7 @@ void PlatilloComandaModel::setIdComanda(const int &nuevoIdComanda)
 
     while(qryPlatillosComanda.next())
     {
-        qDebug() << "\n-->Platillos de la comanda " << nuevoIdComanda;
+        //qDebug() << "\n-->Platillos de la comanda " << nuevoIdComanda;
         int miIdPlatillo = qryPlatillosComanda.value(1).toInt();
 
         QSqlQuery qryCantidadPlatilloEnComanda;
@@ -261,15 +261,15 @@ void PlatilloComandaModel::setIdComanda(const int &nuevoIdComanda)
         }
         if(!platilloRepetido){
             addPlatilloComanda(new PlatilloComanda(nuevoIdComanda, miIdPlatillo, nombre, miCantidad, precioUnidad, total));
-            qDebug() << "Id Platillo: " << miIdPlatillo;
-            qDebug() << "Nombre: " << nombre;
-            qDebug() << "Cantidad: " << miCantidad;
+            //qDebug() << "Id Platillo: " << miIdPlatillo;
+            //qDebug() << "Nombre: " << nombre;
+            //qDebug() << "Cantidad: " << miCantidad;
 
             comandaEnviada = true; //TODO: Checarlo bien
 
         }
     }
-    qDebug() << "";
+    //qDebug() << "";
     //qDebug() << "";
 }
 
@@ -325,7 +325,7 @@ bool PlatilloComandaModel::removePlatillo(const int idPlatillo)
         for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
             if((*itr)->idPlatillo() == idPlatillo){
                 platilloEncontrado = true;
-                qDebug() << "-> Platillo removido de comanda: " << (*itr)->idComanda() <<", " << (*itr)->nombrePlatillo();
+                //qDebug() << "-> Platillo removido de comanda: " << (*itr)->idComanda() <<", " << (*itr)->nombrePlatillo();
                 break;
             }
             indice++;
@@ -338,25 +338,25 @@ bool PlatilloComandaModel::removePlatillo(const int idPlatillo)
             return true;
         }
 
-        else
-            qDebug() << "ERROR al remover platillo con id = " << idPlatillo;
-        qDebug() << "";
+        //else
+            //qDebug() << "ERROR al remover platillo con id = " << idPlatillo;
+        //qDebug() << "";
     //}
 }
 
 void PlatilloComandaModel::setQuantity(const int &idComanda, const int &idPlatillo, const int &cantidad)
 {
-    qDebug() << "";
-    qDebug() << "-->SE QUIERE MODIFICAR UNA CANTIDAD";
-    qDebug() << "idComanda = " << idComanda;
-    qDebug() << "idPlatillo = " << idPlatillo;
+    //qDebug() << "";
+    //qDebug() << "-->SE QUIERE MODIFICAR UNA CANTIDAD";
+    //qDebug() << "idComanda = " << idComanda;
+    //qDebug() << "idPlatillo = " << idPlatillo;
     bool cantidadCambio = false;
     float total = 0;
 
     for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
         if((*itr)->idComanda() == idComanda && (*itr)->idPlatillo() == idPlatillo){
-            qDebug() << "nombre = " << (*itr)->nombrePlatillo();
-            qDebug() << "cantidad vieja = " << (*itr)->cantidad();
+            //qDebug() << "nombre = " << (*itr)->nombrePlatillo();
+            //qDebug() << "cantidad vieja = " << (*itr)->cantidad();
             (*itr)->setCantidad(cantidad);
 
             total = (*itr)->precioUnidad() *cantidad;
@@ -367,13 +367,13 @@ void PlatilloComandaModel::setQuantity(const int &idComanda, const int &idPlatil
     }
 
     if(cantidadCambio){
-        qDebug() << "nueva cantidadd = " << cantidad;
-        qDebug() <<"total = " << total;
+        //qDebug() << "nueva cantidadd = " << cantidad;
+        //qDebug() <<"total = " << total;
         QModelIndex topLeft = createIndex(0,0);
         QModelIndex bottomRight = createIndex(6,misPlatillosComanda.size()); // 6 = numero de atributos de Platillo
         emit dataChanged(topLeft,bottomRight);
     }
-    qDebug() << "";
+    //qDebug() << "";
 
 }
 
@@ -438,14 +438,14 @@ void PlatilloComandaModel::modeloEstado(const int &idEstadoPreparacion)
         if(!misPlatillosComanda.contains(nuevoPlatillo))
             addPlatilloComanda(nuevoPlatillo);
 
-        qDebug() << "Id Comanda: " << idComanda;
-        qDebug() << "Id Platillo: " << idPlatillo;
-        qDebug() << "Nombre: " << nombre;
-        qDebug() << "Cantidad: " << cantidad;
+        //qDebug() << "Id Comanda: " << idComanda;
+        //qDebug() << "Id Platillo: " << idPlatillo;
+        //qDebug() << "Nombre: " << nombre;
+        //qDebug() << "Cantidad: " << cantidad;
 
     }
-    qDebug() << "";
-    qDebug() << "";
+    //qDebug() << "";
+    //qDebug() << "";
 }
 
 void PlatilloComandaModel::modifyStatus(const int &idPlatillosComanda, const int &idNuevoEstado)
@@ -472,7 +472,7 @@ void PlatilloComandaModel::clearModeal()
         indice++;
     }
     */
-    qDebug() << "---> SE LIMPIA EL MODELO PLATILLOSCOMANDA<---";
+    //qDebug() << "---> SE LIMPIA EL MODELO PLATILLOSCOMANDA<---";
 
     for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
         removePlatillo((*itr)->idPlatillo());
@@ -509,7 +509,7 @@ bool PlatilloComandaModel::setComandaPagada()
     qryInsertarCuenta.next();
 
     if(qryInsertarCuenta.numRowsAffected() != 0){
-        qDebug() << "Comanda: " << misPlatillosComanda.first()->idComanda()<< " PAGADA :D!";
+        //qDebug() << "Comanda: " << misPlatillosComanda.first()->idComanda()<< " PAGADA :D!";
         QSqlQuery qryComandaPagada;
         qryComandaPagada.prepare("UPDATE comanda SET idEstadoComanda = 3 "
                                  "WHERE idComanda = :idComanda");
@@ -520,7 +520,7 @@ bool PlatilloComandaModel::setComandaPagada()
             return true;
     }
     else{
-        qDebug() << "Comanda: " << idComandaActual << " SIN PAGAR D:!";
+        //qDebug() << "Comanda: " << idComandaActual << " SIN PAGAR D:!";
         return false;
     }
 }
@@ -533,7 +533,7 @@ bool PlatilloComandaModel::alreadyPaid()
     qryComandaPagada.bindValue(":idComanda", idComandaActual);
     qryComandaPagada.exec();
     qryComandaPagada.next();
-    qDebug() << "Estado comanda = " << qryComandaPagada.value(0).toInt();
+    //qDebug() << "Estado comanda = " << qryComandaPagada.value(0).toInt();
     if(qryComandaPagada.value(0).toInt() == 3)
         return true;
     else
@@ -563,7 +563,7 @@ void PlatilloComandaModel::setIdComandaPedido(const int idComanda)
 bool PlatilloComandaModel::saveNewPedidoInDataBase()
 {
     bool datosInsertados = false;
-    qDebug() << "\n-->Guardando platillos en BD ...";
+    //qDebug() << "\n-->Guardando platillos en BD ...";
     for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
         for (int i = 0; i < (*itr)->cantidad(); i++) {
             if(insertPlatilloComandaInDataBase((*itr)) == false)
@@ -574,7 +574,7 @@ bool PlatilloComandaModel::saveNewPedidoInDataBase()
             }
         }
     }
-    qDebug() << "";
+    //qDebug() << "";
     return datosInsertados;
 }
 
@@ -598,7 +598,8 @@ bool PlatilloComandaModel::setComandaPagada(int idComanda)
     qryInsertarCuenta.next();
 
     if(qryInsertarCuenta.numRowsAffected() != 0){
-        qDebug() << "Comanda: " << idComandaActual << " PAGADA :D!";QSqlQuery qryComandaPagada;
+        //qDebug() << "Comanda: " << idComandaActual << " PAGADA :D!";
+        QSqlQuery qryComandaPagada;
         qryComandaPagada.prepare("UPDATE comanda SET idEstadoComanda = 3 "
                                  "WHERE idComanda = :idComanda");
         qryComandaPagada.bindValue(":idComanda", idComandaActual);
@@ -608,7 +609,7 @@ bool PlatilloComandaModel::setComandaPagada(int idComanda)
             return true;
     }
     else{
-        qDebug() << "Comanda: " << idComandaActual << " SIN PAGAR D:!";
+        //qDebug() << "Comanda: " << idComandaActual << " SIN PAGAR D:!";
         return false;
     }
 }
@@ -620,7 +621,7 @@ int PlatilloComandaModel::getNuevoIdComanda()
     if(qryGetIdComanda.exec("SELECT idComanda FROM comanda ORDER BY idComanda DESC"))
         if (qryGetIdComanda.next()) {
             nuevoIdComanda= qryGetIdComanda.value(0).toInt();
-            qDebug() << "---> QUERY idComanda = " << ++nuevoIdComanda;
+            //qDebug() << "---> QUERY idComanda = " << ++nuevoIdComanda;
         }
     //++nuevoIdComanda;
     //idComandaActual = nuevoIdComanda;
@@ -650,7 +651,7 @@ QStringList PlatilloComandaModel::getPlatillosCuenta()
         QString totalPlatillo;
         totalPlatillo.setNum((*itr)->totalPlatillo());
         platillo = cantidad+","+(*itr)->nombrePlatillo()+",$"+precioUnidad+",$"+totalPlatillo;
-        qDebug() << "Cadena enviada " + platillo;
+        //qDebug() << "Cadena enviada " + platillo;
         listPlatillosCuenta.append(platillo);
     }
     return listPlatillosCuenta;
@@ -658,11 +659,11 @@ QStringList PlatilloComandaModel::getPlatillosCuenta()
 
 bool PlatilloComandaModel::saveNewComandaInDataBase()
 {
-    if(comandaEnviada)
+    /*if(comandaEnviada)
         return false;
-    else {
+    else {*/
         bool datosInsertados = false;
-        qDebug() << "\n-->Guardando platillos en BD ...";
+        //qDebug() << "\n-->Guardando platillos en BD ...";
         for (itr = misPlatillosComanda.begin(); itr != misPlatillosComanda.end(); itr++) {
             for (int i = 0; i < (*itr)->cantidad(); i++) {
                 if(insertPlatilloComandaInDataBase((*itr)) == false)
@@ -673,9 +674,9 @@ bool PlatilloComandaModel::saveNewComandaInDataBase()
                 }
             }
         }
-        qDebug() << "";
+        //qDebug() << "";
         return datosInsertados;
-    }
+    //}
 }
 
 bool PlatilloComandaModel::insertPlatilloComandaInDataBase(PlatilloComanda *platilloComandaToSave)

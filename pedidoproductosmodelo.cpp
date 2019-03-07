@@ -357,7 +357,7 @@ QString PedidoProductosModelo::getUnidadMedida(const QString &nombre)
     {
         buscarId.next();
 
-        obtenerNombre.prepare("SELECT nombre FROM unidadmedida WHERE idUnidadMedida = :idUnidadMedida");
+        obtenerNombre.prepare("SELECT nombre FROM unidadMedida WHERE idUnidadMedida = :idUnidadMedida");
         obtenerNombre.bindValue(":idUnidadMedida", buscarId.value(0).toInt());
         if(obtenerNombre.exec())
         {

@@ -24,7 +24,6 @@ ApplicationWindow {
 
     GridView{
         id:listaMeseros
-
         x: 279
         y: 44
         width: 862
@@ -159,7 +158,8 @@ ApplicationWindow {
                     id: textVisualizar
                     text: qsTr("        Para llevar")
                     anchors.centerIn: parent
-                    font.pointSize: 12
+                    font.weight: Font.Normal
+                    font.pointSize: 14
                     font.family: "Verdana"
                     Material.background: "#FFFFFF"
                 }
@@ -190,7 +190,8 @@ ApplicationWindow {
                     id: textSalir
                     text: qsTr(" Salir")
                     anchors.centerIn: parent
-                    font.pointSize: 12
+                    font.weight: Font.Normal
+                    font.pointSize: 14
                     font.family: "Verdana"
                 }
                 MouseArea{

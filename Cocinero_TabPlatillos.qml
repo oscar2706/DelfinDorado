@@ -47,8 +47,8 @@ Item {
         //PARTE IZQUIERDA
         Pane{
             id: panelPlatillos1
-            Material.background: "#bdbdbd"
-            Material.elevation: 0
+            Material.background: "#f5f5f5"
+            Material.elevation: 4
             Layout.preferredHeight: 600
             Layout.minimumHeight: 600
             Layout.maximumHeight: 600
@@ -209,8 +209,8 @@ Item {
         //PARTE DERECHA
         Pane{
             id: panelPlatillos2
-            Material.background: "#bdbdbd"
-            Material.elevation: 0
+            Material.background: "#f5f5f5"
+            Material.elevation: 4
             Layout.preferredHeight: 600
             Layout.minimumHeight: 600
             Layout.maximumHeight: 600

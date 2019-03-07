@@ -80,8 +80,6 @@ Item {
                 }
                 Button{
                     text: "Pedido"
-                    Material.background: "#FFFFFF"
-                    Material.elevation: 0
                     font.weight: Font.DemiBold
                     font.pointSize: 14
                     font.family: "Verdana"
@@ -89,6 +87,8 @@ Item {
                     font.capitalization: Font.MixedCase
                     focusPolicy: Qt.StrongFocus
                     display: AbstractButton.TextBesideIcon
+                    Material.background: "#FFFFFF"
+                    Material.elevation: 0
                     onClicked:{
                         modeloPedidoProductos.clearModel()
                         dialog_nuevoPedido.modeloUnidades = almacen.getInfoContenido(3);
@@ -109,7 +109,7 @@ Item {
         anchors.leftMargin: 20
         anchors.bottomMargin: 20
         anchors.topMargin: 80
-        Material.background: "#D7D7D7"
+        Material.background: "#f5f5f5"
         Material.elevation: 4
         Column
         {
@@ -121,15 +121,15 @@ Item {
                 height: 50
                 id: productosHeader
                 Label{
+                    color: "#006677"
+                    font.weight: Font.DemiBold
+                    font.family: "Verdana"
+                    font.pointSize: 16
+                    font.bold: true
                     width: parent.width
                     text: "En almacen"
-                    color: "#008d96"
                     anchors.centerIn: parent
                     anchors.verticalCenter: parent.verticalCenter
-                    font.bold: true
-                    font.weight: Font.Bold
-                    font.pointSize: 17
-                    font.family: "Verdana"
                     horizontalAlignment: Text.AlignHCenter
                 }
             }
@@ -139,7 +139,44 @@ Item {
                 Aux.TableView
                 {
                     model: almacen
+                    style: TableViewStyle {
+                        headerDelegate: Rectangle {
+                            height: textItem.implicitHeight * 1.2
+                            width: textItem.implicitWidth
+                            color: "#006677"
+                            Text {
+                                id: textItem
 
+                                font.pixelSize: 14
+                                anchors.fill: parent
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: styleData.textAlignment
+                                anchors.leftMargin: 12
+                                text: styleData.value
+                                elide: Text.ElideRight
+                                color: "#FFFFFF"
+                                renderType: Text.NativeRendering
+                            }
+                            Rectangle {
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 1
+                                anchors.topMargin: 1
+                                width: 1
+                                color: "#ccc"
+                            }
+                        }
+                    }
+                    itemDelegate: Item {
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: styleData.textColor = "#000000"
+                            elide: styleData.elideMode
+                            text: styleData.value
+                            font.pixelSize: 14
+                        }
+                    }
                     Aux.TableViewColumn
                     {
                         id: folio
@@ -198,7 +235,7 @@ Item {
         anchors.leftMargin: 20
         anchors.bottomMargin: 20
         anchors.topMargin: 80
-        Material.background: "#D7D7D7"
+        Material.background: "#f5f5f5"
         Material.elevation: 4
 
         Pane{
@@ -210,13 +247,13 @@ Item {
             Label{
                 width: parent.width
                 text: "Historial de pedidos"
-                color: "#008d96"
                 anchors.centerIn: parent
                 anchors.verticalCenter: parent.verticalCenter
-                font.bold: true
-                font.weight: Font.Bold
-                font.pointSize: 17
+                color: "#006677"
+                font.weight: Font.DemiBold
                 font.family: "Verdana"
+                font.pointSize: 16
+                font.bold: true
                 horizontalAlignment: Text.AlignHCenter
             }
         }

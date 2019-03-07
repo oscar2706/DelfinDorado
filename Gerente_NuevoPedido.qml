@@ -8,7 +8,7 @@ Item {
     property int idGerente
     property int idPedido
     property var totalPedido: modeloPedidoProductos.getTotalPedido()
-    property var unidadCategoria: modeloPedidoProductos.getUnidadMedida(inputCategoria.currentText);
+    property var unidadCategoria//: modeloPedidoProductos.getUnidadMedida(inputCategoria.currentText);
     property int selectedProducto
     property int idSelectedProducto
     property int cantidadProducto

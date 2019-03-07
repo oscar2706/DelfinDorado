@@ -146,7 +146,7 @@ Window{
         height: 50
         Text {
             anchors.centerIn: parent
-            font.pixelSize: 18
+            font.pixelSize: 16
             text: qsTr("¡Mesero sin seleccionar!")
         }
     }

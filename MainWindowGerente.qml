@@ -2,8 +2,9 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.3
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.2
+
 
 import Empleado 1.0
 
@@ -71,7 +72,6 @@ Window {
             font.family: "Verdana"
             anchors.margins: 8
             spacing: 10
-
             TabButton {
                 height: 40
                 text: "Empleados"

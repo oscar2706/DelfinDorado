@@ -7,12 +7,44 @@ import QtQuick.Layouts 1.0
 
 
 ApplicationWindow {
+    id: maindWindowBusboy
     visible: true
     property string mesa
     title: "Mapa mesas"
     width: 1366
     height: 720
-    background: BorderImage {source: "img/mapaBusboy.jpg" }
+    background: BorderImage {source: "img/mapaBusboy.jpg"
+
+    Rectangle {
+        id: rectangle
+        x: 1993
+        y: 8
+        z: 1
+        width: 50
+        height: 50
+        color: "#ffffff"
+        visible: true
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        Image {
+            id: imgSalir
+            height: 40
+            width: 40
+            source: "img/salir.png"
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        MouseArea
+       {
+        anchors.fill: parent
+        onClicked:
+        {
+            maindWindowBusboy.close()
+        }
+       }
+    }
+    }
 
     GridView{
         id:listaMeseros

@@ -4,13 +4,13 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
 
-    //db.setUserName("root");
-    //db.setPassword("Spat2706");
-    //db.setDatabaseName("dorado");
-
-    db.setUserName("Leonardo");
-    db.setPassword("football26398");
+    db.setUserName("root");
+    db.setPassword("Spat2706");
     db.setDatabaseName("dorado");
+
+    /*db.setUserName("Leonardo");
+    db.setPassword("football26398");
+    db.setDatabaseName("dorado");*/
 
     //db.setUserName("oscar_soluciones");
     //db.setPassword("dandelot2012");
@@ -26,7 +26,7 @@ EmpleadoLista::EmpleadoLista(QObject *parent) : QObject(parent)
 
     QSqlQuery queryConsulta, queryUsuario;
 
-    queryConsulta.prepare("SELECT * FROM empleado");
+    queryConsulta.prepare("SELECT * FROM empleado ORDER BY nombre");
     queryConsulta.exec();
 
     queryUsuario.prepare("SELECT * FROM usuario");
@@ -803,7 +803,7 @@ QString EmpleadoLista::visualizarImg(QString id_foto)
     QSqlQuery busqueda;
     busqueda.exec("SELECT foto FROM empleado WHERE idEmpleado = " + id_foto + "");
 
-        qDebug() << "entra foto";
+        //qDebug() << "entra foto";
         //qDebug() << "Imagen: query";
         busqueda.next();
             //qDebug() << "Imagen: registro";

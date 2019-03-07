@@ -228,27 +228,18 @@ ApplicationWindow{
             RoundButton{
                 id: btnLogin
                 radius: 20
-                width: 120
                 text: qsTr("Iniciar sesión")
-                antialiasing: true
-                autoRepeat: false
                 spacing: 0
                 Layout.minimumHeight: 50
-                Layout.minimumWidth: 120
+                Layout.minimumWidth: 140
                 Layout.preferredHeight: 50
-                Layout.preferredWidth: 120
+                Layout.preferredWidth: 140
                 hoverEnabled: true
-                focusPolicy: Qt.NoFocus
-                padding: 0
                 font.capitalization: Font.MixedCase
                 font.family: "Verdana"
-                flat: false
-                font.pointSize: 10
+                font.pointSize: 14
                 highlighted: true
                 Material.background: "#006677"
-                display: AbstractButton.TextBesideIcon
-                Layout.fillWidth: false
-                wheelEnabled: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 onClicked:
                 {

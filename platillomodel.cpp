@@ -3,7 +3,7 @@
 PlatilloModel::PlatilloModel(QObject *parent) : QAbstractListModel(parent)
 {
     QSqlQuery qryPlatillos;
-    qryPlatillos.prepare("SELECT * FROM platillo");
+    qryPlatillos.prepare("SELECT * FROM platillo ORDER BY nombre asc");
     qryPlatillos.exec();
     while (qryPlatillos.next()) {
         int id = 0;

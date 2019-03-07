@@ -224,20 +224,18 @@ Item
                     {
                         color: "#006677"
                         text: "Nombre"
-                        font.weight: Font.Bold
+                        font.weight: Font.DemiBold
                         font.family: "Verdana"
-                        font.pointSize: 12
+                        font.pointSize: 16
                         font.bold: true
-                        //Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     }
                     Label{
                         color: "#006677"
                         text: "Precio"
-                        font.weight: Font.Bold
+                        font.weight: Font.DemiBold
                         font.family: "Verdana"
-                        font.pointSize: 12
+                        font.pointSize: 16
                         font.bold: true
-                        //Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
                 }
             }
@@ -273,30 +271,21 @@ Item
                             GridLayout{
                                 anchors.fill: parent
                                 columns: 2
-                                /*CheckBox{
-                                    Layout.alignment: Qt.AlignLeft
-                                    checked: model.eleccionEmpleado
-                                    onClicked: {
-                                        model.eleccionEmpleado = checked
-                                        tablaEmpleados.currentIndex = index
-                                        selectedEmploye = index
-                                    }
-                                }*/
                                 Text{
                                     Layout.minimumWidth: 250
                                     Layout.maximumWidth: 250
-                                    leftPadding: 0
+                                    leftPadding: 20
                                     text: model.name
                                     font.family: "Verdana"
-                                    font.pointSize: 10
+                                    font.pointSize: 12
                                 }
                                 Text{
                                     Layout.minimumWidth: 200
                                     Layout.maximumWidth: 200
-                                    leftPadding: 0
+                                    leftPadding: 20
                                     text: model.price
                                     font.family: "Verdana"
-                                    font.pointSize: 10
+                                    font.pointSize: 12
                                 }
                             }
                             onClicked: {
@@ -341,9 +330,9 @@ Item
                     width: 10
                     color: "#006677"
                     text: "Información del platillo: "
-                    font.weight: Font.Bold
+                    font.weight: Font.DemiBold
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 16
                     font.bold: true
                 }
             }
@@ -383,8 +372,7 @@ Item
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
-                    font.bold: false
+                    font.pointSize: 14
                     Material.elevation: 1
 
                     text: "Nombre: "+nombre
@@ -396,8 +384,7 @@ Item
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
-                    font.bold: false
+                    font.pointSize: 14
                     Material.elevation: 1
 
                     text: "Precio: "+precio
@@ -409,8 +396,7 @@ Item
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
-                    font.bold: false
+                    font.pointSize: 14
                     Material.elevation: 1
 
                     text: "Descripcion: "+descripcion
@@ -422,7 +408,7 @@ Item
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -434,7 +420,7 @@ Item
                     anchors.left: parent.left
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 

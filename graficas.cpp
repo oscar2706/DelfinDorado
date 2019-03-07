@@ -18,10 +18,10 @@ QString Graficas::nombrePlatilloMasVendido(int numeroPlatillo)
     QSqlQuery nombre;
 
     nombre.prepare("SELECT count(pc.idPlatillo) AS total, p.nombre FROM platillo AS p INNER JOIN "
-                   "platilloscomanda AS pc ON p.idPlatillo = pc.idPlatillo INNER JOIN "
-                   "comanda AS c ON c.idComanda = pc.idComanda WHERE "
-                   "c.fecha BETWEEN :fechaInicial AND :fechaFinal "
-                   "GROUP BY p.nombre ORDER BY total DESC");
+                           "platillosComanda AS pc ON p.idPlatillo = pc.idPlatillo INNER JOIN "
+                           "comanda AS c ON c.idComanda = pc.idComanda "
+                           "WHERE c.fecha BETWEEN :fechaInicial AND :fechaFinal "
+                           "GROUP BY p.nombre ORDER BY total DESC");
     nombre.bindValue(":fechaInicial", m_fechaInicial);
     nombre.bindValue(":fechaFinal", m_fechaFinal);
 
@@ -44,7 +44,7 @@ int Graficas::cantidadPlatilloMasVendido(int numeroPlatillo)
     QSqlQuery nombre;
 
     nombre.prepare("SELECT count(pc.idPlatillo) AS total, p.nombre FROM platillo AS p INNER JOIN "
-                   "platilloscomanda AS pc ON p.idPlatillo = pc.idPlatillo INNER JOIN "
+                   "platillosComanda AS pc ON p.idPlatillo = pc.idPlatillo INNER JOIN "
                    "comanda AS c ON c.idComanda = pc.idComanda WHERE "
                    "c.fecha BETWEEN :fechaInicial AND :fechaFinal "
                    "GROUP BY p.nombre ORDER BY total DESC");
@@ -74,11 +74,11 @@ QString Graficas::categoriaPlatilloMasVendidoCategoria(int numeroCategoria)
     QSqlQuery consulta;
 
     consulta.prepare("SELECT ca.nombre, p.nombre, count(pc.idPlatillo) AS total "
-                     "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                     "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal GROUP BY ca.nombre, p.nombre ORDER BY total DESC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -102,11 +102,11 @@ QString Graficas::nombrePlatilloMasVendidoCategoria(int numeroCategoria)
     QSqlQuery consulta;
 
     consulta.prepare("SELECT ca.nombre, p.nombre, count(pc.idPlatillo) AS total "
-                     "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                     "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal GROUP BY ca.nombre, p.nombre ORDER BY total DESC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -130,11 +130,11 @@ int Graficas::cantidadPlatilloMasVendidoCategoria(int numeroCategoria)
     QSqlQuery consulta;
 
     consulta.prepare("SELECT ca.nombre, p.nombre, count(pc.idPlatillo) AS total "
-                     "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                     "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total DESC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal GROUP BY ca.nombre, p.nombre ORDER BY total DESC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -162,7 +162,7 @@ int Graficas::comprobacionPlatilloMasVendidoCategoria()
     for(int i=1; i<11; i++)
     {
         consulta.prepare("SELECT count(pc.idPlatillo) AS total "
-                         "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                         "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                          "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                          "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                          "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
@@ -190,11 +190,11 @@ QString Graficas::categoriaPlatilloMenosVendidoCategoria(int numeroCategoria)
     QSqlQuery consulta;
 
     consulta.prepare("SELECT ca.nombre, p.nombre, count(pc.idPlatillo) AS total "
-                     "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                     "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total ASC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal GROUP BY ca.nombre, p.nombre ORDER BY total ASC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -218,11 +218,11 @@ QString Graficas::nombrePlatilloMenosVendidoCategoria(int numeroCategoria)
     QSqlQuery consulta;
 
     consulta.prepare("SELECT ca.nombre, p.nombre, count(pc.idPlatillo) AS total "
-                     "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                     "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total ASC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal GROUP BY ca.nombre, p.nombre ORDER BY total ASC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -246,11 +246,11 @@ int Graficas::cantidadPlatilloMenosVendidoCategoria(int numeroCategoria)
     QSqlQuery consulta;
 
     consulta.prepare("SELECT ca.nombre, p.nombre, count(pc.idPlatillo) AS total "
-                     "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                     "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                      "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                      "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                      "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
-                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal ORDER BY total ASC");
+                     "co.fecha BETWEEN :fechaInicial AND :fechaFinal GROUP BY ca.nombre, p.nombre ORDER BY total ASC");
     consulta.bindValue(":numeroCategoria", numeroCategoria);
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
@@ -278,7 +278,7 @@ int Graficas::comprobacionPlatilloMenosVendidoCategoria()
     for(int i=1; i<11; i++)
     {
         consulta.prepare("SELECT count(pc.idPlatillo) AS total "
-                         "FROM platilloscomanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
+                         "FROM platillosComanda AS pc INNER JOIN platillo AS p ON p.idPlatillo = pc.idPlatillo "
                          "INNER JOIN categoriaplatillo AS ca ON ca.idCategoriaPlatillo = p.idCategoriaPlatillo "
                          "INNER JOIN comanda AS co ON co.idComanda = pc.idComanda "
                          "WHERE p.idCategoriaPlatillo = :numeroCategoria AND "
@@ -363,7 +363,7 @@ QString Graficas::nombreComandasAtendidas(int numeroComandas)
     consulta.prepare("SELECT count(co.idEmpleado) AS totalEmpleados, e.nombre FROM empleado AS e INNER JOIN "
                    "comanda AS co ON e.idEmpleado = co.idEmpleado WHERE "
                    "co.IdEstadoComanda = 3 AND co.fecha BETWEEN :fechaInicial AND :fechaFinal "
-                   "ORDER BY totalEmpleados DESC");
+                   "GROUP BY e.nombre ORDER BY totalEmpleados DESC");
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
 
@@ -388,7 +388,7 @@ int Graficas::cantidadComandasAtendidas(int numeroComandas)
     consulta.prepare("SELECT count(co.idEmpleado) AS totalEmpleados, e.nombre FROM empleado AS e INNER JOIN "
                    "comanda AS co ON e.idEmpleado = co.idEmpleado WHERE "
                    "co.IdEstadoComanda = 3 AND co.fecha BETWEEN :fechaInicial AND :fechaFinal "
-                   "ORDER BY totalEmpleados DESC");
+                   "GROUP BY e.nombre ORDER BY totalEmpleados DESC");
     consulta.bindValue(":fechaInicial", m_fechaInicial);
     consulta.bindValue(":fechaFinal", m_fechaFinal);
 
@@ -432,7 +432,7 @@ int Graficas::comandasGeneradas()
 float Graficas::promedioVentas()
 {
     int cantidadComandas;
-    float ganancias;
+    int ganancias;
     QSqlQuery consulta;
 
     consulta.prepare("SELECT SUM(cu.totalCuenta) AS total FROM cuenta AS cu "
@@ -444,9 +444,10 @@ float Graficas::promedioVentas()
     if(consulta.exec())
     {
         consulta.next();
-        ganancias = consulta.value(0).toFloat();
+        ganancias = consulta.value(0).toInt();
         cantidadComandas = comandasGeneradas();
 
+        qDebug() << "Ganancias: " << ganancias << " Comandas: " << cantidadComandas;
         return ganancias/cantidadComandas;
     }
     else {

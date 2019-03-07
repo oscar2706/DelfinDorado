@@ -285,30 +285,22 @@ Item {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    /*Label{
-                        width: 10
-                        color: "#006677"
-                        text: ""
-                        font.pointSize: 10
-                        font.bold: true
-                    }*/
                     Label{
+                        leftPadding: 20
                         color: "#006677"
                         text: "Nombre"
-                        font.weight: Font.Bold
+                        font.weight: Font.DemiBold
                         font.family: "Verdana"
-                        font.pointSize: 12
+                        font.pointSize: 16
                         font.bold: true
-                        //Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     }
                     Label{
                         color: "#006677"
                         text: "Puesto"
-                        font.weight: Font.Bold
+                        font.weight: Font.DemiBold
                         font.family: "Verdana"
-                        font.pointSize: 12
+                        font.pointSize: 16
                         font.bold: true
-                        //Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
                 }
             }
@@ -333,30 +325,21 @@ Item {
                             GridLayout{
                                 anchors.fill: parent
                                 columns: 2
-                                /*CheckBox{
-                                    Layout.alignment: Qt.AlignLeft
-                                    checked: model.eleccionEmpleado
-                                    onClicked: {
-                                        model.eleccionEmpleado = checked
-                                        tablaEmpleados.currentIndex = index
-                                        selectedEmploye = index
-                                    }
-                                }*/
                                 Text{
+                                    leftPadding: 20
                                     Layout.minimumWidth: 250
                                     Layout.maximumWidth: 250
-                                    leftPadding: 0
                                     text: model.nombreEmpleado
                                     font.family: "Verdana"
-                                    font.pointSize: 10
+                                    font.pointSize: 12
                                 }
                                 Text{
+                                    leftPadding: 20
                                     Layout.minimumWidth: 200
                                     Layout.maximumWidth: 200
-                                    leftPadding: 0
                                     text: model.puestoEmpleado
                                     font.family: "Verdana"
-                                    font.pointSize: 10
+                                    font.pointSize: 12
                                 }
                             }
                             onClicked: {
@@ -420,9 +403,9 @@ Item {
                     width: 10
                     color: "#006677"
                     text: "Datos del empleado: "
-                    font.weight: Font.Bold
+                    font.weight: Font.DemiBold
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 16
                     font.bold: true
                 }
             }
@@ -454,13 +437,11 @@ Item {
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.topMargin: 5
-
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
-
                     text: idEmployee
                 }
                 Text{
@@ -470,7 +451,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -483,7 +464,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -496,7 +477,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -509,7 +490,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -522,7 +503,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -535,7 +516,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -548,7 +529,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -561,7 +542,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -574,7 +555,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 
@@ -587,7 +568,7 @@ Item {
 
                     font.weight: Font.Medium
                     font.family: "Verdana"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: false
                     Material.elevation: 1
 

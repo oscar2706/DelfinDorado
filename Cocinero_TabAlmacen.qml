@@ -222,7 +222,7 @@ Item {
             anchors.leftMargin: 20
             anchors.bottomMargin: 40
             anchors.topMargin: 80
-            Material.background: "#D7D7D7"
+            Material.background: "#F5F5F5"
             Material.elevation: 4
 
             Aux.SplitView{
@@ -240,13 +240,14 @@ Item {
                             Text {
                                 id: textItem
                                 font.pixelSize: 16
+                                font.family: "Verdana"
                                 anchors.fill: parent
                                 verticalAlignment: Text.AlignVCenter
                                 horizontalAlignment: styleData.textAlignment
                                 anchors.leftMargin: 12
                                 text: styleData.value
                                 elide: Text.ElideRight
-                                color: textColor
+                                color: "#FFFFFF"
                                 renderType: Text.NativeRendering
                             }
                             Rectangle {
@@ -260,8 +261,6 @@ Item {
                             }
                         }
                     }
-                    alternatingRowColors: false
-                    backgroundVisible: false
                     itemDelegate: Item {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
@@ -286,7 +285,7 @@ Item {
                     Aux.TableViewColumn
                     {
                         role: "descripcion"
-                        title: "Descripcion"
+                        title: "Descripción"
                         width: 500
                     }
                     Aux.TableViewColumn
